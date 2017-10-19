@@ -3895,7 +3895,7 @@ namespace SevenKnightsAI.Classes
                                         case SceneType.RAID_LOBBY:
                                             if (this.CurrentObjective == Objective.RAID)
                                             {
-                                                if (this.MatchMapping(RaidLobbyPM.RedIconOnDefeatedTab, 2))
+                                                if (this.MatchMapping(RaidLobbyPM.RedIconOnDefeatedTab, 2) && !this.DragonFound)
                                                 {
                                                     this.Log("Go Collect Raid Reward", Color.DarkOrchid);
                                                     this.WeightedClick(RaidLobbyPM.DefeatedTab, 1.0, 1.0, 1, 0, "left");
@@ -3904,6 +3904,7 @@ namespace SevenKnightsAI.Classes
                                                     if (this.MatchMapping(RaidLobbyPM.EnterButton, 2))
                                                     {
                                                         this.Log("Collect Raid Reward", Color.DarkRed);
+                                                        SevenKnightsCore.Sleep(500);
                                                         this.WeightedClick(RaidLobbyPM.EnterButton, 1.0, 1.0, 1, 0, "left");
                                                     }
                                                     else
@@ -5320,7 +5321,7 @@ namespace SevenKnightsAI.Classes
                         continue;
                     IL_7A8:
                         this.WeightedClick(array2[num5], 1.0, 1.0, 1, 0, "left");
-                        SevenKnightsCore.Sleep(1000);
+                        SevenKnightsCore.Sleep(1500);
                         if (this.Worker.CancellationPending)
                         {
                             return;
@@ -5333,7 +5334,7 @@ namespace SevenKnightsAI.Classes
                         {
                             return;
                         }
-                        SevenKnightsCore.Sleep(1000);
+                        SevenKnightsCore.Sleep(1500);
                         this.CaptureFrame();
                         scene = this.SceneSearch();
                         if (scene.SceneType == SceneType.HERO_JOIN)
@@ -5347,8 +5348,8 @@ namespace SevenKnightsAI.Classes
                                 scene = this.SceneSearch();
                                 if (flag4)
                                 {
+                                    nomorehero30 = true;
                                     this.DoneManageHeroes();
-                                    this.Log("DoneManageHeroes flag4");
                                     return;
                                 }
                                 else
@@ -5735,8 +5736,8 @@ namespace SevenKnightsAI.Classes
             {
                 this.nomorehero30 = false;
                 this.Alert("No More Hero 30");
-                //                this.AIProfiles.ToggleHotTimeProfile();
-                //                MainForm.Instance.InvokeReloadTabs(true);
+                //this.AIProfiles.ToggleHotTimeProfile();
+                //MainForm.Instance.InvokeReloadTabs(true);
             }
             if (this.AIProfiles.ST_EnableAutoShutdown && MaxHeroUpCount)
             {
