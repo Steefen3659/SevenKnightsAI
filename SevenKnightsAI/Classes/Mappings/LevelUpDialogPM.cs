@@ -6,33 +6,33 @@ namespace SevenKnightsAI.Classes.Mappings
     {
         public static readonly PixelMapping CharacterEye = new PixelMapping
         {
-            X = 163,
+            X = 127,
             Y = 118,
-            Color = 15654860,
+            Color = 11572101,
             Type = MappingType.ANCHOR
         };
 
-        public static readonly PixelMapping DialogBorder = new PixelMapping
+        public static readonly PixelMapping InboxButton = new PixelMapping
         {
-            X = 902,
-            Y = 322,
-            Color = 10712884,
+            X = 619,
+            Y = 489,
+            Color = 13410361,
             Type = MappingType.ANCHOR
         };
 
         public static readonly PixelMapping OkButton = new PixelMapping
         {
-            X = 892,
-            Y = 482,
+            X = 843,
+            Y = 484,
             Color = 0,
             Type = MappingType.BUTTON
         };
 
         public static readonly PixelMapping YellowTick = new PixelMapping
         {
-            X = 820,
-            Y = 485,
-            Color = 16761637,
+            X = 781,
+            Y = 488,
+            Color = 16766520,
             Type = MappingType.ANCHOR
         };
     }

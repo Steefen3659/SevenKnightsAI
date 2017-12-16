@@ -72,6 +72,9 @@ namespace SevenKnightsAI.Classes
         [XmlElement(ElementName = "AD_StopOnDragonFull")]
         public bool AD_StopOnDragonFull;
 
+        [XmlElement(ElementName = "AD_RubyBooster")]
+        public bool AD_RubyBooster;
+
         [XmlElement(ElementName = "AD_StopOnLV30")]
         public bool AD_StopOnLV30;
 
@@ -459,6 +462,7 @@ namespace SevenKnightsAI.Classes
             this.AD_StopOnFullHeroes = false;
             this.AD_StopOnFullItems = true;
             this.AD_StopOnDragonFull = false;
+            this.AD_RubyBooster = false;
             this.AD_StopOnLV30 = false;
             this.AD_CheckingHeroes = true;
             this.AD_Wave1Loop = false;
@@ -482,7 +486,7 @@ namespace SevenKnightsAI.Classes
             this.AR_LimitScore = 4300;
             this.AR_UseRubyAmount = 0;
             this.RD_Enable = true;
-            this.RD_EnableDragonLimit = true;
+            this.RD_EnableDragonLimit = false;
             this.RD_SkillType = SkillType.Both;
             this.RD_Team1Loop = false;
             this.RD_Team2Loop = false;
@@ -493,7 +497,7 @@ namespace SevenKnightsAI.Classes
             this.RD_SummonLV = 9;
             this.RD_DragonHP = 50;
             this.RD_DragonRound = 1;
-            this.RD_DragonLVLimit = 70;
+            this.RD_DragonLVLimit = 10;
             this.RD_DragonHPLimit = 100;
             this.ARD_Enable = true;
             this.RS_SellHeroes = false;
@@ -706,6 +710,12 @@ namespace SevenKnightsAI.Classes
                 try
                 {
                     aISettings.AD_StopOnDragonFull = (bool)dictionary["AD_StopOnDragonFull"];
+                }
+                catch (Exception)
+                { }
+                try
+                {
+                    aISettings.AD_RubyBooster = (bool)dictionary["AD_RubyBooster"];
                 }
                 catch (Exception)
                 { }
@@ -1511,6 +1521,10 @@ namespace SevenKnightsAI.Classes
                 {
                     "AD_StopOnDragonFull",
                     this.AD_StopOnDragonFull
+                },
+                {
+                    "AD_RubyBooster",
+                    this.AD_RubyBooster
                 },
                 {
                     "AD_StopOnLV30",

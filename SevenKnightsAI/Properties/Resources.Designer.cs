@@ -90,26 +90,6 @@ namespace SevenKnightsAI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
-        /// </summary>
-        internal static System.Drawing.Icon dellon2 {
-            get {
-                object obj = ResourceManager.GetObject("dellon2", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
-        /// </summary>
-        internal static System.Drawing.Icon Delone {
-            get {
-                object obj = ResourceManager.GetObject("Delone", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap goldmineIcon {
@@ -222,16 +202,6 @@ namespace SevenKnightsAI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icon_pushbullet {
-            get {
-                object obj = ResourceManager.GetObject("icon_pushbullet", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap icon_raid {
             get {
                 object obj = ResourceManager.GetObject("icon_raid", resourceCulture);
@@ -270,12 +240,12 @@ namespace SevenKnightsAI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Bitmap icon3 {
+        internal static System.Drawing.Icon kriss {
             get {
-                object obj = ResourceManager.GetObject("icon3", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                object obj = ResourceManager.GetObject("kriss", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         
@@ -306,16 +276,6 @@ namespace SevenKnightsAI.Properties {
             get {
                 object obj = ResourceManager.GetObject("tessdata", resourceCulture);
                 return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap title_mercure {
-            get {
-                object obj = ResourceManager.GetObject("title_mercure", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

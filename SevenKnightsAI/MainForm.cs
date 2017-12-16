@@ -130,7 +130,12 @@ namespace SevenKnightsAI
             if (!this.IsElevated)
             {
                 this.adminToolStripLabel.Visible = false;
-                this.AppendWarning("No admin permissions. AI might not function as expected!");
+                MessageBox.Show("No admin permissions. Bot might not function as expected!",
+                "No Admin Permissions",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Warning // for Warning  
+               );
+                this.AppendWarning("No admin permissions. Bot might not function as expected!");
             }
         }
 
@@ -301,7 +306,20 @@ namespace SevenKnightsAI
         {
             CheckBox checkBox = sender as CheckBox;
             this.AISettings.AD_StopOnDragonFull = checkBox.Checked;
-            
+        }
+
+        private void AD_RubyBooster_Checkbox_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            this.AISettings.AD_RubyBooster = checkBox.Checked;
+            if (this.AISettings.AD_RubyBooster)
+            {
+                label24.Text = " / 20";
+            }
+            else
+            {
+                label24.Text = " / 100";
+            }
         }
 
         private void AD_StopOnLV30_Checkbox_CheckedChanged(object sender, EventArgs e)
@@ -367,15 +385,15 @@ namespace SevenKnightsAI
                     MessageBox.Show("Error : Telegram ChatID empty. Uncheck Enable Telegram Checkbox if you not want use telegram");
                 }
                 else
-                { 
-                this.StartAI();
+                {
+                    this.StartAI();
                     timer1.Enabled = !timer1.Enabled;
                     StartTime = DateTime.Now;
                     return;
                 }
             }
             this.StopAI();
-            
+            return;
         }
 
         private void aiPause_Click(object sender, EventArgs e)
@@ -383,7 +401,6 @@ namespace SevenKnightsAI
             this.PauseAI();
             this.botstatusLabel.Text = "Bot Paused";
             this.botstatusLabel.ForeColor = Color.Orange;
-            timer1.Stop();
         }
 
         private void AppendLog(string message)
@@ -427,8 +444,8 @@ namespace SevenKnightsAI
         private void BackgroundWorkerOnCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             this.started = false;
-            this.aiButton.Text = "Start AI";
-            this.statusToolStripLabel.Text = "Status: AI Stopped";
+            this.aiButton.Text = "Start Bot";
+            this.statusToolStripLabel.Text = "Status: Bot Stopped";
             this.botstatusLabel.Text = "Bot Stopped";
             this.botstatusLabel.ForeColor = Color.Red;
             this.ST_toggleBlueStacksButton.Enabled = false;
@@ -651,12 +668,28 @@ namespace SevenKnightsAI
                                 this.AlertSound.Stop();
                             }
                         }
-                        else if ((string)progressArgs.Message == "Bot Error")
+                        else if ((string)progressArgs.Message == "Bot Error2")
                         {
-                            bot.sendMessage.send(this.AIProfiles.ST_TelegramChatID, "Bot Stuck, Automatically Paused");
+                            bot.sendMessage.send(this.AIProfiles.ST_TelegramChatID, "Bot Stuck, bot will restart seven knights. You still need to ResumeBot");
                             this.PauseAI();
                             this.AlertSound.PlayLooping();
-                            Thread.Sleep(1500);
+                            Thread.Sleep(2000);
+                            this.AlertSound.Stop();
+                            CaptureReport();
+                            bot.SendPhoto.Show_sending_a_photo = true;
+                            bot.SendPhoto.caption = String.Format("Last Screenshot {0}", DateTime.Now.ToString());
+                            bot.SendPhoto.send(this.AIProfiles.ST_TelegramChatID, @"C://screen.jpg");
+                            Thread.Sleep(1000);
+                            Restart7k();
+                            Thread.Sleep(2000);
+                            aiButton.PerformClick(); // resume
+                        }
+                        else if ((string)progressArgs.Message == "Bot Error")
+                        {
+                            bot.sendMessage.send(this.AIProfiles.ST_TelegramChatID, "Bot Stuck, bot automatically paused");
+                            this.PauseAI();
+                            this.AlertSound.PlayLooping();
+                            Thread.Sleep(2000);
                             this.AlertSound.Stop();
                         }
                         else if ((string)progressArgs.Message == "Hero Level 30")
@@ -669,6 +702,14 @@ namespace SevenKnightsAI
                         else if ((string)progressArgs.Message == "No More Hero 30")
                         {
                             bot.sendMessage.send(this.AIProfiles.ST_TelegramChatID, "Bot Paused because no more hero to replace");
+                            this.PauseAI();
+                            this.AlertSound.PlayLooping();
+                            Thread.Sleep(1500);
+                            this.AlertSound.Stop();
+                        }
+                        else if ((string)progressArgs.Message == "Max Level Up")
+                        {
+                            bot.sendMessage.send(this.AIProfiles.ST_TelegramChatID, "Bot Paused because Hero Max Level Up 100/100");
                             this.PauseAI();
                             this.AlertSound.PlayLooping();
                             Thread.Sleep(1500);
@@ -806,6 +847,7 @@ namespace SevenKnightsAI
             this.AD_EnHottime_Checkbox.Checked = this.AISettings.AD_HottimeEnable;
             this.AD_limitCheckBox.Checked = this.AISettings.AD_EnableLimit;
             this.AD_limitNumericBox.Value = this.AISettings.AD_Limit;
+            this.AD_RubyBooster_Checkbox.Checked = this.AISettings.AD_RubyBooster;
             this.AD_worldComboBox.SelectedIndex = (int)this.AISettings.AD_World;
             this.AD_stageComboBox.SelectedIndex = this.AISettings.AD_Stage;
             this.AD_difficultyComboBox.SelectedValue = this.AISettings.AD_Difficulty;
@@ -814,7 +856,7 @@ namespace SevenKnightsAI
             this.AD_formationComboBox.SelectedIndex = (int)this.AISettings.AD_Formation;
             this.AD_continuousCheckBox.Checked = this.AISettings.AD_Continuous;
             this.AD_elementHeroesCheckBox.Checked = this.AISettings.AD_ElementHeroesOnly;
-            this.AD_masteryComboBox.SelectedIndex = (int)this.AISettings.AD_Mastery;
+            this.AD_leaderComboBox.SelectedIndex = (int)this.AISettings.AD_Mastery;
             this.AD_StopOnFullHeroes_Checkbox.Checked = this.AISettings.AD_StopOnFullHeroes;
             this.AD_StopOnFullItems_Checkbox.Checked = this.AISettings.AD_StopOnFullItems;
             this.AD_StopOnDragon_Checkbox.Checked = this.AISettings.AD_StopOnDragonFull;
@@ -907,7 +949,7 @@ namespace SevenKnightsAI
             this.AR_limitNumericBox.Value = this.AISettings.AR_Limit;
             this.AR_useRubyCheckBox.Checked = this.AISettings.AR_UseRuby;
             this.AR_useRubyNumericBox.Value = this.AISettings.AR_UseRubyAmount;
-            this.AR_masteryComboBox.SelectedIndex = (int)this.AISettings.AR_Mastery;
+            this.AR_leaderComboBox.SelectedIndex = (int)this.AISettings.AR_Mastery;
             this.AR_stopArenaCheckBox.Checked = this.AISettings.AR_LimitArena;
             this.AR_stopArenaNumericBox.Value = this.AISettings.AR_LimitScore;
         }
@@ -977,9 +1019,8 @@ namespace SevenKnightsAI
                 this._skillButtons[i] = new List<Button>();
             }
             this.RD_enableCheckBox.Checked = this.AISettings.RD_Enable;
-            this.ARD_enableCheckBox.Checked = this.AISettings.ARD_Enable;
             this.RD_DragonLimitCheckBox.Checked = this.AISettings.RD_EnableDragonLimit;
-            this.RD_masteryComboBox.SelectedIndex = (int)this.AISettings.RD_Mastery;
+            this.RD_leaderComboBox.SelectedIndex = (int)this.AISettings.RD_Mastery;
             this.RD_team1LoopCheckBox.Checked = this.AISettings.RD_Team1Loop;
             this.RD_team2LoopCheckBox.Checked = this.AISettings.RD_Team2Loop;
             this.RD_OwnerDragon.Checked = this.AISettings.RD_OwnerDragon;
@@ -1017,100 +1058,6 @@ namespace SevenKnightsAI
                 this.AISettings.RD_Team2Skills
             };
             this.LoadWaveSkills(wavePanels, waveSkill, 5);
-        }
-
-        private void InitSPdungeonTab()
-        {
-            for (int i = 7; i < 10; i++)
-            {
-                this._skillButtons[i] = new List<Button>();
-            }
-            this.SP_enableCheckBox.Checked = this.AISettings.SP_Enable;
-            this.SP_wave1LoopCheckBox.Checked = this.AISettings.SP_Wave1Loop;
-            this.SP_wave2LoopCheckBox.Checked = this.AISettings.SP_Wave2Loop;
-            this.SP_wave3LoopCheckBox.Checked = this.AISettings.SP_Wave3Loop;
-            this.SP_dailyNomalRadioButton.Checked = this.AISettings.SP_DailyNormal;
-            this.SP_dailyHardRadioButton.Checked = this.AISettings.SP_DailyHard;
-            this.SP_dailyHellRadioButton.Checked = this.AISettings.SP_DailyHell;
-            this.SP_cakeEasyRadioButton.Checked = this.AISettings.SP_CakeEasy;
-            this.SP_cakeNormalRadioButton.Checked = this.AISettings.SP_CakeNormal;
-            this.SP_cakeHardRadioButton.Checked = this.AISettings.SP_CakeHard;
-            this.SP_crystalEasyRadioButton.Checked = this.AISettings.SP_CrystalEasy;
-            this.SP_crystalNorRadioButton.Checked = this.AISettings.SP_CrystalNormal;
-            this.SP_crystalHardRadioButton.Checked = this.AISettings.SP_CrystalHard;
-            this.SP_evanNorRadioButton.Checked = this.AISettings.SP_EvanNormal;
-            this.SP_evanHardRadioButton.Checked = this.AISettings.SP_EvanHard;
-            this.SP_evanHellRadioButton.Checked = this.AISettings.SP_EvanHell;
-            this.SP_karinNorRadioButton.Checked = this.AISettings.SP_karinNormal;
-            this.SP_karinHardRadioButton.Checked = this.AISettings.SP_karinHard;
-            this.SP_karinHellRadioButton.Checked = this.AISettings.SP_karinHell;
-            this.SP_dailyLimitNumericBox.Value = this.AISettings.SP_DailyLimit;
-            this.SP_cakeLimitNumericBox.Value = this.AISettings.SP_CakeLimit;
-            this.SP_crystalLimitNumericBox.Value = this.AISettings.SP_CrystalLimit;
-            this.SP_evanLimitNumericBox.Value = this.AISettings.SP_EvanLimit;
-            this.SP_karinLimitNumericBox.Value = this.AISettings.SP_KarinLimit;
-            this.SP_dailyCheckBox.Checked = this.AISettings.SP_DailyEnable;
-            this.SP_cakeCheckBox.Checked = this.AISettings.SP_CakeEnable;
-            this.SP_crystalCheckBox.Checked = this.AISettings.SP_CrystalEnable;
-            this.SP_evanCheckBox.Checked = this.AISettings.SP_EvanEnable;
-            this.SP_karinCheckBox.Checked = this.AISettings.SP_KarinEnable;
-            this.SP_limitCheckBox.Checked = this.AISettings.SP_EnableLimit;
-            this.SP_limitNumericBox.Value = this.AISettings.SP_Limit;
-            switch (this.AISettings.SP_SkillType)
-            {
-                case SkillType.Auto:
-                    this.SP_autoSkillRadio.Checked = true;
-                    break;
-
-                case SkillType.Manual:
-                    this.SP_manualSkillRadio.Checked = true;
-                    break;
-
-                case SkillType.Both:
-                    this.SP_bothSkillRadio.Checked = true;
-                    break;
-            }
-            switch (this.AISettings.SP_w2SkillType)
-            {
-                case SkillType.Auto:
-                    this.SP_w2autoSkillRadio.Checked = true;
-                    break;
-
-                case SkillType.Manual:
-                    this.SP_w2manualSkillRadio.Checked = true;
-                    break;
-
-                case SkillType.Both:
-                    this.SP_w2bothSkillRadio.Checked = true;
-                    break;
-            }
-            switch (this.AISettings.SP_w3SkillType)
-            {
-                case SkillType.Auto:
-                    this.SP_w3autoSkillRadio.Checked = true;
-                    break;
-
-                case SkillType.Manual:
-                    this.SP_w3manualSkillRadio.Checked = true;
-                    break;
-
-                case SkillType.Both:
-                    this.SP_w3bothSkillRadio.Checked = true;
-                    break;
-            }
-            Panel[] wavePanels = new Panel[]
-            {
-                this.SP_wave1Panel,
-                this.SP_wave2Panel,
-                this.SP_wave3Panel
-            };
-            int[][] waveSkill = new int[][]
-            {
-                this.AISettings.SP_Wave1Skills,
-                this.AISettings.SP_Wave2Skills,
-                this.AISettings.SP_Wave3Skills
-            };
-            this.LoadWaveSkills(wavePanels, waveSkill, 7);
         }
 
         private void InitResourcesTab()
@@ -1161,6 +1108,13 @@ namespace SevenKnightsAI
             this.ST_TelegramTokenTextBox.Text = this.AIProfiles.ST_TelegramToken;
             this.ST_TelegramChatIDTextBox.Text = this.AIProfiles.ST_TelegramChatID;
             this.ST_foregroundMode.Checked = this.AIProfiles.ST_ForegroundMode;
+        }
+        private void InitTestTab()
+        {
+            this.ST_BotStuck.Checked = this.AIProfiles.ST_BotStuck;
+            this.ST_BotStuck2.Checked = this.AIProfiles.ST_BotStuck2;
+            this.AD_Pause100.Checked = this.AIProfiles.AD_Pause100;
+            this.AD_NoHeroUp_Checkbox.Checked = this.AIProfiles.AD_NoHeroUp;
         }
 
         private void LG_clearButton_Click(object sender, EventArgs e)
@@ -1419,8 +1373,9 @@ namespace SevenKnightsAI
                 this.AIProfiles.TMP_Paused = true;
                 this.aiButton.Text = "&Resume AI";
                 this.EnablePause(false);
+                timer1.Stop();
             }
-            this.tabControl.SelectedIndex = 8;
+            this.tabControl.SelectedTab = reportTab;
         }
 
         private void ReloadTabs(bool refreshSettings)
@@ -1428,11 +1383,11 @@ namespace SevenKnightsAI
             this.InitAdventureTab();
             this.InitGlobalProfile();
             this.InitGoldChamberTab();
-            this.InitSPdungeonTab();
             this.InitArenaTab();
             this.InitRaidTab();
             this.InitResourcesTab();
             this.InitLogsTab();
+            this.InitTestTab();
             if (refreshSettings)
             {
                 this.InitSettingsTab();
@@ -1447,8 +1402,9 @@ namespace SevenKnightsAI
             this.aiButton.Text = "Stop AI";
             this.botstatusLabel.Text = "Bot Running";
             this.botstatusLabel.ForeColor = Color.Green;
-            this.tabControl.SelectedIndex = 8;
+            this.tabControl.SelectedTab = reportTab;
             this.EnablePause(true);
+            timer1.Start();
         }
 
         private void RS_buyKeysCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -1961,6 +1917,9 @@ namespace SevenKnightsAI
             CheckBox checkBox = sender as CheckBox;
             bool @checked = checkBox.Checked;
             this.AIProfiles.ST_EnableAutoShutdown = @checked;
+            if(this.ST_AutoShutdownCheckBox.Checked == true){
+                this.AD_Pause100.Checked = false;
+            }
         }
 
         private void ST_TelegramEnableCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -1990,7 +1949,14 @@ namespace SevenKnightsAI
         }
 
         private void ST_manageProfileButton_Click(object sender, EventArgs e)
-        { }
+        {
+            if (!Directory.Exists(@Environment.CurrentDirectory + "//profiles"))
+            {
+                saveSettingsButton.PerformClick();
+            }
+            CreateNewProfiles cnp = new CreateNewProfiles();
+            cnp.Show();
+        }
 
         private void ST_opacityTrackBar_ValueChanged(object sender, EventArgs e)
         {
@@ -2088,11 +2054,9 @@ namespace SevenKnightsAI
             this.aiButton.Text = "Stop AI";
             this.botstatusLabel.Text = "Bot Running";
             this.botstatusLabel.ForeColor = Color.Green;
-            this.tabControl.SelectedIndex = 8;
+            this.tabControl.SelectedTab = reportTab;
             this.EnablePause(true);
-            this.LG_LogPixel.Enabled = true;
             this.button2.Enabled = true;
-            this.LG_SaveScreen.Enabled = true;
             this.ST_toggleBlueStacksButton.Enabled = true;
         }
 
@@ -2113,14 +2077,12 @@ namespace SevenKnightsAI
 
         private void StopAI()
         {
-            this.tabControl.SelectedIndex = 8;
+            this.tabControl.SelectedTab = reportTab;
             if (this.Worker != null)
             {
                 this.Worker.CancelAsync();
                 this.EnablePause(false);
-                this.LG_LogPixel.Enabled = false;
                 this.button2.Enabled = false;
-                this.LG_SaveScreen.Enabled = false;
                 this.profileToolStripLabel.Text = string.Empty;
                 this.AIProfiles.TMP_Paused = false;
                 this.AIProfiles.TMP_WaitingForKeys = false;
@@ -2201,6 +2163,14 @@ namespace SevenKnightsAI
         {
             CheckBox checkBox = sender as CheckBox;
             this.AISettings.RD_OwnerDragon = checkBox.Checked;
+            if (AISettings.RD_OwnerDragon)
+            {
+                RD_SummonLvl_CheckBox.Enabled = true;
+            }
+            else
+            {
+                RD_SummonLvl_CheckBox.Enabled = false;
+            }
         }
         private void RD_LevelCheckBox_CheckedChanged(object sender, EventArgs e)
         {
@@ -2583,43 +2553,35 @@ namespace SevenKnightsAI
                 bot.update = "true";
                 if (bot.message_text == "/start" || bot.message_text == "/Start")
                 {
-                    bot.sendKeyboard.keyboard_R1_1 = "StartBot";
-                    bot.sendKeyboard.keyboard_R1_2 = "StopBot";
-                    bot.sendKeyboard.keyboard_R1_3 = "PauseBot";
-                    bot.sendKeyboard.keyboard_R1_4 = "ResumeBot";
+                    bot.sendKeyboard.keyboard_R1_1 = "ChangeMode";
+                    bot.sendKeyboard.keyboard_R1_2 = "ControlPC";
+                    bot.sendKeyboard.keyboard_R1_3 = "/start";
                     bot.sendKeyboard.keyboard_R2_1 = "EnableMode";
                     bot.sendKeyboard.keyboard_R2_2 = "DisableMode";
                     bot.sendKeyboard.keyboard_R2_3 = "GetReport";
                     bot.sendKeyboard.keyboard_R2_4 = "GetMode";
-                    bot.sendKeyboard.keyboard_R3_1 = "ChangeMode";
-                    bot.sendKeyboard.keyboard_R3_2 = "ControlPC";
-                    bot.sendKeyboard.send(bot.chat_id, "Welcome to Seven Knights AI Telegram Bot.\nYour ChatID will automatically added to your bot.");
+                    bot.sendKeyboard.keyboard_R3_1 = "StartBot";
+                    bot.sendKeyboard.keyboard_R3_2 = "StopBot";
+                    bot.sendKeyboard.keyboard_R3_3 = "PauseBot";
+                    bot.sendKeyboard.keyboard_R3_4 = "ResumeBot";
+                    bot.sendKeyboard.send(bot.chat_id, "Welcome to Seven Knights AI Black Telegram Bot.\nYour ChatID will automatically added to your bot.");
                     ST_TelegramChatIDTextBox.Text = bot.chat_id;
                 }
                 if (bot.message_text == "StartBot")
                 {
-                    if (!this.started)
-                    {
-                        //this.StartAI();
-                        aiButton.PerformClick();
-                        bot.sendMessage.send(bot.chat_id, "AI Started!");
-                       
-                    }
-                    else
-                    {
-                        bot.sendMessage.send(bot.chat_id, "AI Already Started!");
-                    }
+                    this.StartAI();
+                    return;
                 }
                 if (bot.message_text == "ChangeScene")
                 {
                     if (!this.started)
                     {
                         this.StartAI();
-                        bot.sendMessage.send(bot.chat_id, "AI Started!");
+                        bot.sendMessage.send(bot.chat_id, "Bot Started!");
                     }
                     else
                     {
-                        bot.sendMessage.send(bot.chat_id, "AI Already Started!");
+                        bot.sendMessage.send(bot.chat_id, "Bot Already Started!");
                     }
                 }
                 if (bot.message_text == "StopBot")
@@ -2627,7 +2589,8 @@ namespace SevenKnightsAI
 
                     if (this.started)
                     {
-                        aiButton.PerformClick();
+                        aiButton_Click(sender, e);
+                        
                         bot.sendMessage.send(bot.chat_id, "Bot Stopped");
                     }
                     else
@@ -2640,7 +2603,8 @@ namespace SevenKnightsAI
                 {
                     if (this.started)
                     {
-                        aiPause.PerformClick();
+                        //aiPause_Click(sender, e);
+                        PauseAI();
                         bot.sendMessage.send(bot.chat_id, "Bot Paused");
                     }
                     else
@@ -2652,7 +2616,8 @@ namespace SevenKnightsAI
                 {
                     if (this.AIProfiles.TMP_Paused)
                     {
-                        aiButton.PerformClick();
+                        //aiButton_Click(sender, e);
+                        ResumeAI();
                         bot.sendMessage.send(bot.chat_id, "Bot Resume");
                     }
                     else
@@ -2736,8 +2701,8 @@ namespace SevenKnightsAI
                     bot.send_inline_keyboard.keyboard_R1_3_callback_data = "FArena";
                     bot.send_inline_keyboard.keyboard_R1_4 = "Raid";
                     bot.send_inline_keyboard.keyboard_R1_4_callback_data = "FRaid";
-                    bot.send_inline_keyboard.keyboard_R2_1 = "Buy key";
-                    bot.send_inline_keyboard.keyboard_R2_1_callback_data = "FBuyKey";
+                    bot.send_inline_keyboard.keyboard_R2_1 = "BUY_KEY";
+                    bot.send_inline_keyboard.keyboard_R2_1_callback_data = "FSellHero";
                     bot.send_inline_keyboard.send(bot.chat_id, "This Feature will force bot to change mode, Please choose Mode what you want : ");
                 }
                 if (bot.data == "FAdventure")
@@ -2752,12 +2717,12 @@ namespace SevenKnightsAI
                         bot.sendMessage.send(bot.chat_id, "Adventure Mode is not Activated");
                     }
                 }
-                if (bot.data == "FBuyKey")
+                if (bot.data == "FSellHero")
                 {
                     if (this.AISettings.RS_BuyKeyHonors == true)
                     {
                         this.AI.ChangeMode(Objective.BUY_KEYS);
-                        bot.sendMessage.send(bot.chat_id, "Mode Changed to : BUY_KEYS");
+                        bot.sendMessage.send(bot.chat_id, "Mode Changed to : SELL_HEROES");
                     }
                     else
                     {
@@ -2854,11 +2819,8 @@ namespace SevenKnightsAI
         }
         public void CaptureReport()
         {
-            if (tabControl.SelectedTab != tabControl.TabPages["reportTab"])
-            {
-                this.tabControl.SelectedTab = reportTab;
-            }
-            System.Threading.Thread.Sleep(5000);
+            this.tabControl.SelectedTab = reportTab;
+            System.Threading.Thread.Sleep(3000);
             ScreenCapture sc = new ScreenCapture();
             // capture entire screen, and save it to a file
             Image img = sc.CaptureScreen();
@@ -2889,6 +2851,48 @@ namespace SevenKnightsAI
         private void h30Label2_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void AD_Pause100_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            bool @checked = checkBox.Checked;
+            this.AIProfiles.AD_Pause100 = @checked;
+            if (AD_Pause100.Checked == true)
+            {
+                this.ST_AutoShutdownCheckBox.Checked = false;
+            }
+        }
+
+        private void ST_BotStuck_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            this.AIProfiles.ST_BotStuck = checkBox.Checked;
+            if (ST_BotStuck.Checked == true)
+            {
+                ST_BotStuck2.Checked = false;
+            }
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            CreateNewProfiles cnp = new CreateNewProfiles();
+            cnp.Show();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            ST_RefreshProfiles();
+        }
+
+        private void ST_BotStuck2_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            this.AIProfiles.ST_BotStuck2 = checkBox.Checked;
+            if(ST_BotStuck2.Checked == true)
+            {
+                ST_BotStuck.Checked = false;
+            }
         }
     }
     public class AutoClosingMessageBox

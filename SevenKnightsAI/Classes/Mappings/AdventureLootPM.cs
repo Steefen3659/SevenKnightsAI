@@ -55,9 +55,9 @@ namespace SevenKnightsAI.Classes.Mappings
 
         public static readonly Rectangle DragonPoint = new Rectangle
         {
-            X = 447,
-            Y = 456,
-            Width = 73,
+            X = 428,
+            Y = 457,
+            Width = 100,
             Height = 23
         };
 

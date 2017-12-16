@@ -111,7 +111,6 @@ namespace SevenKnightsAI.Classes
         private int[] PreviousFingerprint;
         private Objective PreviousObjective;
         private Scene PreviousScene;
-        private SlimPushbullet Pushbullet;
         private int RaidCount;
         private int RaidLimitCount;
         private int RubyCount;
@@ -130,7 +129,9 @@ namespace SevenKnightsAI.Classes
         private bool Hottimeloop;
         private string PlayerName = "";
         private bool CheckPlayaName;
+        private bool changeleader;
         private bool DragonFound;
+        private bool dragonreward;
         private int Sp_LimitCount;
         private int sp_dailycount;
         private int sp_row1count;
@@ -143,6 +144,7 @@ namespace SevenKnightsAI.Classes
         private int goldminegoldamount;
         private int goldmineentry;
         private int h30;
+        private int h30m;
         private int heroreplace;
         private bool sp_dailyflag;
         private bool sp_row1flag;
@@ -169,7 +171,6 @@ namespace SevenKnightsAI.Classes
         public SevenKnightsCore(AIProfiles profile)
         {
             this.AIProfiles = profile;
-            this.Pushbullet = new SlimPushbullet("SpD0cXpZzSFuLlNBVO6Zo2wKK0jVEkZK");
             if (this.AIProfiles.ST_EnableTelegram)
             {
                 bot.token = this.AIProfiles.ST_TelegramToken;
@@ -372,7 +373,7 @@ namespace SevenKnightsAI.Classes
                 ShopPM.Key100Ruby100
             };
             this.Log("Start buying keys", this.COLOR_BUY_KEYS);
-            SendTelegram(this.AIProfiles.ST_TelegramChatID,"AI will buy the keys with honors first, then with rubies.");
+            SendTelegram(this.AIProfiles.ST_TelegramChatID,"Bot will buy the keys with honors first, then with rubies.");
             this.WeightedClick(ShopPM.KeyTab, 1.0, 1.0, 1, 0, "left");
             SevenKnightsCore.Sleep(500);
             Scene scene;
@@ -387,6 +388,7 @@ namespace SevenKnightsAI.Classes
                 }
                 this.WeightedClick(ShopPM.KeyTab, 1.0, 1.0, 1, 0, "left");
                 SevenKnightsCore.Sleep(500);
+                this.Log("Stuck Here?");
             }
             bool flag;
             if (this.IsBuyKeysHonors())
@@ -403,33 +405,6 @@ namespace SevenKnightsAI.Classes
                 }
                 flag = false;
             }
-            if (flag || (!flag && this.AISettings.RS_BuyKeyRubiesType == BuyKeyRubiesType.Key5Ruby10))
-            {
-                for (int i = 0; i < 5; i++)
-                {
-                    this.ScrollShopKeys(false);
-                    this.LongSleep(2000, 1000);
-                    this.CaptureFrame();
-                    if (this.MatchMapping(ShopPM.KeyTabLeftMost, 3))
-                    {
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                for (int j = 0; j < 5; j++)
-                {
-                    this.ScrollShopKeys(true);
-                    this.LongSleep(2000, 1000);
-                    this.CaptureFrame();
-                    if (this.MatchMapping(ShopPM.KeyTabRightMost, 3))
-                    {
-                        break;
-                    }
-                }
-            }
-            SevenKnightsCore.Sleep(700);
             PixelMapping mapping;
             if (flag)
             {
@@ -674,7 +649,7 @@ namespace SevenKnightsAI.Classes
                 this.AISettings.RS_InboxRubies //material
             };
             this.Log("Start collecting inbox", this.COLOR_INBOX);
-            SendTelegram(this.AIProfiles.ST_TelegramChatID, "AI is collecting your inbox.");
+            SendTelegram(this.AIProfiles.ST_TelegramChatID, "Bot is collecting your inbox.");
             List<int> list = new List<int>();
             for (int i = 0; i < array2.Length; i++)
             {
@@ -787,7 +762,7 @@ namespace SevenKnightsAI.Classes
                 this.AISettings.RS_QuestsSocial
             };
             this.Log("Start collecting quests", this.COLOR_QUEST);
-            SendTelegram(this.AIProfiles.ST_TelegramChatID, "AI is collecting quests.");
+            SendTelegram(this.AIProfiles.ST_TelegramChatID, "Bot is collecting quests.");
             List<int> list = new List<int>();
             for (int i = 0; i < array2.Length; i++)
             {
@@ -873,7 +848,7 @@ namespace SevenKnightsAI.Classes
                 this.AISettings.RS_SpecialQuestsMonthly
             };
             this.Log("Start collecting special quests", this.COLOR_QUEST);
-            SendTelegram(this.AIProfiles.ST_TelegramChatID, "AI is collecting special quests.");
+            SendTelegram(this.AIProfiles.ST_TelegramChatID, "Bot is collecting special quests.");
             List<int> list = new List<int>();
             for (int i = 0; i < array2.Length; i++)
             {
@@ -1721,7 +1696,7 @@ namespace SevenKnightsAI.Classes
         private void DoneBuyKeys()
         {
             this.Log("Done buying keys", this.COLOR_BUY_KEYS);
-            SendTelegram(this.AIProfiles.ST_TelegramChatID, "AI has finished buying keys.");
+            SendTelegram(this.AIProfiles.ST_TelegramChatID, "Bot has finished buying keys.");
             this.NextPossibleObjective();
             SevenKnightsCore.Sleep(300);
             this.Escape();
@@ -1742,7 +1717,7 @@ namespace SevenKnightsAI.Classes
         private void DoneCollectInbox()
         {
             this.Log("Done collecting inbox", this.COLOR_INBOX);
-            SendTelegram(this.AIProfiles.ST_TelegramChatID, "AI has finished collecting your inbox.");
+            SendTelegram(this.AIProfiles.ST_TelegramChatID, "Bot has finished collecting your inbox.");
             this.NextPossibleObjective();
             SevenKnightsCore.Sleep(300);
             this.Escape();
@@ -1752,7 +1727,7 @@ namespace SevenKnightsAI.Classes
         private void DoneCollectQuests()
         {
             this.Log("Done collecting quests", this.COLOR_QUEST);
-            SendTelegram(this.AIProfiles.ST_TelegramChatID, "AI has finished collecting quests.");
+            SendTelegram(this.AIProfiles.ST_TelegramChatID, "Bot has finished collecting quests.");
             this.CollectQuestsCount++;
             if (this.CollectQuestsCount == this.CollectQuestsTotal)
             {
@@ -1766,7 +1741,7 @@ namespace SevenKnightsAI.Classes
         private void DoneCollectSpecialQuests()
         {
             this.Log("Done collecting special quests", this.COLOR_QUEST);
-            SendTelegram(this.AIProfiles.ST_TelegramChatID, "AI has finished collecting special quests.");
+            SendTelegram(this.AIProfiles.ST_TelegramChatID, "Bot has finished collecting special quests.");
             this.CollectQuestsCount++;
             if (this.CollectQuestsCount == this.CollectQuestsTotal)
             {
@@ -1785,7 +1760,7 @@ namespace SevenKnightsAI.Classes
             this.Log("Done managing heroes", this.COLOR_HEROES_MANAGEMENT);
 
 
-            SendTelegram(this.AIProfiles.ST_TelegramChatID, "AI has finished managing your team.");
+            SendTelegram(this.AIProfiles.ST_TelegramChatID, "Bot has finished managing your team.");
             String message = String.Format("Replaced {0} Hero", heroreplace);
             SendTelegram(this.AIProfiles.ST_TelegramChatID, message);
             this.heroreplace = 0;
@@ -1825,7 +1800,7 @@ namespace SevenKnightsAI.Classes
         private void DoneSellHeroes(int sellCount)
         {
             this.Log("Done selling heroes", this.COLOR_SELL_HEROES);
-            SendTelegram(this.AIProfiles.ST_TelegramChatID, "AI has finished selling your heroes.");
+            SendTelegram(this.AIProfiles.ST_TelegramChatID, "Bot has finished selling your heroes.");
             if (sellCount == 0)
             {
                 this.Log("No more heroes that satisfied the conditions", this.COLOR_SELL_HEROES);
@@ -1847,7 +1822,7 @@ namespace SevenKnightsAI.Classes
         private void DoneSellItems(int sellCount)
         {
             this.Log("Done selling items", this.COLOR_SELL_ITEMS);
-            SendTelegram(this.AIProfiles.ST_TelegramChatID, "AI has finished selling your items.");
+            SendTelegram(this.AIProfiles.ST_TelegramChatID, "Bot has finished selling your items.");
             if (sellCount == 0)
             {
                 this.Log("No more items that satisfied the conditions", this.COLOR_SELL_ITEMS);
@@ -1862,7 +1837,7 @@ namespace SevenKnightsAI.Classes
         private void DoneSendHonors()
         {
             this.Log("Done sending honors", this.COLOR_HONOR);
-            SendTelegram(this.AIProfiles.ST_TelegramChatID, "AI has finished selling your heroes.");
+            SendTelegram(this.AIProfiles.ST_TelegramChatID, "Bot has finished selling your heroes.");
             this.NextPossibleObjective();
             SevenKnightsCore.Sleep(300);
             this.Escape();
@@ -2177,7 +2152,7 @@ namespace SevenKnightsAI.Classes
                 if (scene.SceneType == SceneType.INBOX_SELECT_HERO)
                 {
                     this.Log("Found a hero card that needs to be selected", this.COLOR_INBOX);
-                    SendTelegram(this.AIProfiles.ST_TelegramChatID, "AI will skip and not collect this card.");
+                    SendTelegram(this.AIProfiles.ST_TelegramChatID, "Bot will skip and not collect this card.");
                     return false;
                 }
                 if (scene.SceneType != SceneType.INBOX_COLLECT_FAILED_POPUP)
@@ -2353,6 +2328,7 @@ namespace SevenKnightsAI.Classes
             this.AdventureLimitCount = 0;
             this.GoldChamberLimitCount = 0;
             this.h30 = 0;
+            this.h30m = 100;
             this.heroreplace = 0;
             this.Sp_LimitCount = 0;
             this.sp_dailycount = 0;
@@ -2385,6 +2361,7 @@ namespace SevenKnightsAI.Classes
             this.ReportAllResources();
             this.OneSecTimer.Enabled = true;
             this.DragonFound = false;
+            this.dragonreward = false;
         }
 
         private bool IsAnyQuestsEnabled()
@@ -2459,16 +2436,17 @@ namespace SevenKnightsAI.Classes
         }
         private bool IsDragonAvailable(bool retrying = false)
         {
-            using (Bitmap bitmap = this.CropFrame(this.BlueStacks.MainWindowAS.CurrentFrame, AdventureLootPM.DragonPoint))
+            Rectangle rek = this.ExpectingScene(SceneType.ADVENTURE_LOOT) ?  AdventureLootPM.DragonPoint : RaidLobbyPM.RaidPoint;
+            using (Bitmap bitmap = this.CropFrame(this.BlueStacks.MainWindowAS.CurrentFrame, rek))
             {
-                using (Page page = this.Tesseractor.Engine.Process(bitmap,null,PageSegMode.Auto))
+                using (Page page = this.Tesseractor.Engine.Process(bitmap, null, PageSegMode.Auto))
                 {
                     string text = this.ReplaceNumericResource(page.GetText());
                     Utility.FilterAscii(text);
                     if (text.Length >= 2)
                     {
                         int lvl = -1;
-                        int maxLvl = 100;
+                        int maxLvl = 1000;
                         string[] array = text.Split(new char[]
                             {
                                 '/'
@@ -2479,15 +2457,17 @@ namespace SevenKnightsAI.Classes
                         if (array.Length >= 2)
                         {
                             int.TryParse(array[1].Substring(0, 2), out maxLvl);
-                            if (maxLvl < 100)
-                                maxLvl = 100;
+                            if (maxLvl < 1000)
+                                maxLvl = 1000;
                         }
+                        //this.Log(string.Format("Level: {0}/{1} String: {2} UsingRect : {3}", lvl, maxLvl, text, this.ExpectingScene(SceneType.ADVENTURE_LOOT) ?  "AdventureLootPM.DragonPoint" : "RaidLobbyPM.RaidPoint"));
+                        //bitmap.Save(string.Format("{0} of {1}.png", lvl, maxLvl));
 #if DEBUG
                         this.Log(string.Format("Level: {0}/{1} String: {2}", lvl, maxLvl, text));
                         bitmap.Save(string.Format("{0} of {1}.png", lvl, maxLvl));
 #endif
                         dragonsummoncount = lvl;
-                        if (lvl != maxLvl)
+                        if (lvl < 1000)
                         {
                             page.Dispose();
                             return false;
@@ -2647,6 +2627,7 @@ namespace SevenKnightsAI.Classes
             this.sp_row3flag = false;
             this.sp_row4flag = false;
             this.CheckPlayaName = true;
+            this.changeleader = true;
             this.Log("Initializing AI...");
             this.BlueStacks = new BlueStacks();
             string errorMessage;
@@ -2716,7 +2697,7 @@ namespace SevenKnightsAI.Classes
                                 if (this.HangCounter >= 30000)
                                 {
                                     this.Log("Restarting Seven Knights", Color.DarkRed);
-                                    SendTelegram(this.AIProfiles.ST_TelegramChatID, "The game is not responding... AI will restart the game and continue.");
+                                    SendTelegram(this.AIProfiles.ST_TelegramChatID, "The game is not responding... Bot will restart the game and continue.");
                                     this.HangCounter = 0;
                                     if (!this.BlueStacks.RestartGame(5))
                                     {
@@ -2787,7 +2768,14 @@ namespace SevenKnightsAI.Classes
                                         this.Escape();
                                         this.Log("cannot find scene escape");
                                         this.botError = true;
-                                        this.Alert("Bot Error");
+                                        if (this.AIProfiles.ST_BotStuck == true)
+                                        {
+                                            this.Alert("Bot Error2");
+                                        }
+                                        else if(this.AIProfiles.ST_BotStuck2 == true)
+                                        {
+                                            this.Alert("Bot Error");
+                                        }
                                         this.IdleCounter = 0;
                                     }
                                 }
@@ -2980,7 +2968,7 @@ namespace SevenKnightsAI.Classes
                                             break;
 
                                         case SceneType.GIFT_REWARDS_POPUP:
-                                            SendTelegram(this.AIProfiles.ST_TelegramChatID, "AI has collected May's Lucky Chest or Lucky Box.");
+                                            SendTelegram(this.AIProfiles.ST_TelegramChatID, "Bot has collected May's Lucky Chest or Lucky Box.");
                                             this.WeightedClick(SharedPM.Rewards_OkButton, 1.0, 1.0, 1, 0, "left");
                                             SevenKnightsCore.Sleep(300);
                                             break;
@@ -3256,12 +3244,12 @@ namespace SevenKnightsAI.Classes
                                             if (this.AISettings.AD_StopOnFullItems)
                                             {
                                                 this.Alert("Items Full");
-                                                SendTelegram(this.AIProfiles.ST_TelegramChatID, "AI has stopped because Your inventory is full");
+                                                SendTelegram(this.AIProfiles.ST_TelegramChatID, "Bot has stopped because Your inventory is full");
                                                 this.Escape();
                                             }
                                             if (!flag)
                                             {
-                                                SendTelegram(this.AIProfiles.ST_TelegramChatID, "Your inventory is full. AI will start selling them if enabled.");
+                                                SendTelegram(this.AIProfiles.ST_TelegramChatID, "Your inventory is full. Bot will start selling them if enabled.");
                                                 flag = true;
                                             }
                                             if (this.AISettings.RS_SellItems && this.CooldownSellItems <= 0)
@@ -3283,12 +3271,12 @@ namespace SevenKnightsAI.Classes
                                             if (this.AISettings.AD_StopOnFullHeroes)
                                             {
                                                 this.Alert("Heroes Full");
-                                                SendTelegram(this.AIProfiles.ST_TelegramChatID, "AI has stopped Because Your hero cards are full");
+                                                SendTelegram(this.AIProfiles.ST_TelegramChatID, "Bot has stopped Because Your hero cards are full");
                                                 this.Escape();
                                             }
                                             if (!flag2)
                                             {
-                                                SendTelegram(this.AIProfiles.ST_TelegramChatID, "Your hero cards are full. AI will start selling them if enabled.");
+                                                SendTelegram(this.AIProfiles.ST_TelegramChatID, "Your hero cards are full. Bot will start selling them if enabled.");
                                                 flag2 = true;
                                             }
                                             if (this.AISettings.RS_SellHeroes && this.CooldownSellHeroes <= 0)
@@ -3321,7 +3309,8 @@ namespace SevenKnightsAI.Classes
                                             break;
 
                                         case SceneType.ADVENTURE_START:
-                                                this.UpdateAdventureKeys(scene.SceneType);
+                                            SevenKnightsCore.Sleep(600);
+                                            this.UpdateAdventureKeys(scene.SceneType);
                                                 this.UpdateGold(scene.SceneType);
                                             if (this.CurrentObjective == Objective.ADVENTURE)
                                             {
@@ -3431,26 +3420,10 @@ namespace SevenKnightsAI.Classes
                                         case SceneType.ADVENTURE_LOOT_HERO:
                                         case SceneType.ADVENTURE_LOOT_GOLD:
                                         case SceneType.ADVENTURE_LOOT:
+                                            this.Log("Dragon Point : " + this.ParseDragonMeter().ToString());
                                             this.AdventureAfterFight();
                                             SevenKnightsCore.Sleep(500);
-                                            if (this.IsDragonAvailable()) {
-                                                if (this.AISettings.AD_StopOnDragonFull)
-                                                {
-                                                    this.Alert("Dragon Found");
-                                                    SendTelegram(this.AIProfiles.ST_TelegramChatID, "Dragon can be summon, Check Now!");
-                                                    this.Escape();
-                                                    this.AIProfiles.TMP_Paused = true;
-                                                    break;
-                                                }
-                                                SendTelegram(this.AIProfiles.ST_TelegramChatID, "Dragon can be summon, Bot will summon dragon if enabled!");
-                                                if (this.AISettings.RD_OwnerDragon)
-                                                {
-                                                    this.ChangeObjective(Objective.RAID);
-                                                    this.DragonFound = true;
-                                                }
-                                            }
-                                            
-                                                if (this.CurrentObjective == Objective.ADVENTURE)
+                                            if (this.CurrentObjective == Objective.ADVENTURE)
                                                 {
                                                     if (this.AISettings.AD_Continuous && this.AISettings.AD_World != World.Sequencer)
                                                     {
@@ -3458,11 +3431,11 @@ namespace SevenKnightsAI.Classes
                                                     }
                                                     else if (this.AISettings.AD_World == World.None)
                                                     {
-                                                        this.WeightedClick(AdventureLootPM.QuickStartButton, 1.0, 1.0, 1, 0, "left");
+                                                       this.WeightedClick(AdventureLootPM.QuickStartButton, 1.0, 1.0, 1, 0, "left");
                                                     }
                                                     else
                                                     {
-                                                        this.WeightedClick(AdventureLootPM.AgainButton, 1.0, 1.0, 1, 0, "left");
+                                                       this.WeightedClick(AdventureLootPM.AgainButton, 1.0, 1.0, 1, 0, "left");
                                                     }
                                                 }
                                                 else
@@ -3480,7 +3453,7 @@ namespace SevenKnightsAI.Classes
                                         case SceneType.OUT_OF_KEYS_OFFER:
                                             if (!flag3)
                                             {
-                                                SendTelegram(this.AIProfiles.ST_TelegramChatID, "[Adventure] AI will buy more keys or play other modes while waiting.");
+                                                SendTelegram(this.AIProfiles.ST_TelegramChatID, "[Adventure] Bot will buy more keys or play other modes while waiting.");
                                                 flag3 = true;
                                             }
                                             if (this.CurrentObjective != Objective.BUY_KEYS && this.AISettings.RS_BuyKeyHonors && this.KeysBoughtHonors < this.AISettings.RS_BuyKeyHonorsAmount)
@@ -3498,7 +3471,7 @@ namespace SevenKnightsAI.Classes
                                         case SceneType.OUT_OF_KEYS_POPUP:
                                             if (!flag3)
                                             {
-                                                SendTelegram(this.AIProfiles.ST_TelegramChatID, "[Adventure] AI will buy more keys or play other modes while waiting.");
+                                                SendTelegram(this.AIProfiles.ST_TelegramChatID, "[Adventure] Bot will buy more keys or play other modes while waiting.");
                                                 flag3 = true;
                                             }
                                             this.HandleOutOfKey(scene.SceneType);
@@ -3813,16 +3786,20 @@ namespace SevenKnightsAI.Classes
                                             {
                                                 if (this.AISettings.AD_ElementHeroesOnly)
                                                 {
-                                                    this.WeightedClick(HeroesPM.ElementButton, 1.0, 1.0, 1, 0, "left");
+                                                   this.WeightedClick(HeroesPM.ElementButton, 1.0, 1.0, 1, 0, "left");
                                                     SevenKnightsCore.Sleep(this.AIProfiles.ST_Delay);
+                                                }
+                                                if(this.MatchMapping(HeroesPM.PetButton, 2))
+                                                {
+                                                    this.WeightedClick(HeroesPM.HeroesButton, 1.0, 1.0, 1, 0, "left");
                                                 }
                                                 this.ManageHeroes();
                                             }
                                             else if (this.CurrentObjective == Objective.SELL_HEROES)
                                             {
-                                                if (!this.MatchMapping(HeroesPM.ElementButton, 2))
+                                                if (this.MatchMapping(HeroesPM.ElementButton, 2))
                                                 {
-                                                    this.WeightedClick(HeroesPM.ElementButton, 1.0, 1.0, 1, 0, "left");
+                                                    this.WeightedClick(HeroesPM.HeroesButton, 1.0, 1.0, 1, 0, "left");
                                                 }
                                                 else
                                                 {
@@ -3897,6 +3874,7 @@ namespace SevenKnightsAI.Classes
                                             {
                                                 if (this.MatchMapping(RaidLobbyPM.RedIconOnDefeatedTab, 2) && !this.DragonFound)
                                                 {
+                                                    this.dragonreward = true;
                                                     this.Log("Go Collect Raid Reward", Color.DarkOrchid);
                                                     this.WeightedClick(RaidLobbyPM.DefeatedTab, 1.0, 1.0, 1, 0, "left");
                                                     SevenKnightsCore.Sleep(500);
@@ -4394,16 +4372,18 @@ namespace SevenKnightsAI.Classes
 
                                         case SceneType.RAID_END:
                                             this.RaidAfterFight();
-                                            SendTelegram(this.AIProfiles.ST_TelegramChatID, "AI will collect the reward and if there is any.");
+                                            SendTelegram(this.AIProfiles.ST_TelegramChatID, "Bot will collect the reward and if there is any.");
+                                            this.dragonreward = true;
                                             this.WeightedClick(RaidEndPM.AgainButton, 1.0, 1.0, 1, 0, "left");
                                             this.LongSleep(2000, 1000);
                                             break;
 
                                         case SceneType.RAID_REWARD:
-                                            if (this.CurrentObjective == Objective.RAID)
+                                            if (this.CurrentObjective == Objective.RAID && this.dragonreward)
                                             {
                                                 this.WeightedClick(RaidRewardPM.RewardButton, 1.0, 1.0, 1, 0, "left");
-                                                SevenKnightsCore.Sleep(300);
+                                                this.dragonreward = false;
+                                                SevenKnightsCore.Sleep(500);
                                             }
                                             else
                                             {
@@ -4412,7 +4392,7 @@ namespace SevenKnightsAI.Classes
                                             break;
 
                                         case SceneType.RAID_REWARD_POPUP:
-                                            this.DoneRaid();
+                                            this.Escape();
                                             break;
 
                                         case SceneType.RAID_REWARD_FAILED_POPUP:
@@ -4422,7 +4402,7 @@ namespace SevenKnightsAI.Classes
                                         case SceneType.RAID_OUT_OF_KEYS_POPUP:
                                             if (!flag3)
                                             {
-                                                SendTelegram(this.AIProfiles.ST_TelegramChatID, "[Raid] AI will buy more keys or play other modes while waiting.");
+                                                SendTelegram(this.AIProfiles.ST_TelegramChatID, "[Raid] Bot will buy more keys or play other modes while waiting.");
                                                 flag3 = true;
                                             }
                                             this.Escape();
@@ -4440,8 +4420,15 @@ namespace SevenKnightsAI.Classes
                                             break;
 
                                         case SceneType.RAID_SUMMON_LOBBY:
-                                            
-                                            if (this.CurrentObjective == Objective.RAID && this.DragonFound == true)
+                                            if (this.IsDragonAvailable() && this.CurrentObjective == Objective.RAID)
+                                            {
+                                            SendTelegram(this.AIProfiles.ST_TelegramChatID, "Dragon can be summon, Bot will summon dragon if enabled!");
+                                                if (this.AISettings.RD_OwnerDragon)
+                                                {
+                                                    this.DragonFound = true;
+                                                }
+                                            }
+                                            if (this.DragonFound == true)
                                             {
                                                 this.WeightedClick(RaidLobbyPM.AwakenedRaidEnter, 1.0, 1.0, 1, 0, "left");
                                             }
@@ -4704,6 +4691,14 @@ namespace SevenKnightsAI.Classes
 
                                         case SceneType.RACHEL_SPECIAL_PACK_CLOSE_POPUP:
                                             this.WeightedClick(Popup3PM.SPrachelCloseOKButton, 1.0, 1.0, 1, 0, "left");
+                                            break;
+
+                                        case SceneType.ONE_DOLLAR_SHOP_POPUP:
+                                            this.WeightedClick(Popup3PM.OneDollarCloseButton, 1.0, 1.0, 1, 0, "left");
+                                            break;
+
+                                        case SceneType.TIER_PACKAGE:
+                                            this.WeightedClick(Popup3PM.TierPackageCloseButton, 1.0, 1.0, 1, 0, "left");
                                             break;
 
                                         case SceneType.ALICE_PRO_PACK_POPUP:
@@ -5039,6 +5034,11 @@ namespace SevenKnightsAI.Classes
                                         case SceneType.CLOSE_POPUP:
                                             this.WeightedClick(Popup3PM.ClosePopupOKButton, 1.0, 1.0, 1, 0, "left");
                                             break;
+                                        case SceneType.CHANGE_LEADER_POPUP:
+                                            this.WeightedClick(ChangeLeaderPM.OKButton, 1.0, 1.0, 1, 0, "left");
+                                            Sleep(1000);
+                                            this.Escape();
+                                            break;
                                     }
                                 }
                             }
@@ -5094,6 +5094,54 @@ namespace SevenKnightsAI.Classes
                 MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Hand);
             }, null);
         }
+
+        /*private void ChangeLeader()
+        {
+            PixelMapping[] array2 = new PixelMapping[]
+{
+                HeroesPM.HeroCard1,
+                HeroesPM.HeroCard2,
+                HeroesPM.HeroCard3,
+                HeroesPM.HeroCard4,
+                HeroesPM.HeroCard5,
+                HeroesPM.HeroCard6,
+                HeroesPM.HeroCard7,
+                HeroesPM.HeroCard8,
+                HeroesPM.HeroCard9,
+                HeroesPM.HeroCard10
+            };
+            PixelMapping[] array = new PixelMapping[]
+{
+                HeroJoinPM.OffensiveIcon1,
+                HeroJoinPM.OffensiveIcon2,
+                HeroJoinPM.MagicIcon1,
+                HeroJoinPM.MagicIcon2,
+                HeroJoinPM.DeffIcon1,
+                HeroJoinPM.DeffIcon2,
+                HeroJoinPM.UniversalIcon1,
+                HeroJoinPM.UniversalIcon2,
+                HeroJoinPM.SupportIcon1,
+                HeroJoinPM.SupportIcon2
+            };
+            this.Log("Start Change Leader");
+            this.Log(GetMode());
+            int hc = 0;
+            while(hc < 11)
+            {
+                this.WeightedClick(array2[hc], 1.0, 1.0, 1, 0, "left");
+                SevenKnightsCore.Sleep(1500);
+                this.CaptureFrame();
+                Scene scene = this.SceneSearch();
+                if (scene.SceneType == SceneType.HERO_JOIN)
+                {
+                    if(this.MatchMapping(array[0], 2) && this.MatchMapping(array[1], 2))
+                    {
+                        this.Log("Offensive Hero");
+                        if(this.CurrentObjective == Objective.ARENA && )
+                    }
+                }
+            }
+        }*/
 
         private void ManageHeroes()
         {
@@ -5203,7 +5251,7 @@ namespace SevenKnightsAI.Classes
             if (this.HeroManageAttemps == 1)
             {
                 this.Log("Start managing heroes", this.COLOR_HEROES_MANAGEMENT);
-                this.SendTelegram(this.AIProfiles.ST_TelegramChatID, "AI will replace the team on the selected positions with lower level heroes");
+                this.SendTelegram(this.AIProfiles.ST_TelegramChatID, "Bot will replace the team on the selected positions with lower level heroes");
             }
             int num = aD_Formation - Formation.Front2Back3;
             PixelMapping[] array5 = array3[num];
@@ -5321,7 +5369,7 @@ namespace SevenKnightsAI.Classes
                         continue;
                     IL_7A8:
                         this.WeightedClick(array2[num5], 1.0, 1.0, 1, 0, "left");
-                        SevenKnightsCore.Sleep(1500);
+                        SevenKnightsCore.Sleep(2500);
                         if (this.Worker.CancellationPending)
                         {
                             return;
@@ -5354,7 +5402,7 @@ namespace SevenKnightsAI.Classes
                                 }
                                 else
                                 {
-                                    this.WeightedClick(HeroesPM.ElementButton, 1.0, 1.0, 1, 0, "left");
+                                    this.WeightedClick(HeroesPM.HeroesButton, 1.0, 1.0, 1, 0, "left");
                                     SevenKnightsCore.Sleep(1000);
                                     //num2 = 0uL;
                                     this.HeroSortReset(true, true);
@@ -5585,11 +5633,13 @@ namespace SevenKnightsAI.Classes
                     if (aR_Enable)
                     {
                         this.ChangeObjective(Objective.ARENA);
+                        this.changeleader = true;
                         return;
                     }
                     if (rD_Enable)
                     {
                         this.ChangeObjective(Objective.RAID);
+                        this.changeleader = true;
                         return;
                     }
                     this.ChangeObjective(Objective.IDLE);
@@ -5628,16 +5678,19 @@ namespace SevenKnightsAI.Classes
                     if (aR_Enable)
                     {
                         this.ChangeObjective(Objective.ARENA);
+                        this.changeleader = true;
                         return;
                     }
                     if (rD_Enable)
                     {
                         this.ChangeObjective(Objective.RAID);
+                        this.changeleader = true;
                         return;
                     }
                     if (aD_Enable)
                     {
                         this.ChangeObjective(Objective.ADVENTURE);
+                        this.changeleader = true;
                         return;
                     }
                     this.ChangeObjective(Objective.IDLE);
@@ -5647,11 +5700,13 @@ namespace SevenKnightsAI.Classes
                     if (rD_Enable)
                     {
                         this.ChangeObjective(Objective.RAID);
+                        this.changeleader = true;
                         return;
                     }
                     if (aD_Enable)
                     {
                         this.ChangeObjective(Objective.ADVENTURE);
+                        this.changeleader = true;
                         return;
                     }
                     if (gC_Enable)
@@ -5671,6 +5726,7 @@ namespace SevenKnightsAI.Classes
                     if (aD_Enable)
                     {
                         this.ChangeObjective(Objective.ADVENTURE);
+                        this.changeleader = true;
                         return;
                     }
                     if (gC_Enable)
@@ -5686,6 +5742,7 @@ namespace SevenKnightsAI.Classes
                     if (aR_Enable)
                     {
                         this.ChangeObjective(Objective.ARENA);
+                        this.changeleader = true;
                         return;
                     }
                     this.ChangeObjective(Objective.IDLE);
@@ -5732,7 +5789,7 @@ namespace SevenKnightsAI.Classes
                 this.AIProfiles.ToggleHotTimeProfile();
                 MainForm.Instance.InvokeReloadTabs(true);
             }
-            if (this.AIProfiles.ST_EnableAutoProfile && nomorehero30)
+            if (this.AIProfiles.AD_NoHeroUp && nomorehero30)
             {
                 this.nomorehero30 = false;
                 this.Alert("No More Hero 30");
@@ -5743,6 +5800,13 @@ namespace SevenKnightsAI.Classes
             {
                 this.Log("Shutdown Now!");
                 Process.Start("shutdown", "/s /f /t 0");
+                this.SendTelegram(this.AIProfiles.ST_TelegramChatID, "Max Hero lvl up 100/100, PC Will shutdown");
+            }
+            if (this.AIProfiles.AD_Pause100 && MaxHeroUpCount)
+            {
+                MaxHeroUpCount = false;
+                this.SendTelegram(this.AIProfiles.ST_TelegramChatID, "Max Hero lvl up 100/100, Bot Paused");
+                this.Alert("Max Level Up");
             }
             TimeSpan ts = TimeSpan.FromSeconds(1.0);
             if (this.AdventureKeyTime != TimeSpan.MaxValue)
@@ -5972,6 +6036,45 @@ namespace SevenKnightsAI.Classes
                 }
             }
             return result;
+        }
+
+        private int ParseDragonMeter()
+        {
+            Rectangle rek = AdventureLootPM.DragonPoint;
+            using (Bitmap bitmap = this.CropFrame(this.BlueStacks.MainWindowAS.CurrentFrame, rek))
+            {
+                using (Page page = this.Tesseractor.Engine.Process(bitmap, null, PageSegMode.Auto))
+                {
+                    string text = this.ReplaceNumericResource(page.GetText());
+                    Utility.FilterAscii(text);
+                    if (text.Length >= 2)
+                    {
+                        int lvl = -1;
+                        int maxLvl = 1000;
+                        string[] array = text.Split(new char[]
+                            {
+                                '/'
+                            });
+
+                        if (array.Length >= 1)
+                            int.TryParse(array[0], out lvl);
+                        if (array.Length >= 2)
+                        {
+                            int.TryParse(array[1].Substring(0, 2), out maxLvl);
+                            if (maxLvl < 1000)
+                                maxLvl = 1000;
+                        }
+                        //this.Log(string.Format("Level: {0}/{1} String: {2} UsingRect : {3}", lvl, maxLvl, text, this.ExpectingScene(SceneType.ADVENTURE_LOOT) ?  "AdventureLootPM.DragonPoint" : "RaidLobbyPM.RaidPoint"));
+                        //bitmap.Save(string.Format("{0} of {1}.png", lvl, maxLvl));
+#if DEBUG
+                        this.Log(string.Format("Level: {0}/{1} String: {2}", lvl, maxLvl, text));
+                        bitmap.Save(string.Format("{0} of {1}.png", lvl, maxLvl));
+#endif
+                        dragonsummoncount = lvl;
+                    }
+                }
+            }
+            return dragonsummoncount;
         }
 
         private int ParseTopaz(int offsetX, int offsetY)
@@ -6208,6 +6311,7 @@ namespace SevenKnightsAI.Classes
 
         private void RaidAfterFight()
         {
+            this.DragonFound = false;
             this.RaidCount++;
             this.ReportCount(Objective.RAID);
             this.RaidCheckLimits();
@@ -6537,12 +6641,12 @@ namespace SevenKnightsAI.Classes
                     Scene result = new Scene(SceneType.LEVEL_30_DIALOG);
                     return result;
                 }
-                if (this.MatchMapping(Level30MaxDialogPM.CharacterEye, 3) && this.MatchMapping(Level30MaxDialogPM.DialogBorder, 4) && this.MatchMapping(Level30MaxDialogPM.YellowTick, 3))
+                if (this.MatchMapping(Level30MaxDialogPM.CharacterEye, 3) && this.MatchMapping(Level30MaxDialogPM.InboxButton, 4) && this.MatchMapping(Level30MaxDialogPM.YellowTick, 3) && this.MatchMapping(Level30MaxDialogPM.NecklaceCharacter, 3))
                 {
                     Scene result = new Scene(SceneType.LEVEL_30_MAX_DIALOG);
                     return result;
                 }
-                if (this.MatchMapping(LevelUpDialogPM.CharacterEye, 3) && this.MatchMapping(LevelUpDialogPM.DialogBorder, 4) && this.MatchMapping(LevelUpDialogPM.YellowTick, 3))
+                if (this.MatchMapping(LevelUpDialogPM.CharacterEye, 3) && this.MatchMapping(LevelUpDialogPM.InboxButton, 4) && this.MatchMapping(LevelUpDialogPM.YellowTick, 3))
                 {
                     Scene result = new Scene(SceneType.LEVEL_UP_DIALOG);
                     return result;
@@ -6993,7 +7097,7 @@ namespace SevenKnightsAI.Classes
                     Scene result = new Scene(SceneType.ADS_CLOSE);
                     return result;
                 }
-                if (this.MatchMapping(CheckInPM.CloseButton, 2))
+                if (this.MatchMapping(CheckInPM.CloseButton, 2) && this.MatchMapping(CheckInPM.BorderTopLeft, 2) && this.MatchMapping(CheckInPM.BorderRightBottom, 2))
                 {
                     Scene result = new Scene(SceneType.CHECK_IN);
                     return result;
@@ -7018,6 +7122,16 @@ namespace SevenKnightsAI.Classes
                     Scene result = new Scene(SceneType.RACHEL_SPECIAL_PACK_CLOSE_POPUP);
                     return result;
                 }
+                if (this.MatchMapping(Popup3PM.OneDollarLeftBorder, 2) && this.MatchMapping(Popup3PM.OneDollarRightBorder, 2))
+                {
+                    Scene result = new Scene(SceneType.ONE_DOLLAR_SHOP_POPUP);
+                    return result;
+                }
+                if (this.MatchMapping(Popup3PM.TierPackage1Selected, 2) || this.MatchMapping(Popup3PM.TierPackage2Selected, 2) || this.MatchMapping(Popup3PM.TierPackage3Selected, 2) || this.MatchMapping(Popup3PM.TierPackage4Selected, 2) || this.MatchMapping(Popup3PM.TierPackage5Selected, 2))
+                {
+                    Scene result = new Scene(SceneType.TIER_PACKAGE);
+                    return result;
+                }
                 if (this.MatchMapping(Popup3PM.AliceProColor, 2) && this.MatchMapping(Popup3PM.AliceProPurchase, 2))
                 {
                     Scene result = new Scene(SceneType.ALICE_PRO_PACK_POPUP);
@@ -7033,7 +7147,7 @@ namespace SevenKnightsAI.Classes
                     Scene result = new Scene(SceneType.WIFI_WARNING_POPUP);
                     return result;
                 }
-                if (this.MatchMapping(Popup3PM.EvenBoderRight, 2) && this.MatchMapping(Popup3PM.Exclucsive, 2))
+                if (this.MatchMapping(Popup3PM.EvenBoderRight, 2) && this.MatchMapping(Popup3PM.MayBoderleft, 2))
                 {
                     Scene result = new Scene(SceneType.MAY_LUCKY_BOX_POPUP);
                     return result;
@@ -7073,7 +7187,7 @@ namespace SevenKnightsAI.Classes
                     Scene result = new Scene(SceneType.EXCLUSIVE_CLOSE_POPUP);
                     return result;
                 }
-                if (this.MatchMapping(Popup3PM.ElementBG, 2) && this.MatchMapping(Popup3PM.ElementTick, 2))
+                if (this.MatchMapping(Popup3PM.ElementAliceCrown, 2) && this.MatchMapping(Popup3PM.ElementTick, 2))
                 {
                     Scene result = new Scene(SceneType.ELEMENT_POPUP);
                     return result;
@@ -7164,6 +7278,11 @@ namespace SevenKnightsAI.Classes
                 if (this.MatchMapping(Popup3PM.Bolder, 2) && this.MatchMapping(Popup3PM.ClosePopupCancle, 2) && this.MatchMapping(Popup3PM.ClosePopupOK, 2))
                 {
                     Scene result = new Scene(SceneType.CLOSE_POPUP);
+                    return result;
+                }
+                if (this.MatchMapping(ChangeLeaderPM.BorderTopLeft, 2) && this.MatchMapping(ChangeLeaderPM.BorderBottomRight, 2) && this.MatchMapping(ChangeLeaderPM.OKButton, 2) && this.MatchMapping(ChangeLeaderPM.CancelButton, 2))
+                {
+                    Scene result = new Scene(SceneType.CHANGE_LEADER_POPUP);
                     return result;
                 }
             }
@@ -7740,7 +7859,7 @@ namespace SevenKnightsAI.Classes
                 }
             };
             this.Log("Start selling heroes", this.COLOR_SELL_HEROES);
-            SendTelegram(this.AIProfiles.ST_TelegramChatID, "AI will only sell the hero if the given condition is met.");
+            SendTelegram(this.AIProfiles.ST_TelegramChatID, "Bot will only sell the hero if the given condition is met.");
             if (!this.MatchMapping(HeroesPM.SortByBoxExpanded, 2))                                          
             {
                 this.WeightedClick(HeroesPM.SortByBox, 1.0, 1.0, 1, 0, "left");                            
@@ -7780,22 +7899,22 @@ namespace SevenKnightsAI.Classes
                 }
                 /**************************************************************************************/
                 if (this.MatchMapping(HeroStar.Star1Loca1, 2) || this.MatchMapping(HeroStar.Star1Loca2, 2)
-                     || this.MatchMapping(HeroStar.Star1Loca3, 2) || this.MatchMapping(HeroStar.Star1Loca4, 2)
+                     || this.MatchMapping(HeroStar.Star1Loca3, 2) || this.MatchMapping(HeroStar.Star1Loca4, 2) || this.MatchMapping(HeroStar.Star1Loca5, 2)
                      || this.MatchMapping(HeroStar.Star1Loca1R1, 2) || this.MatchMapping(HeroStar.Star1Loca2R1, 2)
-                     || this.MatchMapping(HeroStar.Star1Loca3R1, 2) || this.MatchMapping(HeroStar.Star1Loca4R1, 2)
+                     || this.MatchMapping(HeroStar.Star1Loca3R1, 2) || this.MatchMapping(HeroStar.Star1Loca4R1, 2) || this.MatchMapping(HeroStar.Star1Loca5R1, 2)
                      || this.MatchMapping(HeroStar.Star1Loca1R2, 2) || this.MatchMapping(HeroStar.Star1Loca2R2, 2)
-                     || this.MatchMapping(HeroStar.Star1Loca3R2, 2) || this.MatchMapping(HeroStar.Star1Loca4R2, 2))
+                     || this.MatchMapping(HeroStar.Star1Loca3R2, 2) || this.MatchMapping(HeroStar.Star1Loca4R2, 2) || this.MatchMapping(HeroStar.Star1Loca5R2, 2))
                 {
                     monstar = 1;
                 }
                 else if (this.MatchMapping(HeroStar.Star2Loca1, 2) || this.MatchMapping(HeroStar.Star2Loca2, 2)
-                     || this.MatchMapping(HeroStar.Star2Loca3, 2) || this.MatchMapping(HeroStar.Star2Loca4, 2)
+                     || this.MatchMapping(HeroStar.Star2Loca3, 2) || this.MatchMapping(HeroStar.Star2Loca4, 2) || this.MatchMapping(HeroStar.Star2Loca5, 2)
                      || this.MatchMapping(HeroStar.Star2Loca1R3, 2) || this.MatchMapping(HeroStar.Star2Loca2R3, 2)
-                     || this.MatchMapping(HeroStar.Star2Loca3R3, 2) || this.MatchMapping(HeroStar.Star2Loca4R3, 2)
+                     || this.MatchMapping(HeroStar.Star2Loca3R3, 2) || this.MatchMapping(HeroStar.Star2Loca4R3, 2) || this.MatchMapping(HeroStar.Star2Loca5R3, 2)
                      || this.MatchMapping(HeroStar.Star2Loca1R4, 2) || this.MatchMapping(HeroStar.Star2Loca2R4, 2)
-                     || this.MatchMapping(HeroStar.Star2Loca3R4, 2) || this.MatchMapping(HeroStar.Star2Loca4R4, 2)
+                     || this.MatchMapping(HeroStar.Star2Loca3R4, 2) || this.MatchMapping(HeroStar.Star2Loca4R4, 2) || this.MatchMapping(HeroStar.Star2Loca5R4, 2)
                      || this.MatchMapping(HeroStar.Star2Loca1R5, 2) || this.MatchMapping(HeroStar.Star2Loca2R5, 2)
-                     || this.MatchMapping(HeroStar.Star2Loca3R5, 2) || this.MatchMapping(HeroStar.Star2Loca4R5, 2))
+                     || this.MatchMapping(HeroStar.Star2Loca3R5, 2) || this.MatchMapping(HeroStar.Star2Loca4R5, 2) || this.MatchMapping(HeroStar.Star2Loca5R5, 2))
                 {
                     monstar = 2;
                 }
@@ -7926,7 +8045,7 @@ namespace SevenKnightsAI.Classes
                 SellItemConfirmPopupPM.Star6
             };
             this.Log("Start selling items", this.COLOR_SELL_ITEMS);
-            SendTelegram(this.AIProfiles.ST_TelegramChatID, "AI will only sell the item if the given condition is met.");
+            SendTelegram(this.AIProfiles.ST_TelegramChatID, "Bot will only sell the item if the given condition is met.");
             if (this.MatchMapping(SellItemPopupPM.SortButtonDescending, 2))                                     
             {
                 this.WeightedClick(SellItemPopupPM.SortButton, 1.0, 1.0, 1, 0, "left");
@@ -8053,7 +8172,7 @@ namespace SevenKnightsAI.Classes
             };
 
             this.Log("Start sending honors", this.COLOR_HONOR);
-            SendTelegram(this.AIProfiles.ST_TelegramChatID, "AI is sending honors to friends.");
+            SendTelegram(this.AIProfiles.ST_TelegramChatID, "Bot is sending honors to friends.");
             List<int> list = new List<int>();
             for (int i = 0; i < array.Length; i++)
             {
@@ -8207,7 +8326,8 @@ namespace SevenKnightsAI.Classes
         private void HeroLVUPCount()
         {
             int curCount = 0;
-            Rectangle rect = Level30DialogPM.R_HeroLvlUpCount;
+            int maxCount = this.AISettings.AD_RubyBooster ? 20 : 100;
+            Rectangle rect = this.AISettings.AD_RubyBooster ? Level30DialogPM.R_HeroLvlUpCount2 : Level30DialogPM.R_HeroLvlUpCount;
             using (Bitmap bitmap = this.CropFrame(this.BlueStacks.MainWindowAS.CurrentFrame, rect).ScaleByPercent(200))
             {
                 using (Page page = this.Tesseractor.Engine.Process(bitmap, null, PageSegMode.Auto))
@@ -8219,6 +8339,8 @@ namespace SevenKnightsAI.Classes
                     Console.WriteLine("OldText =" + "'" + text + "'");
                     string text1 = Regex.Replace(text, @"\D", "");
                     Utility.FilterAscii(text1);
+                    bitmap.Save("HeroCount.png");
+                    Console.WriteLine("NewText = " + text1);
 #if DEBUG
                     bitmap.Save("HeroCount.png");
                     Console.WriteLine("NewText = " + text1);
@@ -8227,20 +8349,21 @@ namespace SevenKnightsAI.Classes
                     {
                         Console.WriteLine("FilterText =" + "'" + text1 + "'");
                         int.TryParse(text1, out curCount);
-                        if (curCount < 100)
+                        if (curCount < maxCount)
                         {
-                            this.SendTelegram(this.AIProfiles.ST_TelegramChatID, string.Format("Max Heroes level up per day : {0}/100", curCount));
-                            this.Log(string.Format("Max Heroes level up per day : {0}/100", curCount), Color.BlueViolet);
+                            this.SendTelegram(this.AIProfiles.ST_TelegramChatID, string.Format("Max Heroes level up per day : {0}/{1}", curCount, maxCount));
+                            this.Log(string.Format("Max Heroes level up per day : {0}/{1}", curCount, maxCount), Color.BlueViolet);
                             this.ReportCount(Objective.HERO_MANAGEMENT);
                         }
-                        else if (curCount == 100)
+                        else if (curCount == maxCount)
                         {
-                            this.SendTelegram(this.AIProfiles.ST_TelegramChatID, string.Format("Max Heroes level up per day : {0}/100", curCount));
-                            this.Log(string.Format("Max Heroes level up per day : {0}/100", curCount), Color.BlueViolet);
+                            this.SendTelegram(this.AIProfiles.ST_TelegramChatID, string.Format("Max Heroes level up per day : {0}/{1}", curCount, maxCount));
+                            this.Log(string.Format("Max Heroes level up per day : {0}/{1} ", curCount, maxCount), Color.BlueViolet);
                             this.MaxHeroUpCount = true;
                             this.NextPossibleObjective();
                         }
                         h30 = curCount;
+                        h30m = maxCount;
                         this.ReportCount(Objective.HERO_MANAGEMENT);
                     }
                 }

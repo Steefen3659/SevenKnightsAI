@@ -12,7 +12,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <ApplicationIcon>Resources\dellon2.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\kriss.ico</ApplicationIcon>
     <StartupObject>SevenKnightsAI.Program</StartupObject>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
@@ -138,6 +138,7 @@
     <Compile Include="Classes\Mappings\ArenaReadyPM.cs" />
     <Compile Include="Classes\Mappings\ArenaStartPM.cs" />
     <Compile Include="Classes\Mappings\BattleModesPM.cs" />
+    <Compile Include="Classes\Mappings\ChangeLeaderPM.cs" />
     <Compile Include="Classes\Mappings\CheckInPM.cs" />
     <Compile Include="Classes\Mappings\DialogPM.cs" />
     <Compile Include="Classes\Mappings\DisconnectedPopupPM.cs" />
@@ -237,12 +238,17 @@
     <Compile Include="Classes\ScreenCapture.cs" />
     <Compile Include="Classes\SevenKnightsCore.cs" />
     <Compile Include="Classes\SkillType.cs" />
-    <Compile Include="Classes\SlimPushbullet.cs" />
     <Compile Include="Classes\Team.cs" />
     <Compile Include="Classes\Tesseractor.cs" />
     <Compile Include="Classes\User32.cs" />
     <Compile Include="Classes\Utility.cs" />
     <Compile Include="Classes\World.cs" />
+    <Compile Include="CreateNewProfiles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateNewProfiles.Designer.cs">
+      <DependentUpon>CreateNewProfiles.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -272,6 +278,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="CreateNewProfiles.resx">
+      <DependentUpon>CreateNewProfiles.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -339,6 +348,7 @@
     <Content Include="Resources\arenaIcon.png" />
     <None Include="Resources\dellon2.ico" />
     <Content Include="Resources\goldmineIcon.png" />
+    <None Include="Resources\kriss.ico" />
     <Content Include="x64\liblept172.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

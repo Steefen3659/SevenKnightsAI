@@ -13,6 +13,14 @@ namespace SevenKnightsAI.Classes.Mappings
             Height = 20
         };
 
+        public static readonly Rectangle R_HeroLvlUpCount2 = new Rectangle
+        {
+            X = 525,
+            Y = 483,
+            Width = 32,
+            Height = 23
+        };
+
         public static readonly PixelMapping CharacterEye = new PixelMapping
         {
             X = 163,

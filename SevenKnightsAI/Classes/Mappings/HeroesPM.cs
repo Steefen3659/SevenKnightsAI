@@ -17,10 +17,26 @@ namespace SevenKnightsAI.Classes.Mappings
 
         public static readonly PixelMapping ElementButton = new PixelMapping
         {
-            X = 661,
-            Y = 99,
-            Color = 9133319,
+            X = 612,
+            Y = 506,
+            Color = 13270275,
             Type = MappingType.BOTH
+        };
+
+        public static readonly PixelMapping HeroesButton = new PixelMapping
+        {
+            X = 474,
+            Y = 502,
+            Color = 13138692,
+            Type = MappingType.BOTH
+        };
+
+        public static readonly PixelMapping PetButton = new PixelMapping
+        {
+            X = 372,
+            Y = 503,
+            Color = 6168064,
+            Type = MappingType.ANCHOR
         };
 
         public static readonly PixelMapping F1B4_1 = new PixelMapping
@@ -838,7 +854,7 @@ namespace SevenKnightsAI.Classes.Mappings
         public static readonly PixelMapping ScrollAreaDown = new PixelMapping
         {
             X = 618,
-            Y = 510,
+            Y = 462,
             Color = 0,
             Type = MappingType.BUTTON
         };

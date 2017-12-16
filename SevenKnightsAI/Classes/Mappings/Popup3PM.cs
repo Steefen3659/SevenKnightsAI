@@ -71,6 +71,83 @@ namespace SevenKnightsAI.Classes.Mappings
             Type = MappingType.BUTTON
         };
 
+        /* One Dollar Shop Popup 11-24-2017*/
+
+        public static readonly PixelMapping OneDollarLeftBorder = new PixelMapping
+        {
+            X = 117,
+            Y = 61,
+            Color = 16430379,
+            Type = MappingType.ANCHOR
+        };
+
+        public static readonly PixelMapping OneDollarRightBorder = new PixelMapping
+        {
+            X = 836,
+            Y = 474,
+            Color = 14910250,
+            Type = MappingType.ANCHOR
+        };
+
+        public static readonly PixelMapping OneDollarCloseButton = new PixelMapping
+        {
+            X = 818,
+            Y = 77,
+            Color = 0,
+            Type = MappingType.BUTTON
+        };
+
+
+        /* End One Dollar Shop Popup */
+
+        /* Tier Package */
+        public static readonly PixelMapping TierPackage1Selected = new PixelMapping
+        {
+            X = 170,
+            Y = 62,
+            Color = 16766576,
+            Type = MappingType.ANCHOR
+        };
+
+        public static readonly PixelMapping TierPackage2Selected = new PixelMapping
+        {
+            X = 293,
+            Y = 59,
+            Color = 15514967,
+            Type = MappingType.ANCHOR
+        };
+        public static readonly PixelMapping TierPackage3Selected = new PixelMapping
+        {
+            X = 418,
+            Y = 59,
+            Color = 16173669,
+            Type = MappingType.ANCHOR
+        };
+
+        public static readonly PixelMapping TierPackage4Selected = new PixelMapping
+        {
+            X = 541,
+            Y = 62,
+            Color = 10838276,
+            Type = MappingType.ANCHOR
+        };
+        public static readonly PixelMapping TierPackage5Selected = new PixelMapping
+        {
+            X = 669,
+            Y = 60,
+            Color = 16239718,
+            Type = MappingType.ANCHOR
+        };
+
+        public static readonly PixelMapping TierPackageCloseButton = new PixelMapping
+        {
+            X = 788,
+            Y = 56,
+            Color = 0,
+            Type = MappingType.BUTTON
+        };
+        /* End Tier Package */
+
         public static readonly PixelMapping AliceProColse = new PixelMapping
         {
             X = 826,
@@ -129,9 +206,9 @@ namespace SevenKnightsAI.Classes.Mappings
 
         public static readonly PixelMapping MayBoderleft = new PixelMapping
         {
-            X = 69,
-            Y = 22,
-            Color = 16733782,
+            X = 175,
+            Y = 62,
+            Color = 16763327,
             Type = MappingType.ANCHOR
         };
 
@@ -153,9 +230,9 @@ namespace SevenKnightsAI.Classes.Mappings
 
         public static readonly PixelMapping EvenBoderRight = new PixelMapping //bell may
         {
-            X = 800,
-            Y = 336,
-            Color = 9399873,
+            X = 304,
+            Y = 20,
+            Color = 11638353,
             Type = MappingType.ANCHOR
         };
 
@@ -255,50 +332,50 @@ namespace SevenKnightsAI.Classes.Mappings
             Type = MappingType.ANCHOR
         };
 
-        public static readonly PixelMapping ElementBG = new PixelMapping
+        public static readonly PixelMapping ElementAliceCrown = new PixelMapping
         {
-            X = 278,
-            Y = 85,
-            Color = 1450642,
+            X = 157,
+            Y = 109,
+            Color = 11274479,
             Type = MappingType.ANCHOR
         };
 
         public static readonly PixelMapping ElementTick = new PixelMapping
         {
-            X = 342,
-            Y = 353,
-            Color = 4092805,
+            X = 747,
+            Y = 209,
+            Color = 10946533,
             Type = MappingType.ANCHOR
         };
         public static readonly PixelMapping ElementCloseButton = new PixelMapping
         {
-            X = 835,
-            Y = 36,
+            X = 836,
+            Y = 69,
             Color = 0,
             Type = MappingType.BUTTON
         };
         /* Event Package */
         public static readonly PixelMapping EventPackPic = new PixelMapping //Ryan's Belt
         {
-            X = 173,
-            Y = 95,
-            Color = 7617097,
+            X = 259,
+            Y = 75,
+            Color = 6772542,
             Type = MappingType.ANCHOR
         };
 
         public static readonly PixelMapping EventPackColor1 = new PixelMapping //Ryan Goggles
         {
-            X = 227,
-            Y = 152,
-            Color = 4538956,
+            X = 172,
+            Y = 241,
+            Color = 10253421,
             Type = MappingType.ANCHOR
         };
 
         public static readonly PixelMapping EventPackColor2 = new PixelMapping //E letter in PACKAGE
         {
-            X = 767,
-            Y = 63,
-            Color = 15979398,
+            X = 766,
+            Y = 66,
+            Color = 15721915,
             Type = MappingType.ANCHOR
         };
 

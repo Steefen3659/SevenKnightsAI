@@ -46,25 +46,25 @@ namespace SevenKnightsAI.Classes.Mappings
 
         public static readonly PixelMapping CommonShop = new PixelMapping
         {
-            X = 490,
-            Y = 270,
+            X = 453,
+            Y = 390,
             Color = 0,
             Type = MappingType.BUTTON
         };
 
         public static readonly PixelMapping ShopCommon = new PixelMapping
         {
-            X = 457,
-            Y = 142,
-            Color = 9926221,
+            X = 453,
+            Y = 390,
+            Color = 8667183,
             Type = MappingType.ANCHOR
         };
 
         public static readonly PixelMapping ShopPackge = new PixelMapping
         {
-            X = 145,
-            Y = 221,
-            Color = 16053492,
+            X = 238,
+            Y = 386,
+            Color = 13274198,
             Type = MappingType.ANCHOR
         };
 
@@ -91,56 +91,56 @@ namespace SevenKnightsAI.Classes.Mappings
 
         public static readonly PixelMapping Key1Honor10 = new PixelMapping
         {
-            X = 310,
-            Y = 390,
+            X = 268,
+            Y = 215,
             Color = 0,
             Type = MappingType.BUTTON
         };
 
         public static readonly PixelMapping Key5Ruby10 = new PixelMapping
         {
-            X = 515,
-            Y = 390,
+            X = 270,
+            Y = 460,
             Color = 0,
             Type = MappingType.BUTTON
         };
 
         public static readonly PixelMapping Key10Honor100 = new PixelMapping
         {
-            X = 721,
-            Y = 390,
+            X = 455,
+            Y = 218,
             Color = 0,
             Type = MappingType.BUTTON
         };
 
         public static readonly PixelMapping Key10Ruby20 = new PixelMapping
         {
-            X = 242,
-            Y = 390,
+            X = 451,
+            Y = 459,
             Color = 0,
             Type = MappingType.BUTTON
         };
 
         public static readonly PixelMapping Key20Ruby35 = new PixelMapping
         {
-            X = 422,
-            Y = 390,
+            X = 633,
+            Y = 219,
             Color = 0,
             Type = MappingType.BUTTON
         };
 
         public static readonly PixelMapping Key40Ruby45 = new PixelMapping
         {
-            X = 627,
-            Y = 390,
+            X = 630,
+            Y = 458,
             Color = 0,
             Type = MappingType.BUTTON
         };
 
         public static readonly PixelMapping Key100Ruby100 = new PixelMapping
         {
-            X = 854,
-            Y = 326,
+            X = 815,
+            Y = 224,
             Color = 0,
             Type = MappingType.BUTTON
         };
@@ -163,9 +163,9 @@ namespace SevenKnightsAI.Classes.Mappings
 
         public static readonly PixelMapping KeyTabSelected = new PixelMapping
         {
-            X = 58,
-            Y = 82,
-            Color = 11233028,
+            X = 128,
+            Y = 79,
+            Color = 16766576,
             Type = MappingType.ANCHOR
         };
 

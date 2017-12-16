@@ -139,6 +139,14 @@ namespace SevenKnightsAI.Classes.Mappings
             Width = 70,
             Height = 25
         };
+
+        public static readonly Rectangle RaidPoint = new Rectangle
+        {
+            X = 360,
+            Y = 199,
+            Width = 100,
+            Height = 20
+        };
         // จุดตรวจสอบจากบนลงล่าง ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         // ตรวจชื่อ   (เช็คเสร็จแล้ว)
         public static readonly Rectangle RaidNameUpToDownL0 = new Rectangle

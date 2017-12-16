@@ -45,20 +45,19 @@ namespace SevenKnightsAI.Classes.Mappings
             Color = 0,
             Type = MappingType.BUTTON
         };
-
         public static readonly PixelMapping BorderBottomRight = new PixelMapping
         {
-            X = 952,
-            Y = 529,
-            Color = 6505243,
+            X = 36,
+            Y = 25,
+            Color = 12009227,
             Type = MappingType.ANCHOR
         };
 
         public static readonly PixelMapping BorderTopLeft = new PixelMapping
         {
-            X = 8,
-            Y = 8,
-            Color = 4665365,
+            X = 14,
+            Y = 459,
+            Color = 14933976,
             Type = MappingType.ANCHOR
         };
 

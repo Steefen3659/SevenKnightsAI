@@ -8,13 +8,13 @@ using System.Runtime.Versioning;
 using System.Security;
 using System.Security.Permissions;
 
-[assembly: AssemblyVersion("2.8.7")]
+[assembly: AssemblyVersion("2.9.2")]
 [assembly: Debuggable(DebuggableAttribute.DebuggingModes.IgnoreSymbolStoreSequencePoints)]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCopyright("siang.sm")]
 [assembly: AssemblyDescription("Seven Knights AI Black")]
-[assembly: AssemblyFileVersion("2.8.7")]
+[assembly: AssemblyFileVersion("2.9.2")]
 [assembly: AssemblyProduct("Seven Knights AI Black")]
 [assembly: AssemblyTitle("Seven Knights AI Black")]
 [assembly: AssemblyTrademark("")]

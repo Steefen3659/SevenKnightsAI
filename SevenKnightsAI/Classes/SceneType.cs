@@ -138,6 +138,9 @@ namespace SevenKnightsAI.Classes
         EXIT_POPUP,
         MAY_CALENDAR_POPUP,
         LOADING,
-        CLOSE_POPUP
+        CLOSE_POPUP,
+        CHANGE_LEADER_POPUP,
+        ONE_DOLLAR_SHOP_POPUP,
+        TIER_PACKAGE
     }
 }
