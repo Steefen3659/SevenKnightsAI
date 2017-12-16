@@ -141,6 +141,8 @@ namespace SevenKnightsAI.Classes
         CLOSE_POPUP,
         CHANGE_LEADER_POPUP,
         ONE_DOLLAR_SHOP_POPUP,
-        TIER_PACKAGE
+        TIER_PACKAGE,
+        INGRID_QUEST_POPUP,
+        OUT_OF_TICKET_POPUP
     }
 }

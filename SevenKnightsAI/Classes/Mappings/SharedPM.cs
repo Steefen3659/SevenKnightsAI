@@ -435,7 +435,31 @@ namespace SevenKnightsAI.Classes.Mappings
             Color = 14729592,
             Type = MappingType.ANCHOR
         };
+        /* Skill 5 Special Dungeon*/
+        public static readonly PixelMapping Fight_Skill16 = new PixelMapping
+        {
+            X = 603,
+            Y = 495,
+            Color = 0,
+            Type = MappingType.BUTTON
+        };
 
+        public static readonly PixelMapping Fight_Skill16_Q1_1 = new PixelMapping
+        {
+            X = 618,
+            Y = 476,
+            Color = 16772513,
+            Type = MappingType.ANCHOR
+        };
+
+        public static readonly PixelMapping Fight_Skill16_Q1_2 = new PixelMapping
+        {
+            X = 617,
+            Y = 484,
+            Color = 14927485,
+            Type = MappingType.ANCHOR
+        };
+        /* Skill 5 Special Dungeon*/
         public static readonly PixelMapping Fight_SpeedButton = new PixelMapping
         {
             X = 44,

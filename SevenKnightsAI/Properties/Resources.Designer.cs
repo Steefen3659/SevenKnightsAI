@@ -72,16 +72,6 @@ namespace SevenKnightsAI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap amelia_title {
-            get {
-                object obj = ResourceManager.GetObject("amelia_title", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap arenaIcon {
             get {
                 object obj = ResourceManager.GetObject("arenaIcon", resourceCulture);
@@ -250,6 +240,16 @@ namespace SevenKnightsAI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon kriss2 {
+            get {
+                object obj = ResourceManager.GetObject("kriss2", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap raidIcon {
@@ -276,6 +276,16 @@ namespace SevenKnightsAI.Properties {
             get {
                 object obj = ResourceManager.GetObject("tessdata", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap title_ingrid {
+            get {
+                object obj = ResourceManager.GetObject("title_ingrid", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

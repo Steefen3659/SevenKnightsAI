@@ -32,12 +32,12 @@ namespace SevenKnightsAI.Classes.Mappings
 
         public static readonly PixelMapping SpecialDungeonButton = new PixelMapping
         {
-            X = 140,
-            Y = 83,
+            X = 268,
+            Y = 209,
             Color = 0,
             Type = MappingType.BUTTON
         };
-    
+
         public static readonly PixelMapping RaidButton = new PixelMapping
         {
             X = 662,

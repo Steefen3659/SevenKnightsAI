@@ -33,25 +33,25 @@ namespace SevenKnightsAI.Classes.Mappings
 
         public static readonly PixelMapping KeyPlusButton = new PixelMapping
         {
-            X = 705,
-            Y = 28,
-            Color = 12690781,
+            X = 558,
+            Y = 27,
+            Color = 13808234,
             Type = MappingType.BOTH
         };
 
         public static readonly PixelMapping AllTab = new PixelMapping
         {
-            X = 99,
-            Y = 69,
-            Color = 2692103,
+            X = 160,
+            Y = 82,
+            Color = 12219396,
             Type = MappingType.BOTH
         };
 
         public static readonly PixelMapping DailyTab = new PixelMapping
         {
-            X = 218,
-            Y = 67,
-            Color = 2823432,
+            X = 329,
+            Y = 84,
+            Color = 11890692,
             Type = MappingType.BOTH
         };
 
@@ -65,9 +65,9 @@ namespace SevenKnightsAI.Classes.Mappings
 
         public static readonly PixelMapping EventTab = new PixelMapping
         {
-            X = 455,
-            Y = 67,
-            Color = 2823432,
+            X = 483,
+            Y = 86,
+            Color = 11561732,
             Type = MappingType.BOTH
         };
 
@@ -81,56 +81,56 @@ namespace SevenKnightsAI.Classes.Mappings
 
         public static readonly PixelMapping Row1Select = new PixelMapping
         {
-            X = 300,
-            Y = 160,
+            X = 275,
+            Y = 152,
             Color = 0,
             Type = MappingType.BUTTON
         };
 
         public static readonly PixelMapping Row2Select = new PixelMapping
         {
-            X = 300,
-            Y = 260,
+            X = 262,
+            Y = 263,
             Color = 0,
             Type = MappingType.BUTTON
         };
 
         public static readonly PixelMapping Row3Select = new PixelMapping
         {
-            X = 300,
-            Y = 360,
+            X = 262,
+            Y = 373,
             Color = 0,
             Type = MappingType.BUTTON
         };
 
         public static readonly PixelMapping Row4Select = new PixelMapping
         {
-            X = 300,
-            Y = 460,
+            X = 261,
+            Y = 459,
             Color = 0,
             Type = MappingType.BUTTON
         };
 
         public static readonly PixelMapping SelectMode = new PixelMapping
         {
-            X = 828,
-            Y = 83,
+            X = 884,
+            Y = 79,
             Color = 0,
             Type = MappingType.BUTTON
         };
 
-        public static readonly PixelMapping ModeR1 = new PixelMapping
+        public static readonly PixelMapping ModeR1 = new PixelMapping // easy
         {
-            X = 840,
-            Y = 125,
+            X = 812,
+            Y = 157,
             Color = 0,
             Type = MappingType.BUTTON
         };
 
-        public static readonly PixelMapping ModeR2 = new PixelMapping
+        public static readonly PixelMapping ModeR2 = new PixelMapping //normal
         {
-            X = 840,
-            Y = 165,
+            X = 837,
+            Y = 119,
             Color = 0,
             Type = MappingType.BUTTON
         };

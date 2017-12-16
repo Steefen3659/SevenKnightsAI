@@ -435,6 +435,9 @@ namespace SevenKnightsAI.Classes
         [XmlElement(ElementName = "SP_Limit")]
         public int SP_Limit;
 
+        [XmlElement(ElementName = "SP_UseTicket1")]
+        public bool SP_UseTicket1;
+
         [XmlElement(ElementName = "AD_CurrH30")]
         public int AD_CurrH30;
 
@@ -530,7 +533,7 @@ namespace SevenKnightsAI.Classes
             this.RS_BuyKeyRubies = false;
             this.RS_BuyKeyRubiesType = BuyKeyRubiesType.Key5Ruby10;
             this.RS_BuyKeyRubiesAmount = 0;
-            this.SP_Enable = false;
+            this.SP_Enable = true;
             this.SP_DailyEnable = false;
             this.SP_CakeEnable = false;
             this.SP_CrystalEnable = false;
@@ -553,6 +556,7 @@ namespace SevenKnightsAI.Classes
             this.SP_EvanNormal = true;
             this.SP_karinNormal = true;
             this.SP_EnableLimit = false;
+            this.SP_UseTicket1 = false;
             this.SP_Limit = 0;
             this.AD_CurrH30 = 0;
             this.ST_Stop100 = true;
@@ -1411,6 +1415,12 @@ namespace SevenKnightsAI.Classes
                 { }
                 try
                 {
+                    aISettings.SP_UseTicket1 = (bool)dictionary["SP_UseTicket1"];
+                }
+                catch (Exception)
+                { }
+                try
+                {
                     aISettings.SP_Limit = Convert.ToInt32(dictionary["SP_Limit"]);
                 }
                 catch (Exception)
@@ -1849,6 +1859,10 @@ namespace SevenKnightsAI.Classes
                 {
                     "SP_Enable",
                     this.SP_Enable
+                },
+                {
+                    "SP_UseTicket1",
+                    this.SP_UseTicket1
                 },
                 {
                     "SP_Wave1Loop",

@@ -20,6 +20,22 @@ namespace SevenKnightsAI.Classes.Mappings
             Type = MappingType.ANCHOR
         };
 
+        public static readonly PixelMapping DimmedBG2End = new PixelMapping
+        {
+            X = 39,
+            Y = 69,
+            Color = 4139265,
+            Type = MappingType.ANCHOR
+        };
+
+        public static readonly PixelMapping DimmedBG2Start = new PixelMapping
+        {
+            X = 860,
+            Y = 500,
+            Color = 2895167,
+            Type = MappingType.ANCHOR
+        };
+
         public static readonly PixelMapping EnterButton = new PixelMapping
         {
             X = 586,

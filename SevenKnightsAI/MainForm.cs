@@ -942,6 +942,77 @@ namespace SevenKnightsAI
             this.LoadWaveSkills(wavePanels, waveSkill, 0);
         }
 
+        private void InitSPdungeonTab()
+        {
+            for (int i = 7; i < 10; i++)
+            {
+                this._skillButtons[i] = new List<Button>();
+            }
+            this.checkBox3.Checked = this.AISettings.SP_Enable;
+            this.SP_wave1LoopCheckBox.Checked = this.AISettings.SP_Wave1Loop;
+            this.SP_wave2LoopCheckBox.Checked = this.AISettings.SP_Wave2Loop;
+            this.SP_wave3LoopCheckBox.Checked = this.AISettings.SP_Wave3Loop;
+            this.SP_evanNorRadioButton.Checked = this.AISettings.SP_EvanNormal;
+            this.SP_evanHardRadioButton.Checked = this.AISettings.SP_EvanHard;
+            this.SP_evanLimitNumericBox.Value = this.AISettings.SP_EvanLimit;
+            this.SP_evanCheckBox.Checked = this.AISettings.SP_EvanEnable;
+            switch (this.AISettings.SP_SkillType)
+            {
+                case SkillType.Auto:
+                    this.SP_autoSkillRadio.Checked = true;
+                    break;
+
+                case SkillType.Manual:
+                    this.SP_manualSkillRadio.Checked = true;
+                    break;
+
+                case SkillType.Both:
+                    this.SP_bothSkillRadio.Checked = true;
+                    break;
+            }
+            switch (this.AISettings.SP_w2SkillType)
+            {
+                case SkillType.Auto:
+                    this.SP_w2autoSkillRadio.Checked = true;
+                    break;
+
+                case SkillType.Manual:
+                    this.SP_w2manualSkillRadio.Checked = true;
+                    break;
+
+                case SkillType.Both:
+                    this.SP_w2bothSkillRadio.Checked = true;
+                    break;
+            }
+            switch (this.AISettings.SP_w3SkillType)
+            {
+                case SkillType.Auto:
+                    this.SP_w3autoSkillRadio.Checked = true;
+                    break;
+
+                case SkillType.Manual:
+                    this.SP_w3manualSkillRadio.Checked = true;
+                    break;
+
+                case SkillType.Both:
+                    this.SP_w3bothSkillRadio.Checked = true;
+                    break;
+            }
+            Panel[] wavePanels = new Panel[]
+            {
+                this.SP_wave1Panel,
+                this.SP_wave2Panel,
+                this.SP_wave3Panel
+            };
+            int[][] waveSkill = new int[][]
+            {
+                this.AISettings.SP_Wave1Skills,
+                this.AISettings.SP_Wave2Skills,
+                this.AISettings.SP_Wave3Skills
+            };
+            this.LoadWaveSkills(wavePanels, waveSkill, 7);
+        }
+
         private void InitArenaTab()
         {
             this.AR_enableCheckBox.Checked = this.AISettings.AR_Enable;
@@ -1111,8 +1182,6 @@ namespace SevenKnightsAI
         }
         private void InitTestTab()
         {
-            this.ST_BotStuck.Checked = this.AIProfiles.ST_BotStuck;
-            this.ST_BotStuck2.Checked = this.AIProfiles.ST_BotStuck2;
             this.AD_Pause100.Checked = this.AIProfiles.AD_Pause100;
             this.AD_NoHeroUp_Checkbox.Checked = this.AIProfiles.AD_NoHeroUp;
         }
@@ -1385,6 +1454,7 @@ namespace SevenKnightsAI
             this.InitGoldChamberTab();
             this.InitArenaTab();
             this.InitRaidTab();
+            this.InitSPdungeonTab();
             this.InitResourcesTab();
             this.InitLogsTab();
             this.InitTestTab();
@@ -2864,16 +2934,6 @@ namespace SevenKnightsAI
             }
         }
 
-        private void ST_BotStuck_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckBox checkBox = sender as CheckBox;
-            this.AIProfiles.ST_BotStuck = checkBox.Checked;
-            if (ST_BotStuck.Checked == true)
-            {
-                ST_BotStuck2.Checked = false;
-            }
-        }
-
         private void button1_Click_1(object sender, EventArgs e)
         {
             CreateNewProfiles cnp = new CreateNewProfiles();
@@ -2885,13 +2945,19 @@ namespace SevenKnightsAI
             ST_RefreshProfiles();
         }
 
-        private void ST_BotStuck2_CheckedChanged(object sender, EventArgs e)
+        private void SP_UseTicket1_CheckedChanged(object sender, EventArgs e)
         {
             CheckBox checkBox = sender as CheckBox;
-            this.AIProfiles.ST_BotStuck2 = checkBox.Checked;
-            if(ST_BotStuck2.Checked == true)
+            short num = Convert.ToInt16(checkBox.Tag);
+            bool @checked = checkBox.Checked;
+            switch (num)
             {
-                ST_BotStuck.Checked = false;
+                case 0:
+                    this.AISettings.SP_UseTicket1 = @checked;
+                    return;
+
+                default:
+                    return;
             }
         }
     }

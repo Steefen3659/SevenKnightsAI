@@ -153,32 +153,32 @@ namespace SevenKnightsAI.Classes.Mappings
         {
             X = 297,
             Y = 207,
-            Height = 24,
-            Width = 120
+            Height = 22,
+            Width = 145
         };
 
         public static readonly Rectangle RaidNameUpToDownL1 = new Rectangle
         {
             X = 297,
             Y = 282,
-            Height = 24,
-            Width = 120
+            Height = 22,
+            Width = 145
         };
 
         public static readonly Rectangle RaidNameUpToDownL2 = new Rectangle
         {
             X = 297,
             Y = 356,
-            Height = 24,
-            Width = 120
+            Height = 22,
+            Width = 145
         };
 
         public static readonly Rectangle RaidNameUpToDownL3 = new Rectangle
         {
             X = 297,
             Y = 429,
-            Height = 24,
-            Width = 120
+            Height = 22,
+            Width = 145
         };
 
         // ปุ่มหัวมังกร (เช็คเสร็จแล้ว)

@@ -35,12 +35,6 @@ namespace SevenKnightsAI.Classes
         [XmlElement(ElementName = "AD_NoHeroUp")]
         public bool AD_NoHeroUp;
 
-        [XmlElement(ElementName = "ST_BotStuck")]
-        public bool ST_BotStuck;
-
-        [XmlElement(ElementName = "ST_BotStuck2")]
-        public bool ST_BotStuck2;
-
         [XmlElement(ElementName = "ST_EnableTelegram")]
         public bool ST_EnableTelegram;
 
@@ -85,8 +79,6 @@ namespace SevenKnightsAI.Classes
             this.ST_EnableAutoShutdown = false;
             this.AD_Pause100 = false;
             this.AD_NoHeroUp = false;
-            this.ST_BotStuck = false;
-            this.ST_BotStuck2 = false;
             this.ST_EnableTelegram = false;
             this.ST_HotTimeProfile = null;
             this.ST_BlueStacksForceActive = false;
@@ -163,18 +155,6 @@ namespace SevenKnightsAI.Classes
                 try
                 {
                     aIProfiles.AD_NoHeroUp = (bool)dictionary["AD_NoHeroUp"];
-                }
-                catch (Exception)
-                { }
-                try
-                {
-                    aIProfiles.ST_BotStuck = (bool)dictionary["ST_BotStuck"];
-                }
-                catch (Exception)
-                { }
-                try
-                {
-                    aIProfiles.ST_BotStuck2 = (bool)dictionary["ST_BotStuck2"];
                 }
                 catch (Exception)
                 { }
@@ -275,14 +255,6 @@ namespace SevenKnightsAI.Classes
                 {
                     "AD_NoHeroUp",
                     this.AD_NoHeroUp
-                },
-                {
-                    "ST_BotStuck",
-                    this.ST_BotStuck
-                },
-                {
-                    "ST_BotStuck2",
-                    this.ST_BotStuck2
                 },
                 {
                     "ST_EnableTelegram",

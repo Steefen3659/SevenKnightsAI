@@ -100,6 +100,32 @@ namespace SevenKnightsAI.Classes.Mappings
 
         /* End One Dollar Shop Popup */
 
+        /* Ingrid Quest */
+        public static readonly PixelMapping IngridBorderUpLeft = new PixelMapping
+        {
+            X = 142,
+            Y = 62,
+            Color = 2165808,
+            Type = MappingType.ANCHOR
+        };
+
+        public static readonly PixelMapping IngridBorderBottomRight = new PixelMapping
+        {
+            X = 799,
+            Y = 465,
+            Color = 1378352,
+            Type = MappingType.ANCHOR
+        };
+
+        public static readonly PixelMapping IngridQuestCloseButton = new PixelMapping
+        {
+            X = 801,
+            Y = 74,
+            Color = 0,
+            Type = MappingType.BUTTON
+        };
+        /* End Ingrid Quest */
+
         /* Tier Package */
         public static readonly PixelMapping TierPackage1Selected = new PixelMapping
         {

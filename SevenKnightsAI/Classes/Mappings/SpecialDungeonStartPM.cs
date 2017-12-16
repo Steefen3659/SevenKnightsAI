@@ -17,25 +17,25 @@ namespace SevenKnightsAI.Classes.Mappings
 
         public static readonly PixelMapping Masterry = new PixelMapping
         {
-            X = 378,
-            Y = 173,
-            Color = 12691547,
+            X = 375,
+            Y = 175,
+            Color = 8078362,
             Type = MappingType.BOTH
         };
 
         public static readonly PixelMapping KeyPlus = new PixelMapping
         {
-            X = 706,
-            Y = 28,
-            Color = 12690781,
+            X = 556,
+            Y = 29,
+            Color = 11573327,
             Type = MappingType.BOTH
         };
 
         public static readonly PixelMapping CardPlus = new PixelMapping
         {
-            X = 830,
-            Y = 29,
-            Color = 11573327,
+            X = 696,
+            Y = 27,
+            Color = 13808234,
             Type = MappingType.BOTH
         };
 
