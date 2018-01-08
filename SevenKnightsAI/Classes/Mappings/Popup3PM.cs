@@ -380,48 +380,6 @@ namespace SevenKnightsAI.Classes.Mappings
             Color = 0,
             Type = MappingType.BUTTON
         };
-        /* Event Package */
-        public static readonly PixelMapping EventPackPic = new PixelMapping //Ryan's Belt
-        {
-            X = 259,
-            Y = 75,
-            Color = 6772542,
-            Type = MappingType.ANCHOR
-        };
-
-        public static readonly PixelMapping EventPackColor1 = new PixelMapping //Ryan Goggles
-        {
-            X = 172,
-            Y = 241,
-            Color = 10253421,
-            Type = MappingType.ANCHOR
-        };
-
-        public static readonly PixelMapping EventPackColor2 = new PixelMapping //E letter in PACKAGE
-        {
-            X = 766,
-            Y = 66,
-            Color = 15721915,
-            Type = MappingType.ANCHOR
-        };
-
-
-        public static readonly PixelMapping EventPackColorbg = new PixelMapping
-        {
-            X = 613,
-            Y = 255,
-            Color = 2364470,
-            Type = MappingType.ANCHOR
-        };
-
-        public static readonly PixelMapping EventPackOKBtn = new PixelMapping
-        {
-            X = 529,
-            Y = 423,
-            Color = 16757782,
-            Type = MappingType.BOTH
-        };
-        /* Lina Awaken Package END*/
         public static readonly PixelMapping AWAKENPackPic = new PixelMapping
         {
             X = 239,
@@ -509,6 +467,49 @@ namespace SevenKnightsAI.Classes.Mappings
             Color = 16047520,
             Type = MappingType.ANCHOR
         };
+
+        /* Event Package */
+        public static readonly PixelMapping EventPackPic = new PixelMapping //Ryan's Belt
+        {
+            X = 898,
+            Y = 31,
+            Color = 12926219,
+            Type = MappingType.ANCHOR
+        };
+
+        public static readonly PixelMapping EventPackColor1 = new PixelMapping //Ryan Goggles
+        {
+            X = 149,
+            Y = 20,
+            Color = 8933403,
+            Type = MappingType.ANCHOR
+        };
+
+        public static readonly PixelMapping EventPackColor2 = new PixelMapping //E letter in PACKAGE
+        {
+            X = 490,
+            Y = 32,
+            Color = 14399567,
+            Type = MappingType.ANCHOR
+        };
+
+
+        public static readonly PixelMapping EventPackColorbg = new PixelMapping
+        {
+            X = 613,
+            Y = 255,
+            Color = 2364470,
+            Type = MappingType.ANCHOR
+        };
+
+        public static readonly PixelMapping EventPackOKBtn = new PixelMapping
+        {
+            X = 529,
+            Y = 423,
+            Color = 16757782,
+            Type = MappingType.BOTH
+        };
+        /* Lina Awaken Package END*/
 
     }
 }

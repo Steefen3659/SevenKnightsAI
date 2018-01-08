@@ -8,9 +8,9 @@ namespace SevenKnightsAI.Classes.Mappings
 
         public static readonly PixelMapping Point1 = new PixelMapping 
         {
-            X = 497,
-            Y = 368,
-            Color = 14110466,
+            X = 148,
+            Y = 52,
+            Color = 15014422,
             Type = MappingType.ANCHOR
         };
 

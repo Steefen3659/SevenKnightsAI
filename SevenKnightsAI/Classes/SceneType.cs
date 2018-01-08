@@ -72,6 +72,7 @@ namespace SevenKnightsAI.Classes
         RAID_END,
         RAID_REWARD,
         RAID_REWARD_POPUP,
+        FIRST_RAID_REWARD_POPUP,
         RAID_REWARD_FAILED_POPUP,
         RAID_OUT_OF_KEYS_POPUP,
         RAID_ALREADY_ENDED_POPUP,

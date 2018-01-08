@@ -6,33 +6,33 @@ namespace SevenKnightsAI.Classes.Mappings
     {
         public static readonly PixelMapping MemberListBackground = new PixelMapping //M Letter Member Word
         {
-            X = 45,
-            Y = 84,
+            X = 51,
+            Y = 91,
             Color = 16754182,
             Type = MappingType.ANCHOR
         };
 
         public static readonly PixelMapping RewardButton = new PixelMapping
         {
-            X = 782,
-            Y = 421,
+            X = 822,
+            Y = 415,
             Color = 0,
             Type = MappingType.BUTTON
         };
 
         public static readonly PixelMapping RewardButtonBackground = new PixelMapping
         {
-            X = 782,
-            Y = 421,
-            Color = 14259459,
+            X = 822,
+            Y = 415,
+            Color = 14194179,
             Type = MappingType.ANCHOR
         };
 
         public static readonly PixelMapping RewardButtonRedIcon = new PixelMapping
         {
-            X = 760,
-            Y = 401,
-            Color = 12789252,
+            X = 759,
+            Y = 397,
+            Color = 12920833,
             Type = MappingType.ANCHOR
         };
     }

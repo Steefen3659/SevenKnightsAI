@@ -89,6 +89,8 @@ namespace SevenKnightsAI
 
         private BackgroundWorker Worker;
 
+        private BackgroundWorker Worker2 = new BackgroundWorker();
+
         private DateTime StartTime;
 
         #endregion Private Fields
@@ -137,6 +139,11 @@ namespace SevenKnightsAI
                );
                 this.AppendWarning("No admin permissions. Bot might not function as expected!");
             }
+            this.Worker2.DoWork += new DoWorkEventHandler(Test);
+            this.Worker2.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.Worker2_RunWorkerCompleted);
+            this.Worker2.ProgressChanged += new ProgressChangedEventHandler(this.Worker2_ProgressChanged);
+            this.Worker2.WorkerReportsProgress = true;
+            this.Worker2.WorkerSupportsCancellation = true;
         }
 
         #endregion Public Constructors
@@ -500,7 +507,7 @@ namespace SevenKnightsAI
                             int numm2 = (int)dictionary["arenaRank"];
                             this.arenaWinLabel2.Text = num.ToString();
                             this.arenaLoseLabel2.Text = num2.ToString();
-                            this.arenaCountLabel.Text = "x"+(num+num2).ToString();
+                            this.arenaCountLabel.Text = "x" + (num + num2).ToString();
                             this.rankArenaLabel.Text = numm2.ToString();
                             return;
                         }
@@ -516,13 +523,15 @@ namespace SevenKnightsAI
                             string t1 = "" + dictionary["hc"];
                             string t2 = "" + dictionary["hm"];
                             text = string.Format("{0}/{1}", t1, t2);
-                        }else if(objective == Objective.ADVENTURE)
+                        }
+                        else if (objective == Objective.ADVENTURE)
                         {
                             text2 = "" + dictionary["hero"];
                             text3 = "" + dictionary["gold"];
                             text4 = "" + dictionary["item"];
                             text5 = "" + dictionary["h30"];
-                        }else if(objective == Objective.GOLD_CHAMBER)
+                        }
+                        else if (objective == Objective.GOLD_CHAMBER)
                         {
                             text2 = "" + dictionary["hero"]; //goldminegoldamout
                             text3 = "" + dictionary["gold"];//goldmineentry
@@ -1379,8 +1388,7 @@ namespace SevenKnightsAI
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            bot.token = ST_TelegramTokenTextBox.Text;
-            backgroundWorker1.RunWorkerAsync();
+            bot.token = "455541103:AAH5Aw6kS5-yH0OFkcrKbCbrfsb8goRmfcA";
             bot.CheckForIllegalCrossThreadCalls = false;
             ContextMenu contextMenu = new ContextMenu();
             MenuItem menuItem = new MenuItem("Pause");
@@ -1398,6 +1406,7 @@ namespace SevenKnightsAI
             this.tsslBuildInfo.Text = "Build: " + build;
             AppendLog("Loaded Build :  " + build);
             this.loaded = true;
+            Worker2.RunWorkerAsync();
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
@@ -1987,7 +1996,8 @@ namespace SevenKnightsAI
             CheckBox checkBox = sender as CheckBox;
             bool @checked = checkBox.Checked;
             this.AIProfiles.ST_EnableAutoShutdown = @checked;
-            if(this.ST_AutoShutdownCheckBox.Checked == true){
+            if (this.ST_AutoShutdownCheckBox.Checked == true)
+            {
                 this.AD_Pause100.Checked = false;
             }
         }
@@ -2615,257 +2625,6 @@ namespace SevenKnightsAI
             CheckBox checkBox = sender as CheckBox;
             this.AISettings.SP_w3SkillType = SkillType.Both;
         }
-        //Telegram
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-        {
-            while (true)
-            {
-                bot.update = "true";
-                if (bot.message_text == "/start" || bot.message_text == "/Start")
-                {
-                    bot.sendKeyboard.keyboard_R1_1 = "ChangeMode";
-                    bot.sendKeyboard.keyboard_R1_2 = "ControlPC";
-                    bot.sendKeyboard.keyboard_R1_3 = "/start";
-                    bot.sendKeyboard.keyboard_R2_1 = "EnableMode";
-                    bot.sendKeyboard.keyboard_R2_2 = "DisableMode";
-                    bot.sendKeyboard.keyboard_R2_3 = "GetReport";
-                    bot.sendKeyboard.keyboard_R2_4 = "GetMode";
-                    bot.sendKeyboard.keyboard_R3_1 = "StartBot";
-                    bot.sendKeyboard.keyboard_R3_2 = "StopBot";
-                    bot.sendKeyboard.keyboard_R3_3 = "PauseBot";
-                    bot.sendKeyboard.keyboard_R3_4 = "ResumeBot";
-                    bot.sendKeyboard.send(bot.chat_id, "Welcome to Seven Knights AI Black Telegram Bot.\nYour ChatID will automatically added to your bot.");
-                    ST_TelegramChatIDTextBox.Text = bot.chat_id;
-                }
-                if (bot.message_text == "StartBot")
-                {
-                    this.StartAI();
-                    return;
-                }
-                if (bot.message_text == "ChangeScene")
-                {
-                    if (!this.started)
-                    {
-                        this.StartAI();
-                        bot.sendMessage.send(bot.chat_id, "Bot Started!");
-                    }
-                    else
-                    {
-                        bot.sendMessage.send(bot.chat_id, "Bot Already Started!");
-                    }
-                }
-                if (bot.message_text == "StopBot")
-                {
-
-                    if (this.started)
-                    {
-                        aiButton_Click(sender, e);
-                        
-                        bot.sendMessage.send(bot.chat_id, "Bot Stopped");
-                    }
-                    else
-                    {
-                        bot.sendMessage.send(bot.chat_id, "Bot Already Stopped");
-                        
-                    }
-                }
-                if (bot.message_text == "PauseBot")
-                {
-                    if (this.started)
-                    {
-                        //aiPause_Click(sender, e);
-                        PauseAI();
-                        bot.sendMessage.send(bot.chat_id, "Bot Paused");
-                    }
-                    else
-                    {
-                        bot.sendMessage.send(bot.chat_id, "Bot Not Running");
-                    }
-                }
-                if (bot.message_text == "ResumeBot")
-                {
-                    if (this.AIProfiles.TMP_Paused)
-                    {
-                        //aiButton_Click(sender, e);
-                        ResumeAI();
-                        bot.sendMessage.send(bot.chat_id, "Bot Resume");
-                    }
-                    else
-                    {
-                        bot.sendMessage.send(bot.chat_id, "Bot Not Paused");
-                    }
-                }
-                if (bot.message_text == "EnableMode")
-                {
-                    bot.send_inline_keyboard.keyboard_R1_1 = "Adventure";
-                    bot.send_inline_keyboard.keyboard_R1_1_callback_data = "EnableAdventure";
-                    bot.send_inline_keyboard.keyboard_R1_2 = "Arena";
-                    bot.send_inline_keyboard.keyboard_R1_2_callback_data = "EnableArena";
-                    bot.send_inline_keyboard.keyboard_R1_3 = "Tower+GoldMine";
-                    bot.send_inline_keyboard.keyboard_R1_3_callback_data = "EnableGoldChamber";
-                    bot.send_inline_keyboard.keyboard_R1_4 = "Raid";
-                    bot.send_inline_keyboard.keyboard_R1_4_callback_data = "EnableRaid";
-                    bot.send_inline_keyboard.send(bot.chat_id, "Select Mode You Want To Enable : ");
-                }
-                if (bot.data == "EnableAdventure")
-                {
-                    this.AISettings.AD_Enable = true;
-                }
-                if (bot.data == "EnableArena")
-                {
-                    this.AISettings.AR_Enable = true;
-                }
-                if (bot.data == "EnableGoldChamber")
-                {
-                    this.AISettings.GC_Enable = true;
-                }
-                if (bot.data == "EnableRaid")
-                {
-                    this.AISettings.RD_Enable = true;
-                }
-                if (bot.message_text == "DisableMode")
-                {
-                    bot.send_inline_keyboard.keyboard_R1_1 = "Adventure";
-                    bot.send_inline_keyboard.keyboard_R1_1_callback_data = "DisableAdventure";
-                    bot.send_inline_keyboard.keyboard_R1_2 = "Arena";
-                    bot.send_inline_keyboard.keyboard_R1_2_callback_data = "DisableArena";
-                    bot.send_inline_keyboard.keyboard_R1_3 = "Tower+GoldMine";
-                    bot.send_inline_keyboard.keyboard_R1_3_callback_data = "DisableGoldChamber";
-                    bot.send_inline_keyboard.keyboard_R1_4 = "Raid";
-                    bot.send_inline_keyboard.keyboard_R1_4_callback_data = "DisableRaid";
-                    bot.send_inline_keyboard.send(bot.chat_id, "Select Mode You Want To Disable : ");
-                }
-                if (bot.data == "DisableAdventure")
-                {
-                    this.AISettings.AD_Enable = false;
-                }
-                if (bot.data == "DisableArena")
-                {
-                    this.AISettings.AR_Enable = false;
-                }
-                if (bot.data == "DisableGoldChamber")
-                {
-                    this.AISettings.GC_Enable = false;
-                }
-                if (bot.data == "DisableRaid")
-                {
-                    this.AISettings.RD_Enable = false;
-                }
-                if (bot.message_text == "GetReport")
-                {
-                    CaptureReport();
-                    bot.SendPhoto.Show_sending_a_photo = true;
-                    bot.SendPhoto.caption = String.Format("Report {0} , {1}", DateTime.Now.ToString(), this.AI.GetMode().ToString());
-                    bot.SendPhoto.send(this.AIProfiles.ST_TelegramChatID, @"C://report.jpg");
-                    bot.SendPhoto.Show_sending_a_photo = true;
-                    bot.SendPhoto.caption = String.Format("Last Screenshot {0}", DateTime.Now.ToString());
-                    bot.SendPhoto.send(this.AIProfiles.ST_TelegramChatID, @"C://screen.jpg");
-                }
-                if (bot.message_text == "ChangeMode")
-                {
-                    bot.send_inline_keyboard.keyboard_R1_1 = "Adventure";
-                    bot.send_inline_keyboard.keyboard_R1_1_callback_data = "FAdventure";
-                    bot.send_inline_keyboard.keyboard_R1_2 = "Tower+GoldMine";
-                    bot.send_inline_keyboard.keyboard_R1_2_callback_data = "FGoldChamber";
-                    bot.send_inline_keyboard.keyboard_R1_3 = "Arena";
-                    bot.send_inline_keyboard.keyboard_R1_3_callback_data = "FArena";
-                    bot.send_inline_keyboard.keyboard_R1_4 = "Raid";
-                    bot.send_inline_keyboard.keyboard_R1_4_callback_data = "FRaid";
-                    bot.send_inline_keyboard.keyboard_R2_1 = "BUY_KEY";
-                    bot.send_inline_keyboard.keyboard_R2_1_callback_data = "FSellHero";
-                    bot.send_inline_keyboard.send(bot.chat_id, "This Feature will force bot to change mode, Please choose Mode what you want : ");
-                }
-                if (bot.data == "FAdventure")
-                {
-                    if (this.AISettings.AD_Enable == true)
-                    {
-                        this.AI.ChangeMode(Objective.ADVENTURE);
-                        bot.sendMessage.send(bot.chat_id, "Mode Changed to : Adventure");
-                    }
-                    else
-                    {
-                        bot.sendMessage.send(bot.chat_id, "Adventure Mode is not Activated");
-                    }
-                }
-                if (bot.data == "FSellHero")
-                {
-                    if (this.AISettings.RS_BuyKeyHonors == true)
-                    {
-                        this.AI.ChangeMode(Objective.BUY_KEYS);
-                        bot.sendMessage.send(bot.chat_id, "Mode Changed to : SELL_HEROES");
-                    }
-                    else
-                    {
-                        bot.sendMessage.send(bot.chat_id, "BUY_KEYS Mode is not Activated");
-                    }
-                }
-                if (bot.data == "FGoldChamber")
-                {
-                    if (this.AISettings.GC_Enable == true)
-                    {
-                        this.AI.ChangeMode(Objective.GOLD_CHAMBER);
-                        bot.sendMessage.send(bot.chat_id, "Mode Changed to : Gold Chamber");
-                    }
-                    else
-                    {
-                        bot.sendMessage.send(bot.chat_id, "Gold Chamber Mode is not Activated");
-                    }
-                }
-                if (bot.data == "FArena")
-                {
-                    if (this.AISettings.AR_Enable == true)
-                    {
-                        this.AI.ChangeMode(Objective.ARENA);
-                        bot.sendMessage.send(bot.chat_id, "Mode Changed to : Arena");
-                    }
-                    else
-                    {
-                        bot.sendMessage.send(bot.chat_id, "Arena Mode is not Activated");
-                    }
-                }
-                if (bot.data == "FRaid")
-                {
-                    if (this.AISettings.RD_Enable == true)
-                    {
-                        this.AI.ChangeMode(Objective.RAID);
-                        bot.sendMessage.send(bot.chat_id, "Mode Changed to : Raid");
-                    }
-                    else
-                    {
-                        bot.sendMessage.send(bot.chat_id, "Raid Mode is not Activated");
-                    }
-                }
-                if (bot.message_text == "GetMode")
-                {
-                    string result = this.AI.GetMode();
-                    bot.sendMessage.send(bot.chat_id, result);
-                }
-                if (bot.message_text == "ControlPC")
-                {
-                    bot.send_inline_keyboard.keyboard_R1_1 = "Shutdown PC";
-                    bot.send_inline_keyboard.keyboard_R1_1_callback_data = "Shutdown";
-                    bot.send_inline_keyboard.keyboard_R1_2 = "Restart PC";
-                    bot.send_inline_keyboard.keyboard_R1_2_callback_data = "Restart";
-                    bot.send_inline_keyboard.keyboard_R2_1 = "Restart 7k";
-                    bot.send_inline_keyboard.keyboard_R2_1_callback_data = "Restart7k";
-                    bot.send_inline_keyboard.send(bot.chat_id, "Select Mode You Want To Enable : ");
-                }
-                if (bot.data == "Restart7k")
-                {
-                    bot.sendMessage.send(bot.chat_id, Restart7k());
-                }
-                if (bot.data == "Shutdown")
-                {
-                    bot.sendMessage.send(bot.chat_id, "PC will Shutdown Now!");
-                    Process.Start("shutdown", "/s /f /t 0");
-                }
-                if (bot.data == "Restart")
-                {
-                    bot.sendMessage.send(bot.chat_id, "PC will Restart Now!");
-                    Process.Start("shutdown","/r /t 0");
-                }
-            }
-        }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -2959,6 +2718,332 @@ namespace SevenKnightsAI
                 default:
                     return;
             }
+        }
+
+
+        private void Worker2_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            AppendLog("Nothing?");
+        }
+
+        private void Worker2_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            ProgressArgsTelegram progressArgsT = e.UserState as ProgressArgsTelegram;
+            if (progressArgsT == null)
+            {
+                return;
+            }
+            Label label = null;
+            switch (progressArgsT.Type)
+            {
+                case ProgressType.COMMANDT:
+                    {
+                        if ((string)progressArgsT.Message == "Start Bot")
+                        {
+                            this.aiButton.PerformClick();
+                        }
+                        else if ((string)progressArgsT.Message == "Stop Bot")
+                        {
+                            this.aiButton.PerformClick();
+                        }
+                        else if ((string)progressArgsT.Message == "Pause Bot")
+                        {
+                            this.aiPause.PerformClick();
+                        }
+                        else if ((string)progressArgsT.Message == "Resume Bot")
+                        {
+                            this.aiButton.PerformClick();
+                        }
+                        else if ((string)progressArgsT.Message == "Enable Adventure")
+                        {
+                            this.AISettings.AD_Enable = true;
+                        }
+                        else if ((string)progressArgsT.Message == "Enable GoldMine")
+                        {
+                            this.AISettings.GC_Enable = true;
+                        }
+                        else if ((string)progressArgsT.Message == "Enable Arena")
+                        {
+                            this.AISettings.AR_Enable = true;
+                        }
+                        else if ((string)progressArgsT.Message == "Enable Raid")
+                        {
+                            this.AISettings.RD_Enable = true;
+                        }
+                        else if ((string)progressArgsT.Message == "Disable Adventure")
+                        {
+                            this.AISettings.AD_Enable = false;
+                        }
+                        else if ((string)progressArgsT.Message == "Disable GoldMine")
+                        {
+                            this.AISettings.GC_Enable = false;
+                        }
+                        else if ((string)progressArgsT.Message == "Disable Arena")
+                        {
+                            this.AISettings.AR_Enable = false;
+                        }
+                        else if ((string)progressArgsT.Message == "Disable Raid")
+                        {
+                            this.AISettings.RD_Enable = false;
+                        }
+                        else if ((string)progressArgsT.Message == "Change Mode Adventure")
+                        {
+                            this.AI.ChangeMode(Objective.ADVENTURE);
+                        }
+                        else if ((string)progressArgsT.Message == "Change Mode GoldMine")
+                        {
+                            this.AI.ChangeMode(Objective.GOLD_CHAMBER);
+                        }
+                        else if ((string)progressArgsT.Message == "Change Mode Arena")
+                        {
+                            this.AI.ChangeMode(Objective.ARENA);
+                        }
+                        else if ((string)progressArgsT.Message == "Change Mode Raid")
+                        {
+                            this.AI.ChangeMode(Objective.RAID);
+                        }
+                        break;
+                    }
+            }
+        }
+
+        public void Test(object sender, DoWorkEventArgs e)
+        {
+            while (!this.Worker2.CancellationPending)
+            {
+                bot.update = "true";
+                if (bot.message_text == "/start" || bot.message_text == "/Start" || bot.message_text == "ResetTelegram")
+                {
+                    bot.sendKeyboard.keyboard_R1_1 = "ChangeMode";
+                    bot.sendKeyboard.keyboard_R1_2 = "ControlPC";
+                    bot.sendKeyboard.keyboard_R1_3 = "ResetTelegram";
+                    bot.sendKeyboard.keyboard_R2_1 = "EnableMode";
+                    bot.sendKeyboard.keyboard_R2_2 = "DisableMode";
+                    bot.sendKeyboard.keyboard_R2_3 = "GetReport";
+                    bot.sendKeyboard.keyboard_R3_1 = "StartBot";
+                    bot.sendKeyboard.keyboard_R3_2 = "StopBot";
+                    bot.sendKeyboard.keyboard_R3_3 = "PauseBot";
+                    bot.sendKeyboard.keyboard_R3_4 = "ResumeBot";
+                    bot.sendKeyboard.send(bot.chat_id, "Welcome to Seven Knights AI Black Telegram Bot.\nYour ChatID will automatically added to your bot.");
+                    ST_TelegramChatIDTextBox.Text = bot.chat_id;
+                }
+                if (bot.message_text == "StartBot")
+                {
+                    this.tabControl.SelectedTab = reportTab;
+                    Thread.Sleep(2000);
+                    if (!this.started)
+                    {
+                        SendCommand("Start Bot");
+
+                        bot.sendMessage.send(bot.chat_id, "Bot Started");
+                    }
+                    else
+                    {
+                        bot.sendMessage.send(bot.chat_id, "Bot Already Started");
+                    }
+                }
+                if (bot.message_text == "StopBot")
+                {
+                    if (this.started)
+                    {
+                        SendCommand("Stop Bot");
+
+                        bot.sendMessage.send(bot.chat_id, "Bot Stopped");
+                    }
+                    else
+                    {
+                        bot.sendMessage.send(bot.chat_id, "Bot Already Stopped");
+
+                    }
+                }
+                if (bot.message_text == "PauseBot")
+                {
+                    if (this.started)
+                    {
+                        SendCommand("Pause Bot");
+                        bot.sendMessage.send(bot.chat_id, "Bot Paused");
+                    }
+                    else
+                    {
+                        bot.sendMessage.send(bot.chat_id, "Bot Not Running");
+                    }
+                }
+                if (bot.message_text == "ResumeBot")
+                {
+                    if (this.AIProfiles.TMP_Paused)
+                    {
+                        SendCommand("Resume Bot");
+                        bot.sendMessage.send(bot.chat_id, "Bot Resume");
+                    }
+                    else
+                    {
+                        bot.sendMessage.send(bot.chat_id, "Bot Not Paused");
+                    }
+                }
+                if (bot.message_text == "EnableMode")
+                {
+                    bot.send_inline_keyboard.keyboard_R1_1 = "Adventure";
+                    bot.send_inline_keyboard.keyboard_R1_1_callback_data = "EnableAdventure";
+                    bot.send_inline_keyboard.keyboard_R1_2 = "Arena";
+                    bot.send_inline_keyboard.keyboard_R1_2_callback_data = "EnableArena";
+                    bot.send_inline_keyboard.keyboard_R1_3 = "Tower+GoldMine";
+                    bot.send_inline_keyboard.keyboard_R1_3_callback_data = "EnableGoldMine";
+                    bot.send_inline_keyboard.keyboard_R1_4 = "Raid";
+                    bot.send_inline_keyboard.keyboard_R1_4_callback_data = "EnableRaid";
+                    bot.send_inline_keyboard.send(bot.chat_id, "Select Mode You Want To Enable : ");
+                }
+                if (bot.data == "EnableAdventure")
+                {
+                    SendCommand("Enable Adventure");
+                    bot.sendMessage.send(bot.chat_id, "Adventure Enabled");
+                }
+                if (bot.data == "EnableArena")
+                {
+                    SendCommand("Enable Arena");
+                    bot.sendMessage.send(bot.chat_id, "Adventure Enabled");
+                }
+                if (bot.data == "EnableGoldMine")
+                {
+                    SendCommand("Enable GoldMine");
+                    bot.sendMessage.send(bot.chat_id, "Adventure Enabled");
+                }
+                if (bot.data == "EnableRaid")
+                {
+                    SendCommand("Enable Raid");
+                    bot.sendMessage.send(bot.chat_id, "Adventure Enabled");
+                }
+                if (bot.message_text == "DisableMode")
+                {
+                    bot.send_inline_keyboard.keyboard_R1_1 = "Adventure";
+                    bot.send_inline_keyboard.keyboard_R1_1_callback_data = "DisableAdventure";
+                    bot.send_inline_keyboard.keyboard_R1_2 = "Arena";
+                    bot.send_inline_keyboard.keyboard_R1_2_callback_data = "DisableArena";
+                    bot.send_inline_keyboard.keyboard_R1_3 = "Tower+GoldMine";
+                    bot.send_inline_keyboard.keyboard_R1_3_callback_data = "DisableGoldMine";
+                    bot.send_inline_keyboard.keyboard_R1_4 = "Raid";
+                    bot.send_inline_keyboard.keyboard_R1_4_callback_data = "DisableRaid";
+                    bot.send_inline_keyboard.send(bot.chat_id, "Select Mode You Want To Disable : ");
+                }
+                if (bot.data == "DisableAdventure")
+                {
+                    SendCommand("Disable Adventure");
+                    bot.sendMessage.send(bot.chat_id, "Adventure Disabled");
+                }
+                if (bot.data == "DisableArena")
+                {
+                    SendCommand("Disable Arena");
+                    bot.sendMessage.send(bot.chat_id, "Adventure Disabled");
+                }
+                if (bot.data == "DisableGoldMine")
+                {
+                    SendCommand("Disable GoldMine");
+                    bot.sendMessage.send(bot.chat_id, "Adventure Disabled");
+                }
+                if (bot.data == "DisableRaid")
+                {
+                    SendCommand("Disable Raid");
+                    bot.sendMessage.send(bot.chat_id, "Adventure Disabled");
+                }
+                if (bot.message_text == "GetReport")
+                {
+                    CaptureReport();
+                    bot.SendPhoto.Show_sending_a_photo = true;
+                    bot.SendPhoto.caption = String.Format("Report {0} , {1}", DateTime.Now.ToString(), this.AI.GetMode().ToString());
+                    bot.SendPhoto.send(this.AIProfiles.ST_TelegramChatID, @"C://report.jpg");
+                    bot.SendPhoto.Show_sending_a_photo = true;
+                    bot.SendPhoto.caption = String.Format("Last Screenshot {0}", DateTime.Now.ToString());
+                    bot.SendPhoto.send(this.AIProfiles.ST_TelegramChatID, @"C://screen.jpg");
+                }
+                if (bot.message_text == "ChangeMode")
+                {
+                    bot.send_inline_keyboard.keyboard_R1_1 = "Adventure";
+                    bot.send_inline_keyboard.keyboard_R1_1_callback_data = "FAdventure";
+                    bot.send_inline_keyboard.keyboard_R1_2 = "Tower+GoldMine";
+                    bot.send_inline_keyboard.keyboard_R1_2_callback_data = "FGoldMine";
+                    bot.send_inline_keyboard.keyboard_R1_3 = "Arena";
+                    bot.send_inline_keyboard.keyboard_R1_3_callback_data = "FArena";
+                    bot.send_inline_keyboard.keyboard_R1_4 = "Raid";
+                    bot.send_inline_keyboard.keyboard_R1_4_callback_data = "FRaid";
+                    bot.send_inline_keyboard.send(bot.chat_id, "This Feature will force bot to change mode, Please choose Mode what you want : ");
+                }
+                if (bot.data == "FAdventure")
+                {
+                    if (this.AISettings.AD_Enable == true)
+                    {
+                        SendCommand("Change Mode Adventure");
+                        bot.sendMessage.send(bot.chat_id, "Mode Changed to : Adventure");
+                    }
+                    else
+                    {
+                        bot.sendMessage.send(bot.chat_id, "Adventure Mode is not Activated");
+                    }
+                }
+                if (bot.data == "FGoldMine")
+                {
+                    if (this.AISettings.GC_Enable == true)
+                    {
+                        SendCommand("Change Mode GoldMine");
+                        bot.sendMessage.send(bot.chat_id, "Mode Changed to : Gold Mine");
+                    }
+                    else
+                    {
+                        bot.sendMessage.send(bot.chat_id, "Gold Mine Mode is not Activated");
+                    }
+                }
+                if (bot.data == "FArena")
+                {
+                    if (this.AISettings.AR_Enable == true)
+                    {
+                        SendCommand("Change Mode Arena");
+                        bot.sendMessage.send(bot.chat_id, "Mode Changed to : Arena");
+                    }
+                    else
+                    {
+                        bot.sendMessage.send(bot.chat_id, "Arena Mode is not Activated");
+                    }
+                }
+                if (bot.data == "FRaid")
+                {
+                    if (this.AISettings.RD_Enable == true)
+                    {
+                        SendCommand("Change Mode Raid");
+                        bot.sendMessage.send(bot.chat_id, "Mode Changed to : Raid");
+                    }
+                    else
+                    {
+                        bot.sendMessage.send(bot.chat_id, "Raid Mode is not Activated");
+                    }
+                }
+                if (bot.message_text == "ControlPC")
+                {
+                    bot.send_inline_keyboard.keyboard_R1_1 = "Shutdown PC";
+                    bot.send_inline_keyboard.keyboard_R1_1_callback_data = "Shutdown";
+                    bot.send_inline_keyboard.keyboard_R1_2 = "Restart PC";
+                    bot.send_inline_keyboard.keyboard_R1_2_callback_data = "Restart";
+                    bot.send_inline_keyboard.keyboard_R2_1 = "Restart 7k";
+                    bot.send_inline_keyboard.keyboard_R2_1_callback_data = "Restart7k";
+                    bot.send_inline_keyboard.send(bot.chat_id, "Select Mode You Want To Enable : ");
+                }
+                if (bot.data == "Restart7k")
+                {
+                    bot.sendMessage.send(bot.chat_id, Restart7k());
+                }
+                if (bot.data == "Shutdown")
+                {
+                    bot.sendMessage.send(bot.chat_id, "PC will Shutdown Now!");
+                    Process.Start("shutdown", "/s /f /t 0");
+                }
+                if (bot.data == "Restart")
+                {
+                    bot.sendMessage.send(bot.chat_id, "PC will Restart Now!");
+                    Process.Start("shutdown", "/r /t 0");
+                }
+            }
+        }
+        private void SendCommand(string message)
+        {
+            ProgressArgsTelegram userState = new ProgressArgsTelegram(ProgressType.COMMANDT, message);
+            this.Worker2.ReportProgress(0, userState);
         }
     }
     public class AutoClosingMessageBox

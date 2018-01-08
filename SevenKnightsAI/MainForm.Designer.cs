@@ -501,9 +501,9 @@
             this.goldLabel = new System.Windows.Forms.Label();
             this.resourcesTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.aiPause = new System.Windows.Forms.Button();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.LG_logTextBox = new System.Windows.Forms.RichTextBox();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.tabControl.SuspendLayout();
             this.adventureTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AD_limitNumericBox)).BeginInit();
@@ -2914,7 +2914,17 @@
             "7",
             "8",
             "9",
-            "10"});
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20"});
             this.RD_SummonLvl_CheckBox.Location = new System.Drawing.Point(141, 50);
             this.RD_SummonLvl_CheckBox.Name = "RD_SummonLvl_CheckBox";
             this.RD_SummonLvl_CheckBox.Size = new System.Drawing.Size(51, 21);
@@ -2983,7 +2993,7 @@
             // 
             this.RD_DragonLVLimit.Location = new System.Drawing.Point(142, 42);
             this.RD_DragonLVLimit.Maximum = new decimal(new int[] {
-            10,
+            20,
             0,
             0,
             0});
@@ -3044,7 +3054,7 @@
             // 
             this.RD_DragonLV.Location = new System.Drawing.Point(75, 42);
             this.RD_DragonLV.Maximum = new decimal(new int[] {
-            99,
+            20,
             0,
             0,
             0});
@@ -6307,10 +6317,10 @@
             // topheaderPictureBox
             // 
             this.topheaderPictureBox.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.topheaderPictureBox.Image = global::SevenKnightsAI.Properties.Resources.title_ingrid;
+            this.topheaderPictureBox.Image = global::SevenKnightsAI.Properties.Resources.title_spike;
             this.topheaderPictureBox.Location = new System.Drawing.Point(0, 0);
             this.topheaderPictureBox.Name = "topheaderPictureBox";
-            this.topheaderPictureBox.Size = new System.Drawing.Size(504, 80);
+            this.topheaderPictureBox.Size = new System.Drawing.Size(504, 90);
             this.topheaderPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.topheaderPictureBox.TabIndex = 0;
             this.topheaderPictureBox.TabStop = false;
@@ -6450,10 +6460,6 @@
             this.aiPause.UseVisualStyleBackColor = true;
             this.aiPause.Click += new System.EventHandler(this.aiPause_Click);
             // 
-            // backgroundWorker1
-            // 
-            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
-            // 
             // timer1
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
@@ -6469,6 +6475,9 @@
             this.LG_logTextBox.TabIndex = 1;
             this.LG_logTextBox.Text = "";
             this.LG_logTextBox.TextChanged += new System.EventHandler(this.LG_logTextBox_TextChanged);
+            // 
+            // backgroundWorker1
+            // 
             // 
             // MainForm
             // 
@@ -7510,7 +7519,6 @@
         private System.Windows.Forms.RadioButton AD_w3bothSkillRadio;
         private System.Windows.Forms.RadioButton AD_w3manualSkillRadio;
         private System.Windows.Forms.RadioButton AD_w3autoSkillRadio;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Label timer;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.CheckBox ST_AutoShutdownCheckBox;
@@ -7663,5 +7671,6 @@
         private System.Windows.Forms.Button SP_w1Skill01Button;
         private System.Windows.Forms.CheckBox SP_UseTicket1;
         private System.Windows.Forms.Button button1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }

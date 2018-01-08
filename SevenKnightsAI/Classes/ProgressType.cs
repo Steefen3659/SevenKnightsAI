@@ -12,6 +12,7 @@ namespace SevenKnightsAI.Classes
         KEY,
         RESOURCE,
         CURSORPOS,
-        Alert
+        Alert,
+        COMMANDT
     }
 }
