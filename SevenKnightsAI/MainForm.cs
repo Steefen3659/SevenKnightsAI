@@ -2733,7 +2733,6 @@ namespace SevenKnightsAI
             {
                 return;
             }
-            Label label = null;
             switch (progressArgsT.Type)
             {
                 case ProgressType.COMMANDT:
@@ -3044,6 +3043,12 @@ namespace SevenKnightsAI
         {
             ProgressArgsTelegram userState = new ProgressArgsTelegram(ProgressType.COMMANDT, message);
             this.Worker2.ReportProgress(0, userState);
+        }
+
+        private void button4_Click_1(object sender, EventArgs e)
+        {
+            MainForm2 mf2 = new MainForm2();
+            mf2.Show();
         }
     }
     public class AutoClosingMessageBox

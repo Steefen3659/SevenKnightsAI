@@ -204,3 +204,4 @@ E:\Downloads\Compressed\Backup (23-12-2017)\Backup\SevenKnightsAI\SevenKnightsAI
 E:\Downloads\Compressed\Backup (23-12-2017)\Backup\SevenKnightsAI\SevenKnightsAI\SevenKnightsAI\obj\x86\Release\SevenKnightsAI.csproj.CoreCompileInputs.cache
 E:\Downloads\Compressed\Backup (23-12-2017)\Backup\SevenKnightsAI\SevenKnightsAI\SevenKnightsAI\obj\x86\Release\SevenKnightsAI.exe
 E:\Downloads\Compressed\Backup (23-12-2017)\Backup\SevenKnightsAI\SevenKnightsAI\SevenKnightsAI\obj\x86\Release\SevenKnightsAI.pdb
+E:\Documents\GitHub\SevenKnightsAI\SevenKnightsAI\obj\x86\Release\SevenKnightsAI.MainForm2.resources

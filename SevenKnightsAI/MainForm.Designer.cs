@@ -504,6 +504,7 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.LG_logTextBox = new System.Windows.Forms.RichTextBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.button4 = new System.Windows.Forms.Button();
             this.tabControl.SuspendLayout();
             this.adventureTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AD_limitNumericBox)).BeginInit();
@@ -6476,8 +6477,15 @@
             this.LG_logTextBox.Text = "";
             this.LG_logTextBox.TextChanged += new System.EventHandler(this.LG_logTextBox_TextChanged);
             // 
-            // backgroundWorker1
+            // button4
             // 
+            this.button4.Location = new System.Drawing.Point(410, 651);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.TabIndex = 9;
+            this.button4.Text = "button4";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click_1);
             // 
             // MainForm
             // 
@@ -6486,6 +6494,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Silver;
             this.ClientSize = new System.Drawing.Size(500, 722);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.aiPause);
             this.Controls.Add(this.resourcesTableLayoutPanel);
@@ -7672,5 +7681,6 @@
         private System.Windows.Forms.CheckBox SP_UseTicket1;
         private System.Windows.Forms.Button button1;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.Button button4;
     }
 }
