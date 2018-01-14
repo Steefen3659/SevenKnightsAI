@@ -251,66 +251,66 @@ namespace SevenKnightsAI.Classes.Mappings
         // จุดที่ใช้ตรวจสอบ เลือดบน ลงล่าง
         public static readonly Rectangle RaidHPUpToDownL0F = new Rectangle
         {
-            X = 610,
-            Y = 205,
-            Width = 54,
-            Height = 24
+            X = 590,
+            Y = 209,
+            Width = 80,
+            Height = 25
         };
 
         public static readonly Rectangle RaidHPUpToDownL1F = new Rectangle
         {
-            X = 610,
-            Y = 279,
-            Width = 54,
-            Height = 24
+            X = 588,
+            Y = 283,
+            Width = 81,
+            Height = 27
         };
 
         public static readonly Rectangle RaidHPUpToDownL2F = new Rectangle
         {
-            X = 610,
-            Y = 353,
-            Width = 54,
-            Height = 24
+            X = 589,
+            Y = 358,
+            Width = 80,
+            Height = 26
         };
 
         public static readonly Rectangle RaidHPUpToDownL3F = new Rectangle
         {
-            X = 610,
-            Y = 427,
-            Width = 54,
-            Height = 24
+            X = 590,
+            Y = 432, 
+            Width = 78,
+            Height = 26
         };
 
         public static readonly Rectangle RaidHPUpToDownL0B = new Rectangle
         {
-            X = 678,
-            Y = 205,
-            Width = 54,
-            Height = 24
+            X = 679,
+            Y = 211,
+            Width = 85,
+            Height = 25
         };
 
         public static readonly Rectangle RaidHPUpToDownL1B = new Rectangle
         {
             X = 678,
-            Y = 279,
-            Width = 54,
-            Height = 24
+            Y = 285,
+            Width = 85,
+            Height = 25
         };
 
         public static readonly Rectangle RaidHPUpToDownL2B = new Rectangle
         {
             X = 678,
-            Y = 353,
-            Width = 54,
-            Height = 24
+            Y = 358,
+            Width = 85,
+            Height = 25 
         };
 
         public static readonly Rectangle RaidHPUpToDownL3B = new Rectangle
         {
-            X = 678,
-            Y = 427,
-            Width = 54,
-            Height = 24
+            X = 677,
+            Y = 432,
+            Width = 85,
+            Height = 25
         };
 
 
@@ -421,66 +421,66 @@ namespace SevenKnightsAI.Classes.Mappings
         // จุดที่ใช้ตรวจสอบ HP ล่าง ขึ้นบน
         public static readonly Rectangle RaidHPDownToUpL0F = new Rectangle
         {
-            X = 610,
-            Y = 206,
-            Width = 54,
-            Height = 20
+            X = 590,
+            Y = 209,
+            Width = 80,
+            Height = 25
         };
 
         public static readonly Rectangle RaidHPDownToUpL1F = new Rectangle
         {
-            X = 610,
-            Y = 281,
-            Width = 54,
-            Height = 20
+            X = 588,
+            Y = 283,
+            Width = 81,
+            Height = 27
         };
 
         public static readonly Rectangle RaidHPDownToUpL2F = new Rectangle
         {
-            X = 610,
-            Y = 354,
-            Width = 54,
-            Height = 20
+            X = 589,
+            Y = 358,
+            Width = 80,
+            Height = 26
         };
 
         public static readonly Rectangle RaidHPDownToUpL3F = new Rectangle
         {
-            X = 610,
-            Y = 429,
-            Width = 54,
-            Height = 20
+            X = 590,
+            Y = 432,
+            Width = 78,
+            Height = 26
         };
 
         public static readonly Rectangle RaidHPDownToUpL0B = new Rectangle
         {
-            X = 678,
-            Y = 206,
-            Width = 54,
-            Height = 20
+            X = 679,
+            Y = 211,
+            Width = 85,
+            Height = 25
         };
 
         public static readonly Rectangle RaidHPDownToUpL1B = new Rectangle
         {
             X = 678,
-            Y = 281,
-            Width = 54,
-            Height = 20
+            Y = 285,
+            Width = 85,
+            Height = 25
         };
 
         public static readonly Rectangle RaidHPDownToUpL2B = new Rectangle
         {
             X = 678,
-            Y = 354,
-            Width = 54,
-            Height = 20
+            Y = 358,
+            Width = 85,
+            Height = 25 
         };
 
         public static readonly Rectangle RaidHPDownToUpL3B = new Rectangle
         {
-            X = 678,
-            Y = 429,
-            Width = 54,
-            Height = 20
+            X = 677,
+            Y = 432,
+            Width = 85,
+            Height = 25
         };
 
         //--------------------------------------- จุดสำหรับ Scoll หน้าจอ-----------------
