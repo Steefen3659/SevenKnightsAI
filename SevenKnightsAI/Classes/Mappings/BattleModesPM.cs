@@ -47,17 +47,17 @@ namespace SevenKnightsAI.Classes.Mappings
         };
         public static readonly PixelMapping BorderBottomRight = new PixelMapping
         {
-            X = 36,
-            Y = 25,
-            Color = 12009227,
+            X = 16,
+            Y = 527,
+            Color = 6767900,
             Type = MappingType.ANCHOR
         };
 
         public static readonly PixelMapping BorderTopLeft = new PixelMapping
         {
-            X = 14,
-            Y = 459,
-            Color = 14933976,
+            X = 948,
+            Y = 8,
+            Color = 2365708,
             Type = MappingType.ANCHOR
         };
 
@@ -91,9 +91,9 @@ namespace SevenKnightsAI.Classes.Mappings
 
         public static readonly PixelMapping QuestRedScroll = new PixelMapping
         {
-            X = 47,
-            Y = 457,
-            Color = 15275793,
+            X = 44,
+            Y = 476,
+            Color = 15866131,
             Type = MappingType.ANCHOR
         };
 

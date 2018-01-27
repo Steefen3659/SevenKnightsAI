@@ -93,6 +93,8 @@ namespace SevenKnightsAI
 
         private DateTime StartTime;
 
+        private Stopwatch timer1;
+
         #endregion Private Fields
 
         #region Public Properties
@@ -139,11 +141,7 @@ namespace SevenKnightsAI
                );
                 this.AppendWarning("No admin permissions. Bot might not function as expected!");
             }
-            this.Worker2.DoWork += new DoWorkEventHandler(Test);
-            this.Worker2.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.Worker2_RunWorkerCompleted);
-            this.Worker2.ProgressChanged += new ProgressChangedEventHandler(this.Worker2_ProgressChanged);
-            this.Worker2.WorkerReportsProgress = true;
-            this.Worker2.WorkerSupportsCancellation = true;
+            //BackgroudWorker for Telegram
         }
 
         #endregion Public Constructors
@@ -382,7 +380,6 @@ namespace SevenKnightsAI
             if (this.AIProfiles.TMP_Paused)
             {
                 this.ResumeAI();
-                timer1.Start();
                 return;
             }
             if (!this.started)
@@ -394,8 +391,6 @@ namespace SevenKnightsAI
                 else
                 {
                     this.StartAI();
-                    timer1.Enabled = !timer1.Enabled;
-                    StartTime = DateTime.Now;
                     return;
                 }
             }
@@ -480,6 +475,28 @@ namespace SevenKnightsAI
                     this.statusToolStripLabel.Text = string.Format("Status: {0}", progressArgs.Message.ToString());
                     this.UpdateCurrentProfileStatus();
                     this.AppendLog("Changing objective to: " + progressArgs.Message.ToString(), Color.OrangeRed);
+                    if (progressArgs.Message.ToString() == "Adventure")
+                    {
+                        groupBox7.ForeColor = Color.Black;
+                        groupBox8.ForeColor = Color.Black;
+                        groupBox9.ForeColor = Color.Green;
+                    }else if(progressArgs.Message.ToString() == "Gold Chamber")
+                    {
+                        groupBox7.ForeColor = Color.Green;
+                        groupBox8.ForeColor = Color.Black;
+                        groupBox9.ForeColor = Color.Black;
+                    }else if(progressArgs.Message.ToString() == "Arena")
+                    {
+                        groupBox7.ForeColor = Color.Black;
+                        groupBox8.ForeColor = Color.Green;
+                        groupBox9.ForeColor = Color.Black;
+                    }
+                    else
+                    {
+                        groupBox7.ForeColor = Color.Black;
+                        groupBox8.ForeColor = Color.Black;
+                        groupBox9.ForeColor = Color.Black;
+                    }
                     return;
 
                 case ProgressType.EVENT:
@@ -489,6 +506,7 @@ namespace SevenKnightsAI
 
                 case ProgressType.ERROR:
                     this.AppendLog("ERROR: " + progressArgs.Message, Color.Firebrick);
+                    timer1.Stop();
                     return;
 
                 case ProgressType.WARNING:
@@ -624,22 +642,22 @@ namespace SevenKnightsAI
                         switch (resourceType)
                         {
                             case ResourceType.GOLD:
-                                label = this.goldLabel;
+                                //label = this.goldLabel;
                                 label = this.goldLabel2;
                                 break;
 
                             case ResourceType.RUBY:
-                                label = this.rubyLabel;
+                                //label = this.rubyLabel;
                                 label = this.rubyLabel2;
                                 break;
 
                             case ResourceType.HONOR:
-                                label = this.honorLabel;
+                                //label = this.honorLabel;
                                 label = this.honorLabel2;
                                 break;
 
                             case ResourceType.TOPAZ:
-                                label = this.topazLabel;
+                                //label = this.topazLabel;
                                 label = this.topazLabel2;
                                 break;
                         }
@@ -1059,34 +1077,12 @@ namespace SevenKnightsAI
             this.GC_teamComboBox.SelectedIndex = (int)this.AISettings.GC_Team;
             this.GC_formationComboBox.SelectedIndex = (int)this.AISettings.GC_Formation;
             this.GC_masteryComboBox.SelectedIndex = (int)this.AISettings.GC_Mastery;
-            this.GC_wave1LoopCheckBox.Checked = this.AISettings.GC_Wave1Loop;
-            this.GC_wave2LoopCheckBox.Checked = this.AISettings.GC_Wave2Loop;
             this.GC_UseFriendCheckBox.Checked = this.AISettings.GC_UseFriend;
-            switch (this.AISettings.GC_SkillType)
-            {
-                case SkillType.Auto:
-                    this.GC_autoSkillRadio.Checked = true;
-                    break;
-
-                case SkillType.Manual:
-                    this.GC_manualSkillRadio.Checked = true;
-                    break;
-
-                case SkillType.Both:
-                    this.GC_bothSkillRadio.Checked = true;
-                    break;
-            }
-            Panel[] wavePanels = new Panel[]
-            {
-                this.GC_wave1Panel,
-                this.GC_wave2Panel
-            };
             int[][] waveSkill = new int[][]
             {
                 this.AISettings.GC_Wave1Skills,
                 this.AISettings.GC_Wave2Skills
             };
-            this.LoadWaveSkills(wavePanels, waveSkill, 3);
         }
 
         private void InitLogsTab()
@@ -1388,7 +1384,14 @@ namespace SevenKnightsAI
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            bot.token = "455541103:AAH5Aw6kS5-yH0OFkcrKbCbrfsb8goRmfcA";
+            bot.token = this.AIProfiles.ST_TelegramToken;
+            this.Worker2.DoWork += new DoWorkEventHandler(Test);
+            this.Worker2.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.Worker2_RunWorkerCompleted);
+            this.Worker2.ProgressChanged += new ProgressChangedEventHandler(this.Worker2_ProgressChanged);
+            this.Worker2.WorkerReportsProgress = true;
+            this.Worker2.WorkerSupportsCancellation = true;
+            Worker2.RunWorkerAsync();
+            timer1 = new Stopwatch();
             bot.CheckForIllegalCrossThreadCalls = false;
             ContextMenu contextMenu = new ContextMenu();
             MenuItem menuItem = new MenuItem("Pause");
@@ -1406,7 +1409,6 @@ namespace SevenKnightsAI
             this.tsslBuildInfo.Text = "Build: " + build;
             AppendLog("Loaded Build :  " + build);
             this.loaded = true;
-            Worker2.RunWorkerAsync();
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
@@ -1453,7 +1455,8 @@ namespace SevenKnightsAI
                 this.EnablePause(false);
                 timer1.Stop();
             }
-            this.tabControl.SelectedTab = reportTab;
+
+            this.tabControl1.SelectedTab = tabPage4;
         }
 
         private void ReloadTabs(bool refreshSettings)
@@ -1481,9 +1484,11 @@ namespace SevenKnightsAI
             this.aiButton.Text = "Stop AI";
             this.botstatusLabel.Text = "Bot Running";
             this.botstatusLabel.ForeColor = Color.Green;
-            this.tabControl.SelectedTab = reportTab;
+
+            this.tabControl1.SelectedTab = tabPage4;
             this.EnablePause(true);
             timer1.Start();
+            
         }
 
         private void RS_buyKeysCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -2098,6 +2103,7 @@ namespace SevenKnightsAI
                 }
                 num++;
             }
+            this.groupBox2.Text = "Current Profiles: "+ this.ST_currentProfileComboBox.Text;
         }
 
         private void ST_ToggleBlueStacks(bool force = false, bool show = true)
@@ -2125,6 +2131,7 @@ namespace SevenKnightsAI
             this.ST_ToggleBlueStacks(false, true);
         }
 
+
         private void StartAI()
         {
             this.Worker = this.AI.Start(this.SynchronizationContext);
@@ -2134,10 +2141,15 @@ namespace SevenKnightsAI
             this.aiButton.Text = "Stop AI";
             this.botstatusLabel.Text = "Bot Running";
             this.botstatusLabel.ForeColor = Color.Green;
-            this.tabControl.SelectedTab = reportTab;
+
+            this.tabControl1.SelectedTab = tabPage4;
             this.EnablePause(true);
             this.button2.Enabled = true;
             this.ST_toggleBlueStacksButton.Enabled = true;
+            timer1.Reset();
+            timer1.Start();
+            timer2.Start();
+
         }
 
         private string Restart7k()
@@ -2157,7 +2169,8 @@ namespace SevenKnightsAI
 
         private void StopAI()
         {
-            this.tabControl.SelectedTab = reportTab;
+
+            this.tabControl1.SelectedTab = tabPage4;
             if (this.Worker != null)
             {
                 this.Worker.CancelAsync();
@@ -2175,7 +2188,7 @@ namespace SevenKnightsAI
                     }
                 }
             }
-            timer1.Enabled = !timer1.Enabled;
+            timer1.Stop();
             timer.Text = "00:00:00";
         }
 
@@ -2336,7 +2349,7 @@ namespace SevenKnightsAI
             Process.Start("https://www.nulled.to/user/600594-xhum");
         }
 
-        private void linkLabel7_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void linkstatusToolStripLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("https://github.com/dreammed/SevenKnightsAI");
         }
@@ -2648,8 +2661,11 @@ namespace SevenKnightsAI
         }
         public void CaptureReport()
         {
-            this.tabControl.SelectedTab = reportTab;
-            System.Threading.Thread.Sleep(3000);
+            if (tabControl1.SelectedTab != tabControl1.TabPages["tabPage4"])
+            {
+                this.tabControl1.SelectedTab = tabPage4;
+            }
+            System.Threading.Thread.Sleep(5000);
             ScreenCapture sc = new ScreenCapture();
             // capture entire screen, and save it to a file
             Image img = sc.CaptureScreen();
@@ -2723,7 +2739,7 @@ namespace SevenKnightsAI
 
         private void Worker2_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            AppendLog("Nothing?");
+            AppendLog(e.Error.ToString());
         }
 
         private void Worker2_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -2733,7 +2749,6 @@ namespace SevenKnightsAI
             {
                 return;
             }
-            Label label = null;
             switch (progressArgsT.Type)
             {
                 case ProgressType.COMMANDT:
@@ -2772,19 +2787,19 @@ namespace SevenKnightsAI
                         }
                         else if ((string)progressArgsT.Message == "Disable Adventure")
                         {
-                            this.AISettings.AD_Enable = false;
+                            AI.DisableMode(Objective.ADVENTURE);
                         }
                         else if ((string)progressArgsT.Message == "Disable GoldMine")
                         {
-                            this.AISettings.GC_Enable = false;
+                            AI.DisableMode(Objective.GOLD_CHAMBER);
                         }
                         else if ((string)progressArgsT.Message == "Disable Arena")
                         {
-                            this.AISettings.AR_Enable = false;
+                            AI.DisableMode(Objective.ARENA);
                         }
                         else if ((string)progressArgsT.Message == "Disable Raid")
                         {
-                            this.AISettings.RD_Enable = false;
+                            AI.DisableMode(Objective.RAID);
                         }
                         else if ((string)progressArgsT.Message == "Change Mode Adventure")
                         {
@@ -2801,6 +2816,10 @@ namespace SevenKnightsAI
                         else if ((string)progressArgsT.Message == "Change Mode Raid")
                         {
                             this.AI.ChangeMode(Objective.RAID);
+                        }
+                        else if ((string)progressArgsT.Message == "Change Mode Send Honor")
+                        {
+                            this.AI.ChangeMode(Objective.SEND_HONORS);
                         }
                         break;
                     }
@@ -2829,8 +2848,9 @@ namespace SevenKnightsAI
                 }
                 if (bot.message_text == "StartBot")
                 {
-                    this.tabControl.SelectedTab = reportTab;
-                    Thread.Sleep(2000);
+        
+                    this.tabControl1.SelectedTab = tabPage4;
+                    Thread.Sleep(5000);
                     if (!this.started)
                     {
                         SendCommand("Start Bot");
@@ -2958,12 +2978,14 @@ namespace SevenKnightsAI
                 {
                     bot.send_inline_keyboard.keyboard_R1_1 = "Adventure";
                     bot.send_inline_keyboard.keyboard_R1_1_callback_data = "FAdventure";
-                    bot.send_inline_keyboard.keyboard_R1_2 = "Tower+GoldMine";
+                    bot.send_inline_keyboard.keyboard_R1_2 = "GoldMine";
                     bot.send_inline_keyboard.keyboard_R1_2_callback_data = "FGoldMine";
                     bot.send_inline_keyboard.keyboard_R1_3 = "Arena";
                     bot.send_inline_keyboard.keyboard_R1_3_callback_data = "FArena";
                     bot.send_inline_keyboard.keyboard_R1_4 = "Raid";
                     bot.send_inline_keyboard.keyboard_R1_4_callback_data = "FRaid";
+                    bot.send_inline_keyboard.keyboard_R2_1 = "Send Honor";
+                    bot.send_inline_keyboard.keyboard_R2_1_callback_data = "FSendHonors";
                     bot.send_inline_keyboard.send(bot.chat_id, "This Feature will force bot to change mode, Please choose Mode what you want : ");
                 }
                 if (bot.data == "FAdventure")
@@ -3014,6 +3036,18 @@ namespace SevenKnightsAI
                         bot.sendMessage.send(bot.chat_id, "Raid Mode is not Activated");
                     }
                 }
+                if (bot.data == "FSendHonors")
+                {
+                    if (this.AISettings.RD_Enable == true)
+                    {
+                        SendCommand("Change Mode Send Honor");
+                        bot.sendMessage.send(bot.chat_id, "Mode Changed to : Raid");
+                    }
+                    else
+                    {
+                        bot.sendMessage.send(bot.chat_id, "Raid Mode is not Activated");
+                    }
+                }
                 if (bot.message_text == "ControlPC")
                 {
                     bot.send_inline_keyboard.keyboard_R1_1 = "Shutdown PC";
@@ -3044,6 +3078,53 @@ namespace SevenKnightsAI
         {
             ProgressArgsTelegram userState = new ProgressArgsTelegram(ProgressType.COMMANDT, message);
             this.Worker2.ReportProgress(0, userState);
+        }
+
+        private void AD_NoHeroUp_Checkbox_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            bool @checked = checkBox.Checked;
+            this.AIProfiles.AD_NoHeroUp = @checked;
+        }
+
+        private void label27_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label24_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void screenshotButton_Click(object sender, EventArgs e)
+        {
+            Bitmap screen = this.AI.BlueStacks.CaptureFrame(!this.AIProfiles.ST_ForegroundMode);
+            screen.Save("C:\\screen.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+            MessageBox.Show("Screenshot Saved to C:\\screen.jpg");
+        }
+
+        private void label10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox5_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            TimeSpan ts = timer1.Elapsed;
+            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}",
+ts.Hours, ts.Minutes, ts.Seconds);
+            timer.Text = elapsedTime;
+        }
+
+        private void botstatusLabel_Click(object sender, EventArgs e)
+        {
+
         }
     }
     public class AutoClosingMessageBox

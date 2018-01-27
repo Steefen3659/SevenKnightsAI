@@ -117,7 +117,6 @@ namespace SevenKnightsAI.Classes
         private int RubyCount;
         private int HeroCount;
         private bool MaxHeroUpCount;
-        private bool botError;
         private bool nomorehero30;
         private string HeroMax;
         private SynchronizationContext SynchronizationContext;
@@ -126,7 +125,6 @@ namespace SevenKnightsAI.Classes
         private int TowerKeys;
         private TimeSpan TowerKeyTime;
         private BackgroundWorker Worker;
-        private BackgroundWorker Worker2;
         private string MapZone;
         private bool Hottimeloop;
         private string PlayerName = "";
@@ -150,6 +148,7 @@ namespace SevenKnightsAI.Classes
         private bool sp_row3flag;
         private bool sp_row4flag;
         private bool rewarddragon;
+        private int summondragonlimit;
 
         #endregion Private Fields
 
@@ -207,6 +206,12 @@ namespace SevenKnightsAI.Classes
         {
             ChangeObjective(OBJA);
         }
+
+        public void DisableMode(Objective OBJA)
+        {
+            DisableObjective(OBJA);
+        }
+
         public void ChangeProfile()
         {
             this.AIProfiles.ToggleHotTimeProfile();
@@ -545,6 +550,40 @@ namespace SevenKnightsAI.Classes
             this.PreviousObjective = this.CurrentObjective;
             this.CurrentObjective = objective;
             this.Worker.ReportProgress(0, new ProgressArgs(ProgressType.OBJECTIVE, message));
+        }
+
+        private void DisableObjective(Objective Obj)
+        {
+            string message = string.Empty;
+            switch (Obj)
+            {
+
+                case Objective.ADVENTURE:
+                    message = "Adventure";
+                    this.AISettings.AD_Enable = false;
+                    break;
+
+                case Objective.GOLD_CHAMBER:
+                    message = "Gold Chamber";
+                    this.AISettings.AD_Enable = false;
+                    break;
+
+                case Objective.SPECIAL_DUNGEON:
+                    message = "Special Dungeon";
+                    this.AISettings.AD_Enable = false;
+                    break;
+
+                case Objective.ARENA:
+                    message = "Arena";
+                    this.AISettings.AD_Enable = false;
+                    break;
+
+                case Objective.RAID:
+                    message = "Raid";
+                    this.AISettings.AD_Enable = false;
+                    break;
+            }
+            this.Log(message + " Disabled", Color.Orange);
         }
 
         private bool CheckMapNumber(World world, int stage)
@@ -1369,8 +1408,7 @@ namespace SevenKnightsAI.Classes
 
         private string CheckDragonNameUpToDown(int location) //หามังกรหลายตำแหน่งจาก บน ลง ล่าง
         {
-            this.Log("Up To Down Run");
-            //string DragonN = "";
+            string DragonN = "";
             Rectangle[] array = new Rectangle[]
             {
                 RaidLobbyPM.RaidNameUpToDownL0,
@@ -1379,36 +1417,28 @@ namespace SevenKnightsAI.Classes
                 RaidLobbyPM.RaidNameUpToDownL3
             };
             Rectangle rect = array[location];
-            using (Bitmap bitmap = this.CropFrame(this.BlueStacks.MainWindowAS.CurrentFrame, LobbyPM.OwnerLocation))
+            using (Bitmap bitmap = this.CropFrame(this.BlueStacks.MainWindowAS.CurrentFrame, rect))
             {
                 using (Page page = this.Tesseractor.Engine.Process(bitmap, null))
                 {
                     string text = page.GetText();
 #if DEBUG
-                    Console.WriteLine("Name = " + text.Trim());
-                    bitmap.Save("Name.png");
+                        Console.WriteLine("DName = " + text.Trim().Replace(" ", ""));
+                        bitmap.Save("DName"+location+".png");
 #endif
                     Utility.FilterAscii(text);
-                    if (text != "")
-                    {
-                        PlayerName = text.Trim();
-                    }
-                    else
-                    {
-                        PlayerName = "NULL";
-                    }
+                    DragonN = text.Trim();
                 }
 #if DEBUG
-                Console.WriteLine("Owner Name = " + PlayerName);
+                        Console.WriteLine("DName = " + DragonN);
 #endif
-                return PlayerName;
+                return DragonN;
             }
 
         }
 
         private string CheckDragonNameDownToUp(int location) //หามังกรหลายตำแหน่งจาก ล่าง ขึ้น บน
         {
-            this.Log("Down To UP Run");
             string DragonN = "";
             Rectangle[] array = new Rectangle[]
             {
@@ -2356,7 +2386,6 @@ namespace SevenKnightsAI.Classes
             this.RaidLimitCount = 0;
             this.HeroCount = 0;
             this.MaxHeroUpCount = false;
-            this.botError = false;
             this.nomorehero30 = false;
             this.AdventureKeys = -1;
             this.AdventureKeyTime = TimeSpan.MaxValue;
@@ -2373,6 +2402,7 @@ namespace SevenKnightsAI.Classes
             this.OneSecTimer.Enabled = true;
             this.DragonFound = false;
             this.rewarddragon = true;
+            this.summondragonlimit = 0;
         }
 
         private bool IsAnyQuestsEnabled()
@@ -2777,8 +2807,7 @@ namespace SevenKnightsAI.Classes
                                     {
                                         this.Escape();
                                         this.Log("cannot find scene escape");
-                                        this.botError = true;
-                                            this.Alert("Bot Error2");
+                                        this.Alert("Bot Error2");
                                         this.IdleCounter = 0;
                                     }
                                 }
@@ -3850,6 +3879,7 @@ namespace SevenKnightsAI.Classes
                                             this.Log("The dragon Appears!", this.COLOR_RAID);
                                             SevenKnightsCore.Sleep(1500);
                                             this.WeightedClick(RaidDragonPM.TapArea, 1.0, 1.0, 1, 0, "left");
+                                            this.summondragonlimit += 1;
                                             if (this.AISettings.RD_OwnerDragon)
                                             {
                                                 this.DragonFound = true;
@@ -3915,22 +3945,24 @@ namespace SevenKnightsAI.Classes
                                             if (this.CurrentObjective == Objective.RAID)
                                             {
                                                 this.LongSleep(1000, 1000);
-                                                if (this.MatchMapping(RaidLobbyPM.RedIconOnDefeatedTab, 2) && !this.DragonFound && this.rewarddragon)
+                                                if (this.MatchMapping(RaidLobbyPM.RedIconOnDefeatedTab, 2) && !this.DragonFound)
                                                 {
                                                     this.Log("Go Collect Raid Reward", Color.DarkOrchid);
+                                                    this.rewarddragon = true;
                                                     this.WeightedClick(RaidLobbyPM.DefeatedTab, 1.0, 1.0, 1, 0, "left");
                                                     SevenKnightsCore.Sleep(500);
                                                     this.CaptureFrame();
-                                                    if (this.MatchMapping(RaidLobbyPM.EnterButton, 2))
+                                                    if (this.MatchMapping(RaidLobbyPM.RewardButtonRedIcon1, 2))
                                                     {
                                                         this.Log("Collect Raid Reward", Color.DarkRed);
                                                         SevenKnightsCore.Sleep(500);
-                                                        this.WeightedClick(RaidLobbyPM.EnterButton, 1.0, 1.0, 1, 0, "left");
+                                                        this.WeightedClick(RaidLobbyPM.RewardButton1, 1.0, 1.0, 1, 0, "left");
                                                     }
                                                     else
                                                     {
                                                         this.Log("No Raid Reward", Color.DarkMagenta);
-                                                        this.DoneRaid();
+                                                        this.rewarddragon = false;
+                                                        //this.DoneRaid();
                                                     }
                                                 }
                                                 else
@@ -4370,7 +4402,7 @@ namespace SevenKnightsAI.Classes
                                                     }
                                                     else
                                                     {
-                                                        this.WeightedClick(RaidLobbyPM.EnterButton, 1.0, 1.0, 1, 0, "left");
+                                                        this.WeightedClick(RaidLobbyPM.RaidDownToUpBtn0, 1.0, 1.0, 1, 0, "left");
                                                     }
                                                 }
                                                 this.MasteryChecked = !this.MasteryChecked;
@@ -4416,7 +4448,7 @@ namespace SevenKnightsAI.Classes
                                             this.RaidAfterFight();
                                             SendTelegram(this.AIProfiles.ST_TelegramChatID, "Bot will collect the reward and if there is any.");
                                             this.rewarddragon = true;
-                                            this.WeightedClick(RaidEndPM.AgainButton, 1.0, 1.0, 1, 0, "left");
+                                            this.WeightedClick(RaidEndPM.RaidButton, 1.0, 1.0, 1, 0, "left");
                                             this.LongSleep(2000, 1000);
                                             break;
 
@@ -4435,10 +4467,12 @@ namespace SevenKnightsAI.Classes
 
                                         case SceneType.RAID_REWARD_POPUP:
                                             this.rewarddragon = false;
-                                            this.Escape();
+                                            this.WeightedClick(RaidRewardPopupPM.OkButton, 1.0, 1.0, 1, 0, "left");
+                                            SevenKnightsCore.Sleep(1000);
                                             break;
                                         case SceneType.FIRST_RAID_REWARD_POPUP:
-                                            this.Escape();
+                                            this.WeightedClick(FirstRaidRewardPopupPM.OkButton, 1.0, 1.0, 1, 0, "left");
+                                            SevenKnightsCore.Sleep(1000);
                                             break;
 
                                         case SceneType.RAID_REWARD_FAILED_POPUP:
@@ -4466,17 +4500,14 @@ namespace SevenKnightsAI.Classes
                                             break;
 
                                         case SceneType.RAID_SUMMON_LOBBY:
-                                            if (this.IsDragonAvailable() && this.CurrentObjective == Objective.RAID)
+                                            if (this.IsDragonAvailable() && this.CurrentObjective == Objective.RAID && this.summondragonlimit < 1 && this.AISettings.RD_OwnerDragon)
                                             {
-                                            SendTelegram(this.AIProfiles.ST_TelegramChatID, "Dragon can be summon, Bot will summon dragon if enabled!");
-                                                if (this.AISettings.RD_OwnerDragon)
-                                                {
-                                                    this.DragonFound = true;
-                                                }
-                                            }
-                                            if (this.DragonFound == true)
-                                            {
+                                                //this.DragonFound = true;
+                                                //if (this.DragonFound == true)
+                                                //{
+                                                SendTelegram(this.AIProfiles.ST_TelegramChatID, "Dragon has been summoned!");
                                                 this.WeightedClick(RaidLobbyPM.AwakenedRaidEnter, 1.0, 1.0, 1, 0, "left");
+                                                //}
                                             }
                                             else
                                             {
@@ -4724,6 +4755,10 @@ namespace SevenKnightsAI.Classes
                                             break;
 
                                         case SceneType.SEND_HONOR_CONFIRM_POPUP:
+                                            this.Escape();
+                                            break;
+
+                                        case SceneType.SEND_HONOR_END_POPUP:
                                             this.Escape();
                                             break;
 
@@ -7066,6 +7101,11 @@ namespace SevenKnightsAI.Classes
                     Scene result = new Scene(SceneType.SEND_HONOR_CONFIRM_POPUP);
                     return result;
                 }
+                if (this.MatchMapping(SendHonorEndPM.borderbottomright, 2) && this.MatchMapping(SendHonorEndPM.bordertopleft, 2) && (this.MatchMapping(SendHonorEndPM.DimmedInGameTab, 2) || this.MatchMapping(SendHonorEndPM.DimmedFBTab, 2)))
+                {
+                    Scene result = new Scene(SceneType.SEND_HONOR_END_POPUP);
+                    return result;
+                }
                 if (this.MatchMapping(TowerStartPM.KeyBoxBorder, 2) && this.MatchMapping(TowerStartPM.StartKey, 5))
                 {
                     Scene result = new Scene(SceneType.TOWER_START);
@@ -8295,6 +8335,12 @@ namespace SevenKnightsAI.Classes
                         }
                         else
                         {
+                            if (scene.SceneType == SceneType.SEND_HONOR_END_POPUP)
+                            {
+                                this.Log("Send Honor End Popup");
+                                this.Escape();
+                                SevenKnightsCore.Sleep(300);
+                            }
                             if (scene.SceneType == SceneType.SEND_HONOR_FULL_POPUP || scene.SceneType == SceneType.SEND_HONOR_CONFIRM_POPUP)
                             {
                                 this.DoneSendHonors();
@@ -8418,6 +8464,7 @@ namespace SevenKnightsAI.Classes
                         {
                             this.SendTelegram(this.AIProfiles.ST_TelegramChatID, string.Format("Max Heroes level up per day : {0}/{1}", curCount, maxCount));
                             this.Log(string.Format("Max Heroes level up per day : {0}/{1} ", curCount, maxCount), Color.BlueViolet);
+                            this.DisableObjective(Objective.ADVENTURE);
                             this.MaxHeroUpCount = true;
                             this.NextPossibleObjective();
                         }

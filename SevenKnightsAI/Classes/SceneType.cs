@@ -99,6 +99,7 @@ namespace SevenKnightsAI.Classes
         SOCIAL_SELECT,
         FRIENDS,
         SEND_HONOR_SENDING_POPUP,
+        SEND_HONOR_END_POPUP,
         SEND_HONOR_FAILED_POPUP,
         SEND_HONOR_CONFIRM_POPUP,
         SEND_HONOR_FULL_POPUP,

@@ -58,9 +58,9 @@ namespace SevenKnightsAI.Classes.Mappings
         };
         public static readonly PixelMapping HottimeRedIcon = new PixelMapping
         {
-            X = 370,
-            Y = 86,
-            Color = 12461060,
+            X = 361,
+            Y = 87,
+            Color = 12855297,
             Type = MappingType.ANCHOR
         };
 

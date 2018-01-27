@@ -204,3 +204,27 @@ E:\Downloads\Compressed\Backup (23-12-2017)\Backup\SevenKnightsAI\SevenKnightsAI
 E:\Downloads\Compressed\Backup (23-12-2017)\Backup\SevenKnightsAI\SevenKnightsAI\SevenKnightsAI\obj\x86\Release\SevenKnightsAI.csproj.CoreCompileInputs.cache
 E:\Downloads\Compressed\Backup (23-12-2017)\Backup\SevenKnightsAI\SevenKnightsAI\SevenKnightsAI\obj\x86\Release\SevenKnightsAI.exe
 E:\Downloads\Compressed\Backup (23-12-2017)\Backup\SevenKnightsAI\SevenKnightsAI\SevenKnightsAI\obj\x86\Release\SevenKnightsAI.pdb
+E:\Documents\GitHub\SevenKnightsAI\SevenKnightsAI\obj\x86\Release\SevenKnightsAI.MainForm2.resources
+E:\Downloads\Compressed\SevenKnightsAI-beta-20180108\SevenKnightsAI-beta-20180108\SevenKnightsAI\bin\Release\x64\liblept172.dll
+E:\Downloads\Compressed\SevenKnightsAI-beta-20180108\SevenKnightsAI-beta-20180108\SevenKnightsAI\bin\Release\x64\libtesseract304.dll
+E:\Downloads\Compressed\SevenKnightsAI-beta-20180108\SevenKnightsAI-beta-20180108\SevenKnightsAI\bin\Release\x86\liblept172.dll
+E:\Downloads\Compressed\SevenKnightsAI-beta-20180108\SevenKnightsAI-beta-20180108\SevenKnightsAI\bin\Release\x86\libtesseract304.dll
+E:\Downloads\Compressed\SevenKnightsAI-beta-20180108\SevenKnightsAI-beta-20180108\SevenKnightsAI\bin\Release\SevenKnightsAI.exe.config
+E:\Downloads\Compressed\SevenKnightsAI-beta-20180108\SevenKnightsAI-beta-20180108\SevenKnightsAI\bin\Release\SevenKnightsAI.exe
+E:\Downloads\Compressed\SevenKnightsAI-beta-20180108\SevenKnightsAI-beta-20180108\SevenKnightsAI\bin\Release\SevenKnightsAI.pdb
+E:\Downloads\Compressed\SevenKnightsAI-beta-20180108\SevenKnightsAI-beta-20180108\SevenKnightsAI\bin\Release\AutoItX3.Assembly.dll
+E:\Downloads\Compressed\SevenKnightsAI-beta-20180108\SevenKnightsAI-beta-20180108\SevenKnightsAI\bin\Release\ICSharpCode.SharpZipLib.dll
+E:\Downloads\Compressed\SevenKnightsAI-beta-20180108\SevenKnightsAI-beta-20180108\SevenKnightsAI\bin\Release\Newtonsoft.Json.dll
+E:\Downloads\Compressed\SevenKnightsAI-beta-20180108\SevenKnightsAI-beta-20180108\SevenKnightsAI\bin\Release\RestSharp.dll
+E:\Downloads\Compressed\SevenKnightsAI-beta-20180108\SevenKnightsAI-beta-20180108\SevenKnightsAI\bin\Release\Telegram.dll
+E:\Downloads\Compressed\SevenKnightsAI-beta-20180108\SevenKnightsAI-beta-20180108\SevenKnightsAI\bin\Release\Tesseract.dll
+E:\Downloads\Compressed\SevenKnightsAI-beta-20180108\SevenKnightsAI-beta-20180108\SevenKnightsAI\bin\Release\Tesseract.xml
+E:\Downloads\Compressed\SevenKnightsAI-beta-20180108\SevenKnightsAI-beta-20180108\SevenKnightsAI\obj\x86\Release\SevenKnightsAI.csprojResolveAssemblyReference.cache
+E:\Downloads\Compressed\SevenKnightsAI-beta-20180108\SevenKnightsAI-beta-20180108\SevenKnightsAI\obj\x86\Release\SevenKnightsAI.CreateNewProfiles.resources
+E:\Downloads\Compressed\SevenKnightsAI-beta-20180108\SevenKnightsAI-beta-20180108\SevenKnightsAI\obj\x86\Release\SevenKnightsAI.MainForm.resources
+E:\Downloads\Compressed\SevenKnightsAI-beta-20180108\SevenKnightsAI-beta-20180108\SevenKnightsAI\obj\x86\Release\SevenKnightsAI.Properties.Resources.resources
+E:\Downloads\Compressed\SevenKnightsAI-beta-20180108\SevenKnightsAI-beta-20180108\SevenKnightsAI\obj\x86\Release\SevenKnightsAI.StageSequencerForm.resources
+E:\Downloads\Compressed\SevenKnightsAI-beta-20180108\SevenKnightsAI-beta-20180108\SevenKnightsAI\obj\x86\Release\SevenKnightsAI.csproj.GenerateResource.Cache
+E:\Downloads\Compressed\SevenKnightsAI-beta-20180108\SevenKnightsAI-beta-20180108\SevenKnightsAI\obj\x86\Release\SevenKnightsAI.csproj.CoreCompileInputs.cache
+E:\Downloads\Compressed\SevenKnightsAI-beta-20180108\SevenKnightsAI-beta-20180108\SevenKnightsAI\obj\x86\Release\SevenKnightsAI.exe
+E:\Downloads\Compressed\SevenKnightsAI-beta-20180108\SevenKnightsAI-beta-20180108\SevenKnightsAI\obj\x86\Release\SevenKnightsAI.pdb

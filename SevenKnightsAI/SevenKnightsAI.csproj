@@ -207,6 +207,7 @@
     <Compile Include="Classes\Mappings\SellItemConfirmPopupPM.cs" />
     <Compile Include="Classes\Mappings\SellItemPopupPM.cs" />
     <Compile Include="Classes\Mappings\SendHonorConfirmPopupPM.cs" />
+    <Compile Include="Classes\Mappings\SendHonorEndPM.cs" />
     <Compile Include="Classes\Mappings\SendHonorFailedPopupPM.cs" />
     <Compile Include="Classes\Mappings\SendHonorFullPopupPM.cs" />
     <Compile Include="Classes\Mappings\SendHonorSendingPopupPM.cs" />
@@ -358,6 +359,8 @@
     <None Include="Resources\kriss.ico" />
     <None Include="Resources\title_ingrid.png" />
     <None Include="Resources\title_spike.png" />
+    <None Include="Resources\test_cover.jpg" />
+    <None Include="Resources\test_cover_504x90.jpg" />
     <Content Include="x64\liblept172.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -533,7 +533,7 @@ namespace SevenKnightsAI.Classes
             this.RS_BuyKeyRubies = false;
             this.RS_BuyKeyRubiesType = BuyKeyRubiesType.Key5Ruby10;
             this.RS_BuyKeyRubiesAmount = 0;
-            this.SP_Enable = true;
+            this.SP_Enable = false;
             this.SP_DailyEnable = false;
             this.SP_CakeEnable = false;
             this.SP_CrystalEnable = false;

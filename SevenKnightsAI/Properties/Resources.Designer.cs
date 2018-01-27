@@ -282,16 +282,6 @@ namespace SevenKnightsAI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap title_ingrid {
-            get {
-                object obj = ResourceManager.GetObject("title_ingrid", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap title_spike {
             get {
                 object obj = ResourceManager.GetObject("title_spike", resourceCulture);

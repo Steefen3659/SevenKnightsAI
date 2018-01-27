@@ -81,9 +81,9 @@ namespace SevenKnightsAI.Classes.Mappings
 
         public static readonly PixelMapping GoldIcon = new PixelMapping
         {
-            X = 825,
-            Y = 25,
-            Color = 3552323,
+            X = 663,
+            Y = 27,
+            Color = 14921305,
             Type = MappingType.ANCHOR
         };
 
@@ -137,25 +137,25 @@ namespace SevenKnightsAI.Classes.Mappings
 
         public static readonly PixelMapping Fight_AweakButton = new PixelMapping
         {
-            X = 804,
-            Y = 80,
+            X = 924,
+            Y = 233,
             Color = 0,
             Type = MappingType.BUTTON
         };
 
         public static readonly PixelMapping Fight_AweakOff = new PixelMapping
         {
-            X = 802,
-            Y = 78,
-            Color = 5454884,
+            X = 924,
+            Y = 233,
+            Color = 4599579,
             Type = MappingType.ANCHOR
         };
 
         public static readonly PixelMapping Fight_AweakOn = new PixelMapping
         {
-            X = 802,
-            Y = 78,
-            Color = 6830618,
+            X = 924,
+            Y = 233,
+            Color = 8539426,
             Type = MappingType.ANCHOR
         };
 

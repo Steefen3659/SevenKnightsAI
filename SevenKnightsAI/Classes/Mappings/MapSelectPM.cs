@@ -152,17 +152,17 @@ namespace SevenKnightsAI.Classes.Mappings
 
         public static readonly PixelMapping World1Anchor_1 = new PixelMapping
         {
-            X = 258,
-            Y = 68,
-            Color = 13678453,
+            X = 126,
+            Y = 366,
+            Color = 7631981,
             Type = MappingType.ANCHOR
         };
 
         public static readonly PixelMapping World1Anchor_2 = new PixelMapping
         {
-            X = 265,
-            Y = 450,
-            Color = 13086299,
+            X = 315,
+            Y = 201,
+            Color = 11125179,
             Type = MappingType.ANCHOR
         };
 
@@ -536,17 +536,17 @@ namespace SevenKnightsAI.Classes.Mappings
 
         public static readonly PixelMapping World5Anchor_1 = new PixelMapping
         {
-            X = 787,
-            Y = 101,
-            Color = 13678453,
+            X = 777,
+            Y = 164,
+            Color = 6116428,
             Type = MappingType.ANCHOR
         };
 
         public static readonly PixelMapping World5Anchor_2 = new PixelMapping
         {
-            X = 87,
-            Y = 335,
-            Color = 5780892,
+            X = 433,
+            Y = 296,
+            Color = 6375438,
             Type = MappingType.ANCHOR
         };
 
@@ -1480,17 +1480,17 @@ namespace SevenKnightsAI.Classes.Mappings
 
         public static readonly PixelMapping World12_1Anchor_1 = new PixelMapping
         {
-            X = 447,
+            X = 388,
             Y = 163,
-            Color = 14861425,
+            Color = 6180156,
             Type = MappingType.ANCHOR
         };
 
         public static readonly PixelMapping World12_1Anchor_2 = new PixelMapping
         {
-            X = 761,
-            Y = 102,
-            Color = 12610392,
+            X = 272,
+            Y = 379,
+            Color = 16711082,
             Type = MappingType.ANCHOR
         };
 

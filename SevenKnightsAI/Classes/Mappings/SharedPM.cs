@@ -63,17 +63,17 @@ namespace SevenKnightsAI.Classes.Mappings
 
         public static readonly PixelMapping Fight_ChatButton = new PixelMapping
         {
-            X = 926,
-            Y = 100,
-            Color = 7481868,
+            X = 925,
+            Y = 121,
+            Color = 14272898,
             Type = MappingType.BOTH
         };
 
         public static readonly PixelMapping Fight_PauseButton = new PixelMapping
         {
-            X = 872,
-            Y = 100,
-            Color = 7285261,
+            X = 922,
+            Y = 181,
+            Color = 5317647,
             Type = MappingType.BOTH
         };
 
