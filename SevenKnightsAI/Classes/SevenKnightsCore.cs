@@ -149,6 +149,7 @@ namespace SevenKnightsAI.Classes
         private bool sp_row4flag;
         private bool rewarddragon;
         private int summondragonlimit;
+        private int dragonmeter;
 
         #endregion Private Fields
 
@@ -210,12 +211,6 @@ namespace SevenKnightsAI.Classes
         public void DisableMode(Objective OBJA)
         {
             DisableObjective(OBJA);
-        }
-
-        public void ChangeProfile()
-        {
-            this.AIProfiles.ToggleHotTimeProfile();
-            MainForm.Instance.InvokeReloadTabs(true);
         }
         public string GetMode()
         {
@@ -1861,15 +1856,15 @@ namespace SevenKnightsAI.Classes
             SevenKnightsCore.Sleep(1000);
         }
 
-        private void DoneSellItems(int sellCount)
+        private void DoneSellItems()
         {
             this.Log("Done selling items", this.COLOR_SELL_ITEMS);
             SendTelegram(this.AIProfiles.ST_TelegramChatID, "Bot has finished selling your items.");
-            if (sellCount == 0)
-            {
-                this.Log("No more items that satisfied the conditions", this.COLOR_SELL_ITEMS);
-                this.CooldownSellItems = 900000;
-            }
+            //if (sellCount == 0)
+           // {
+             //   this.Log("No more items that satisfied the conditions", this.COLOR_SELL_ITEMS);
+             //   this.CooldownSellItems = 900000;
+            //}
             this.NextPossibleObjective();
             SevenKnightsCore.Sleep(300);
             this.Escape();
@@ -2403,6 +2398,7 @@ namespace SevenKnightsAI.Classes
             this.DragonFound = false;
             this.rewarddragon = true;
             this.summondragonlimit = 0;
+            this.dragonmeter = 0;
         }
 
         private bool IsAnyQuestsEnabled()
@@ -2475,6 +2471,49 @@ namespace SevenKnightsAI.Classes
             }
             return true;
         }
+
+        private bool IsHeroLevel30small(int location)
+        {
+            Rectangle[] mapping = new Rectangle[]
+            {
+                SellHeroesLobbyPM.levelsmall1,
+                SellHeroesLobbyPM.levelsmall2,
+                SellHeroesLobbyPM.levelsmall3,
+                SellHeroesLobbyPM.levelsmall4,
+                SellHeroesLobbyPM.levelsmall5,
+                SellHeroesLobbyPM.levelsmall6,
+                SellHeroesLobbyPM.levelsmall7,
+                SellHeroesLobbyPM.levelsmall8
+            };
+            int lvl = 0;
+            using (Bitmap bitmap = this.CropFrame(this.BlueStacks.MainWindowAS.CurrentFrame, mapping[location]).ScaleByPercent(200))
+            {
+                using (Page page = this.Tesseractor.Engine.Process(bitmap, null, PageSegMode.Auto))
+                {
+                    string text = page.GetText().ToLower().Replace("l", "1").Replace(".", "").Replace(" ", "").Replace("s", "5").Replace("v", "")
+                        .Replace("o", "0").Replace("i", "1").Replace("z", "2").Replace("Z", "2").Replace(")", "").Replace("j", "").Replace("_", "")
+                        .Replace("‘", "").Replace("'", "").Replace(":", "").Replace("$", "5").Replace("e", "").Replace("q", "2").Replace("§", "3").Trim();
+
+                    Log("OldText =" + "'" + text + "'");
+                    string text1 = Regex.Replace(text, @"\D", "");
+                    Utility.FilterAscii(text1);
+                    //bitmap.Save(string.Format("HeroCount {0}.png", location));
+                    Log("NewText = " + text1);
+                    if (text.Length >= 1)
+                    {
+                        this.Log(string.Format("Level: {0}/{1} String: {2}", lvl, 30, text));
+                        bitmap.Save(string.Format("{0} of {1} / {2}.png", lvl, 30, location));
+                        if (lvl != 30)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+    
+
         private bool IsDragonAvailable(bool retrying = false)
         {
             Rectangle rek = this.ExpectingScene(SceneType.ADVENTURE_LOOT) ?  AdventureLootPM.DragonPoint : RaidLobbyPM.RaidPoint;
@@ -2910,6 +2949,86 @@ namespace SevenKnightsAI.Classes
                                                 SevenKnightsCore.Sleep(800);
                                                 this.CheckPlayaName = false;
                                             }
+                                            this.CaptureFrame();
+                                            scene = this.SceneSearch();
+                                            if (this.AISettings.EX_Enable && this.MatchMapping(LobbyPM.ExplorationAvailable1, 2) && this.MatchMapping(LobbyPM.ExplorationAvailable2, 2))
+                                            {
+                                                PixelMapping[] rewardbutton = new PixelMapping[]
+                                                {
+                                                    ExplorationPopupPM.Reward1,
+                                                    ExplorationPopupPM.Reward2,
+                                                    ExplorationPopupPM.Reward3,
+                                                    ExplorationPopupPM.Reward4
+                                                };
+                                                PixelMapping[] rewardcollected = new PixelMapping[]
+                                                {
+                                                    ExplorationPopupPM.Reward1Collected,
+                                                    ExplorationPopupPM.Reward2Collected,
+                                                    ExplorationPopupPM.Reward3Collected,
+                                                    ExplorationPopupPM.Reward4Collected
+                                                };
+                                                List<int> list = new List<int>();
+                                                for (int i = 3; i < rewardbutton.Length; i++) //int i = 0
+                                                {
+                                                    list.Add(i);
+                                                }
+                                                this.Log("Exploration Clear! Bot will collect reward and start new exploration!");
+                                                this.SendTelegram(this.AIProfiles.ST_TelegramChatID, "Bot will collect exploration");
+                                                this.WeightedClick(LobbyPM.ExplorationLobbyButton, 1.0, 1.0, 1, 0, "left");
+                                                SevenKnightsCore.Sleep(1000);
+                                                this.CaptureFrame();
+                                                scene = this.SceneSearch();
+                                                if (this.ExpectingScene(SceneType.EXPLORATION_POPUP, 10, 1000)) // First Popup Exploration
+                                                {
+                                                    foreach (int current in list)
+                                                    {
+                                                        if (this.Worker.CancellationPending)
+                                                        {
+                                                            return;
+                                                        }
+                                                        if (!this.MatchMapping(rewardcollected[current], 2))
+                                                        {
+                                                            this.WeightedClick(rewardbutton[current], 1.0, 1.0, 1, 0, "left");
+                                                            SevenKnightsCore.Sleep(1000);
+                                                            this.CaptureFrame();
+                                                            scene = this.SceneSearch();
+                                                            if (this.ExpectingScene(SceneType.EXPLORATION_COMPLETE_POPUP, 10, 1000)) //After Click Reward Button
+                                                            {
+                                                                this.WeightedClick(ExplorationCompletePopupPM.OKButton, 1.0, 1.0, 1, 0, "left");
+                                                                SevenKnightsCore.Sleep(1000);
+                                                                this.CaptureFrame();
+                                                                scene = this.SceneSearch();
+                                                                if (this.ExpectingScene(SceneType.EXPLORATION_SENDAGAIN_POPUP, 10, 1000)) //Popup Send Again
+                                                                {
+                                                                    if (this.AISettings.EX_Send)
+                                                                    {
+                                                                        this.WeightedClick(ExplorationSendAgainPM.OKButton, 1.0, 1.0, 1, 0, "left");
+                                                                        SevenKnightsCore.Sleep(1000);
+                                                                        this.CaptureFrame();
+                                                                        scene = this.SceneSearch();
+                                                                        if (this.ExpectingScene(SceneType.EXPLORATION_SENDSUCCESS_POPUP, 8, 800)) //Popup Success Send Again
+                                                                        {
+                                                                            this.Escape();
+                                                                            SevenKnightsCore.Sleep(1000);
+                                                                        }
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        this.WeightedClick(ExplorationSendAgainPM.ClosButton, 1.0, 1.0, 1, 0, "left");
+                                                                        SevenKnightsCore.Sleep(1000);
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        this.WeightedClick(ExplorationPopupPM.ClosButton, 1.0, 1.0, 1, 0, "left");
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    this.Log("Not Detected");
+                                                }
+
+                                            }
                                             if (this.AISettings.AD_HottimeEnable && this.Hottimeloop == true)
                                             {
                                                 this.WeightedClick(LobbyPM.StatusBoard, 1.0, 1.0, 1, 0, "left");
@@ -3290,7 +3409,7 @@ namespace SevenKnightsAI.Classes
                                                 {
                                                     this.ChangeObjective(Objective.SELL_ITEMS);
                                                 }
-                                                this.WeightedClick(SharedPM.Full_NoButton, 1.0, 1.0, 1, 0, "left");
+                                                this.WeightedClick(SharedPM.Full_SellButton, 1.0, 1.0, 1, 0, "left");
                                             }
                                             else
                                             {
@@ -3452,8 +3571,10 @@ namespace SevenKnightsAI.Classes
                                         case SceneType.ADVENTURE_LOOT_ITEM:
                                         case SceneType.ADVENTURE_LOOT_HERO:
                                         case SceneType.ADVENTURE_LOOT_GOLD:
+                                        case SceneType.ADVENTURE_LOOT_HERO_SPECIAL:
                                         case SceneType.ADVENTURE_LOOT:
-                                            this.Log("Dragon Point : " + this.ParseDragonMeter().ToString());
+                                            dragonmeter = this.ParseDragonMeter();
+                                            this.Log("Dragon Point : " + dragonmeter.ToString());
                                             this.AdventureAfterFight();
                                             SevenKnightsCore.Sleep(500);
                                             if (this.CurrentObjective == Objective.ADVENTURE)
@@ -3477,14 +3598,6 @@ namespace SevenKnightsAI.Classes
                                                 }
                                             this.LongSleep(2000, 1000);
                                             break;
-
-                                        case SceneType.ADVENTURE_LOOT_HERO_SPECIAL:
-                                            this.AdventureAfterFight();
-                                            SevenKnightsCore.Sleep(300);
-                                            this.WeightedClick(SharedPM.Loot_LobbyButton, 1.0, 1.0, 1, 0, "left");
-                                            this.LongSleep(2000, 1000);
-                                            break;
-
                                         case SceneType.OUT_OF_KEYS_OFFER:
                                             if (!flag3)
                                             {
@@ -4562,6 +4675,25 @@ namespace SevenKnightsAI.Classes
                                             }
                                             break;
 
+                                        case SceneType.SELL_ITEM_LOBBY:
+                                            if (this.CurrentObjective == Objective.SELL_ITEMS)
+                                            {
+                                                this.SellItems();
+                                            }
+
+                                            else
+                                            {
+                                                this.Escape();
+                                            }
+                                            break;
+
+                                        case SceneType.SELL_ITEM_SUCCESS_POPUP:
+                                            this.Escape();
+                                            break;
+                                        case SceneType.SELL_HEROES_SUCCESS_POPUP:
+                                            this.Escape();
+                                            break;
+
                                         case SceneType.SELL_ITEM_CONFIRM_POPUP:
                                             this.Escape();
                                             break;
@@ -4782,8 +4914,8 @@ namespace SevenKnightsAI.Classes
                                             this.WeightedClick(Popup3PM.TierPackageCloseButton, 1.0, 1.0, 1, 0, "left");
                                             break;
 
-                                        case SceneType.INGRID_QUEST_POPUP:
-                                            this.WeightedClick(Popup3PM.IngridQuestCloseButton, 1.0, 1.0, 1, 0, "left");
+                                        case SceneType.SPECIAL_QUEST_POPUP:
+                                            this.WeightedClick(Popup3PM.QuestRedCrossButton, 1.0, 1.0, 1, 0, "left");
                                             break;
 
                                         case SceneType.ALICE_PRO_PACK_POPUP:
@@ -4866,7 +4998,15 @@ namespace SevenKnightsAI.Classes
                                             break;
 
                                         case SceneType.SELL_HERO_LOBBY:
-                                            this.Escape();
+                                            if (this.CurrentObjective == Objective.SELL_HEROES)
+                                            {
+                                                this.SellHeroes();
+                                            }
+
+                                            else
+                                            {
+                                                this.Escape();
+                                            }
                                             break;
 
                                         case SceneType.YEAR_END_AWAKE:
@@ -5117,6 +5257,18 @@ namespace SevenKnightsAI.Classes
 
                                         case SceneType.CLOSE_POPUP:
                                             this.WeightedClick(Popup3PM.ClosePopupOKButton, 1.0, 1.0, 1, 0, "left");
+                                            break;
+                                        case SceneType.EXPLORATION_COMPLETE_POPUP:
+                                            
+                                            break;
+                                        case SceneType.EXPLORATION_POPUP:
+                                            
+                                            break;
+                                        case SceneType.EXPLORATION_SENDAGAIN_POPUP:
+                                            
+                                            break;
+                                        case SceneType.EXPLORATION_SENDSUCCESS_POPUP:
+                                            
                                             break;
                                         case SceneType.CHANGE_LEADER_POPUP:
                                             this.WeightedClick(ChangeLeaderPM.OKButton, 1.0, 1.0, 1, 0, "left");
@@ -5863,6 +6015,12 @@ namespace SevenKnightsAI.Classes
                 this.MaxHeroUpCount = false;
                 this.AIProfiles.ToggleHotTimeProfile();
                 MainForm.Instance.InvokeReloadTabs(true);
+            }
+            if (this.AISettings.AD_SummonAuto && this.AISettings.RD_OwnerDragon && dragonmeter == 1000 && summondragonlimit < 1)
+            {
+                this.Log("Dragon Point full, bot will summon dragon automatically");
+                this.SendTelegram(this.AIProfiles.ST_TelegramChatID, "Dragon Point full, bot will summon dragon automatically");
+                this.ChangeMode(Objective.RAID);
             }
             if (this.AIProfiles.AD_NoHeroUp && nomorehero30)
             {
@@ -6625,13 +6783,6 @@ namespace SevenKnightsAI.Classes
             this.ClickDrag(pixelMapping.X, pixelMapping.Y, pixelMapping.X, pixelMapping.Y + num);
         }
 
-        private void ScrollItemPopup(bool down = true)
-        {
-            PixelMapping pixelMapping = down ? SellItemPopupPM.ScrollAreaDown : SellItemPopupPM.ScrollAreaUp;
-            int num = down ? (-SellItemPopupPM.SCROLL_DOUBLE_DELTA) : SellItemPopupPM.SCROLL_DOUBLE_DELTA;
-            this.ClickDrag(pixelMapping.X, pixelMapping.Y, pixelMapping.X, pixelMapping.Y + num);
-        }
-
         private void ScrollShopKeys(bool right = true)
         {
             int num = 500;
@@ -6970,6 +7121,26 @@ namespace SevenKnightsAI.Classes
                     Scene result = new Scene(SceneType.DISCONNECTED_POPUP);
                     return result;
                 }
+                if (this.MatchMapping(ExplorationPopupPM.PopupPoint1, 2) && this.MatchMapping(ExplorationPopupPM.PopupPoint2, 2))
+                {
+                    Scene result = new Scene(SceneType.EXPLORATION_POPUP);
+                    return result;
+                }
+                if (this.MatchMapping(ExplorationCompletePopupPM.PopupPoint1, 2) && this.MatchMapping(ExplorationCompletePopupPM.PopupPoint2, 2))
+                {
+                    Scene result = new Scene(SceneType.EXPLORATION_COMPLETE_POPUP);
+                    return result;
+                }
+                if (this.MatchMapping(ExplorationSendAgainPM.PopupPoint1, 2) && this.MatchMapping(ExplorationSendAgainPM.PopupPoint2, 2))
+                {
+                    Scene result = new Scene(SceneType.EXPLORATION_SENDAGAIN_POPUP);
+                    return result;
+                }
+                if (this.MatchMapping(ExplorationSendSuccessPM.PopupPoint1, 2) && this.MatchMapping(ExplorationSendSuccessPM.PopupPoint2, 2))
+                {
+                    Scene result = new Scene(SceneType.EXPLORATION_SENDSUCCESS_POPUP);
+                    return result;
+                }
                 if (this.MatchMapping(AdventureModesPM.BorderTopLeft, 3) && this.MatchMapping(AdventureModesPM.BorderBottomRight, 3))
                 {
                     Scene result = new Scene(SceneType.ADVENTURE_MODES);
@@ -7028,6 +7199,16 @@ namespace SevenKnightsAI.Classes
                 if (this.MatchMapping(AdventureReadyPM.ReadyButtonBackground, 2))
                 {
                     Scene result = new Scene(SceneType.ADVENTURE_READY);
+                    return result;
+                }
+                if (this.MatchMapping(SellHeroesLobbyPM.Point1, 2) && this.MatchMapping(SellHeroesLobbyPM.Point2, 2) && this.MatchMapping(SellHeroesLobbyPM.BackButton, 2) && this.MatchMapping(SellHeroesLobbyPM.RefreshButton, 2))
+                {
+                    Scene result = new Scene(SceneType.SELL_HERO_LOBBY);
+                    return result;
+                }
+                if (this.MatchMapping(SellItemsLobbyPM.Point1, 2) && this.MatchMapping(SellItemsLobbyPM.Point2, 2) && this.MatchMapping(SellItemsLobbyPM.BackButton, 2) && this.MatchMapping(SellItemsLobbyPM.RefreshButton, 2))
+                {
+                    Scene result = new Scene(SceneType.SELL_ITEM_LOBBY);
                     return result;
                 }
                 if (this.MatchMapping(AdventureStartPM.KeyPlusButton, 2))
@@ -7131,6 +7312,16 @@ namespace SevenKnightsAI.Classes
                     Scene result = new Scene(SceneType.SELL_ITEM_CONFIRM_POPUP);
                     return result;
                 }
+                if (this.MatchMapping(SellItemSuccessPopupPM.Point1, 2) && this.MatchMapping(SellItemSuccessPopupPM.Point2, 2) && this.MatchMapping(SellItemSuccessPopupPM.YellowTick, 2) && this.MatchMapping(SellItemSuccessPopupPM.DimmedBG, 2))
+                {
+                    Scene result = new Scene(SceneType.SELL_ITEM_SUCCESS_POPUP);
+                    return result;
+                }
+                if (this.MatchMapping(SellHeroesSuccessPopupPM.Point1, 2) && this.MatchMapping(SellHeroesSuccessPopupPM.Point2, 2) && this.MatchMapping(SellHeroesSuccessPopupPM.YellowTick, 2) && this.MatchMapping(SellHeroesSuccessPopupPM.DimmedBG, 2))
+                {
+                    Scene result = new Scene(SceneType.SELL_HEROES_SUCCESS_POPUP);
+                    return result;
+                }
                 if (this.MatchMapping(SpecialDungeonLootPM.LobbyButton, 2) && this.MatchMapping(SpecialDungeonLootPM.AgainButton, 2))
                 {
                     Scene result = new Scene(SceneType.SPECIAL_DUN_LOOT);
@@ -7221,9 +7412,9 @@ namespace SevenKnightsAI.Classes
                     Scene result = new Scene(SceneType.TIER_PACKAGE);
                     return result;
                 }
-                if (this.MatchMapping(Popup3PM.IngridBorderUpLeft, 2) && this.MatchMapping(Popup3PM.IngridBorderBottomRight, 2))
+                if (this.MatchMapping(Popup3PM.QuestCharacterPic, 2) && this.MatchMapping(Popup3PM.QuestPoint1, 2) && this.MatchMapping(Popup3PM.QuestPoint2, 2) && this.MatchMapping(Popup3PM.QuestRedCrossButton, 2))
                 {
-                    Scene result = new Scene(SceneType.INGRID_QUEST_POPUP);
+                    Scene result = new Scene(SceneType.SPECIAL_QUEST_POPUP);
                     return result;
                 }
                 if (this.MatchMapping(Popup3PM.AliceProColor, 2) && this.MatchMapping(Popup3PM.AliceProPurchase, 2))
@@ -7259,11 +7450,6 @@ namespace SevenKnightsAI.Classes
                 if (this.MatchMapping(Popup3PM.ArenaAregon, 2) && this.MatchMapping(Popup3PM.ArenaAregonOK, 2))
                 {
                     Scene result = new Scene(SceneType.ARENA_WEEK_REWARD);
-                    return result;
-                }
-                if (this.MatchMapping(SellHeroConfirmPopupPM.GoldSellIcon, 2) && this.MatchMapping(SellHeroConfirmPopupPM.SellText, 2))
-                {
-                    Scene result = new Scene(SceneType.SELL_HERO_LOBBY);
                     return result;
                 }
                 if (this.MatchMapping(QuestRewardsPopupPM.QuestIcon, 2) && this.MatchMapping(QuestRewardsPopupPM.AragonPic, 2))
@@ -7959,41 +8145,43 @@ namespace SevenKnightsAI.Classes
             };
             this.Log("Start selling heroes", this.COLOR_SELL_HEROES);
             SendTelegram(this.AIProfiles.ST_TelegramChatID, "Bot will only sell the hero if the given condition is met.");
-            if (!this.MatchMapping(HeroesPM.SortByBoxExpanded, 2))                                          
+            if (!this.MatchMapping(HeroesPM.SortByBoxExpanded, 2))
             {
-                this.WeightedClick(HeroesPM.SortByBox, 1.0, 1.0, 1, 0, "left");                            
+                this.WeightedClick(HeroesPM.SortByBox, 1.0, 1.0, 1, 0, "left");
                 SevenKnightsCore.Sleep(this.AIProfiles.ST_Delay);
             }
-            this.WeightedClick(HeroesPM.SortByRank, 1.0, 1.0, 1, 0, "left");                               
+            this.WeightedClick(HeroesPM.SortByRank, 1.0, 1.0, 1, 0, "left");
             SevenKnightsCore.Sleep(this.AIProfiles.ST_Delay);
-            if (!this.MatchMapping(HeroesPM.SortButtonAscending, 2))                                        
+            if (!this.MatchMapping(HeroesPM.SortButtonAscending, 2))
             {
-                this.WeightedClick(HeroesPM.SortButton, 1.0, 1.0, 1, 0, "left");                            
+                this.WeightedClick(HeroesPM.SortButton, 1.0, 1.0, 1, 0, "left");
                 SevenKnightsCore.Sleep(this.AIProfiles.ST_Delay);
             }
-            this.ScrollHeroCards(false);                                                                   
+            this.ScrollHeroCards(false);
             SevenKnightsCore.Sleep(this.AIProfiles.ST_Delay);
             bool flag = false;
             int monstar = 0;
             int num = 0;
             int num2 = 0;
             int num3 = 0;
-            while (num3 < 100 && !this.Worker.CancellationPending)                                  
+            while (num3 < 100 && !this.Worker.CancellationPending)
             {
                 this.CaptureFrame();
                 Scene scene = this.SceneSearch();
-                if (scene != null && scene.SceneType != SceneType.HEROES)                           
+                if (scene != null && scene.SceneType != SceneType.HEROES)
                 {
-                    this.DoneSellHeroes(-1);                                                                
-                    return;
+                        this.Log("Stop Disini4");
+                        this.DoneSellHeroes(-1);
+                        return;
                 }
-                if (this.MatchMapping(HeroesPM.LastRow_1, 3) && this.MatchMapping(HeroesPM.LastRow_2, 3))   
+                if (this.MatchMapping(HeroesPM.LastRow_1, 3) && this.MatchMapping(HeroesPM.LastRow_2, 3))
                 {
-                    flag = true;                                                                            
+                    flag = true;
                 }
-                if (!this.AISettings.RS_SellHeroAll && num2 >= this.AISettings.RS_SellHeroAmount)           
+                if (!this.AISettings.RS_SellHeroAll && num2 >= this.AISettings.RS_SellHeroAmount)
                 {
-                    this.DoneSellHeroes(-1);                                                                
+                    this.Log("Stop Disini3");
+                    this.DoneSellHeroes(-1);
                     return;
                 }
                 /**************************************************************************************/
@@ -8032,27 +8220,28 @@ namespace SevenKnightsAI.Classes
                 }
                 if (monstar <= this.AISettings.RS_SellHeroStars)
                 {
-                        //ตรวจเวล 30
-                        SevenKnightsCore.Sleep(500);
-                        this.WeightedClick(array2[num], 1.0, 1.0, 1, 0, "left");                                    
-                        SevenKnightsCore.Sleep(this.AIProfiles.ST_Delay);
-                        this.CaptureFrame();
-                        scene = this.SceneSearch();
+                    //ตรวจเวล 30
+                    SevenKnightsCore.Sleep(500);
+                    this.WeightedClick(array2[num], 1.0, 1.0, 1, 0, "left");
+                    SevenKnightsCore.Sleep(this.AIProfiles.ST_Delay);
+                    this.CaptureFrame();
+                    scene = this.SceneSearch();
                     if (scene != null && scene.SceneType != SceneType.HERO_JOIN && scene.SceneType != SceneType.HERO_REMOVE)
                     {
+                        this.Log("Stop Disini2");
                         this.DoneSellHeroes(-1);
                         return;
                     }
                     if (this.IsHeroLevel30() && this.MatchMapping(HeroJoinPM.KeyLockButton, 2)
-                            && this.MatchMapping(HeroJoinPM.SellButton, 2))                                     
+                            && this.MatchMapping(HeroJoinPM.SellButton, 2))
                     {
-                        this.WeightedClick(HeroJoinPM.SellButton, 1.0, 1.0, 1, 0, "left");                  
+                        this.WeightedClick(HeroJoinPM.SellButton, 1.0, 1.0, 1, 0, "left");
                         SevenKnightsCore.Sleep(this.AIProfiles.ST_Delay);
-                        this.WeightedClick(SellHeroConfirmPopupPM.SellLobbyButton, 1.0, 1.0, 1, 0, "left"); 
+                        this.WeightedClick(SellHeroConfirmPopupPM.SellLobbyButton, 1.0, 1.0, 1, 0, "left");
                         SevenKnightsCore.Sleep(this.AIProfiles.ST_Delay);
-                        this.CaptureFrame();                                                                
+                        this.CaptureFrame();
                         scene = this.SceneSearch();
-                        if (scene != null && scene.SceneType != SceneType.SELL_HERO_CONFIRM_POPUP)          
+                        if (scene != null && scene.SceneType != SceneType.SELL_HERO_CONFIRM_POPUP)
                         {
                             this.Log("Stop Sell Hero.");
                             this.DoneSellHeroes(-1);
@@ -8072,7 +8261,7 @@ namespace SevenKnightsAI.Classes
                             }
                         }
                         num2++;
-                        this.WeightedClick(SellHeroConfirmPopupPM.SellButton, 1.0, 1.0, 1, 0, "left");     
+                        this.WeightedClick(SellHeroConfirmPopupPM.SellButton, 1.0, 1.0, 1, 0, "left");
                         int n = 1;
                         while (n <= 100)
                         {
@@ -8087,7 +8276,9 @@ namespace SevenKnightsAI.Classes
                                 n = 110;
                                 SevenKnightsCore.Sleep(500);
                                 this.WeightedClick(SellHeroConfirmPopupPM.SoldOKButton, 1.0, 1.0, 1, 0, "left");
+                                SevenKnightsCore.Sleep(1000);
                                 this.Log(string.Format("-- Hero sold ({0})", num2), this.COLOR_SELL_HEROES);
+                                this.Escape();
                                 SevenKnightsCore.Sleep(this.AIProfiles.ST_Delay);
                                 this.DoneSellHeroesMini();
                             }
@@ -8110,13 +8301,15 @@ namespace SevenKnightsAI.Classes
                     }
                     if (flag && num >= array2.Length)
                     {
+                        this.Log("Stop Disini");
                         this.DoneSellHeroes(num2);
                         return;
                     }
                 }
                 else
                 {
-                    this.DoneSellHeroes(-1);                                                                
+                    this.Log("Stop Disini1");
+                    this.DoneSellHeroes(-1);
                     return;
                 }
                 num3++;
@@ -8126,128 +8319,86 @@ namespace SevenKnightsAI.Classes
 
         private void SellItems()
         {
-            PixelMapping[] array = new PixelMapping[]
+            PixelMapping[] BulkButton = new PixelMapping[]
             {
-                SellItemPopupPM.SellButtonRow1,
-                SellItemPopupPM.SellButtonRow2,
-                SellItemPopupPM.SellButtonRow3,
-                SellItemPopupPM.SellButtonRow4,
-                SellItemPopupPM.SellButtonRow5
+                SellItemsLobbyPM.Star1,
+                SellItemsLobbyPM.Star2,
+                SellItemsLobbyPM.Star3,
+                SellItemsLobbyPM.Star4,
+                SellItemsLobbyPM.Star5
             };
-            PixelMapping[] array2 = new PixelMapping[]
+            PixelMapping[] StartExists = new PixelMapping[]
             {
-                SellItemConfirmPopupPM.Star1,
-                SellItemConfirmPopupPM.Star2,
-                SellItemConfirmPopupPM.Star3,
-                SellItemConfirmPopupPM.Star4,
-                SellItemConfirmPopupPM.Star5,
-                SellItemConfirmPopupPM.Star6
+                SellItemsLobbyPM.Star1Exists,
+                SellItemsLobbyPM.Star2Exists,
+                SellItemsLobbyPM.Star3Exists,
+                SellItemsLobbyPM.Star4Exists,
+                SellItemsLobbyPM.Star5Exists
             };
+            string[] array2 = new string[]
+            {
+                "1 Star Item",
+                "2 Star Item",
+                "3 Star Item",
+                "4 Star Item",
+                "5 Star Item"
+            };
+            int test = this.AISettings.RS_SellItemStars;
+            Scene scene = this.SceneSearch();
             this.Log("Start selling items", this.COLOR_SELL_ITEMS);
-            SendTelegram(this.AIProfiles.ST_TelegramChatID, "Bot will only sell the item if the given condition is met.");
-            if (this.MatchMapping(SellItemPopupPM.SortButtonDescending, 2))                                     
+            SendTelegram(this.AIProfiles.ST_TelegramChatID, "Bot will selling items");
+            List<int> list = new List<int>();
+            for (int i = 0; i < test; i++)
             {
-                this.WeightedClick(SellItemPopupPM.SortButton, 1.0, 1.0, 1, 0, "left");
-                SevenKnightsCore.Sleep(300);
+                list.Add(i);
             }
-            this.ScrollItemPopup(false);
-            SevenKnightsCore.Sleep(500);
-            bool flag = false;
-            int num = 0;
-            int num2 = 0;
-            ulong num3 = 0uL;
-            ulong hash = 0uL;
-            double num4 = 99.9;
-            int num5 = 0;
-            while (num5 < 80 && !this.Worker.CancellationPending)
+            if (list.Count <= 0)
             {
-                this.CaptureFrame();
-                Scene scene = this.SceneSearch();
-                if (scene != null && scene.SceneType != SceneType.SELL_ITEM_POPUP)
+                this.Log("Nothing to do", this.COLOR_HONOR);
+                this.DoneSellItems();
+                return;
+            }
+            foreach (int current in list)
+            {
+                if (this.Worker.CancellationPending)
                 {
-                    this.DoneSellItems(-1);
                     return;
                 }
-                if (!this.AISettings.RS_SellItemAll && num2 >= this.AISettings.RS_SellItemAmount)
-                {
-                    this.DoneSellItems(num2);
-                    return;
-                }
-                if (!this.MatchMapping(array[num], 3))
-                {
-                    this.DoneSellItems(num2);
-                    return;
-                }
-                this.WeightedClick(array[num], 1.0, 1.0, 1, 0, "left");
                 SevenKnightsCore.Sleep(500);
+                this.Log(string.Format("Selling {0}", array2[current]), this.COLOR_HONOR);
+                this.WeightedClick(SellItemsLobbyPM.BulkButton, 1.0, 1.0, 1, 0, "left");
+                SevenKnightsCore.Sleep(1000);
+                PixelMapping mapping = BulkButton[current];
+                this.WeightedClick(mapping, 1.0, 1.0, 1, 0, "left");
+                SevenKnightsCore.Sleep(1000);
                 this.CaptureFrame();
                 scene = this.SceneSearch();
-                if (scene != null && scene.SceneType != SceneType.SELL_ITEM_CONFIRM_POPUP)
+                if (this.MatchMapping(StartExists[current], 2))
                 {
-                    this.DoneSellItems(-1);
-                    return;
-                }
-                int num6 = -1;
-                for (int i = 5; i >= 0; i--)
-                {
-                    if (this.MatchMapping(array2[i], 8))
-                    {
-                        num6 = i + 1;
-                        break;
-                    }
-                }
-                int num7 = this.AISettings.RS_SellItemStars;
-                if (num6 != -1 && num6 <= this.AISettings.RS_SellItemStars)
-                {
-                    num2++;
-                    this.Log(string.Format("-- Item sold ({0})", num2), this.COLOR_SELL_ITEMS);
-                    this.WeightedClick(SellItemConfirmPopupPM.SellButton, 1.0, 1.0, 1, 0, "left");
+                    this.Log(string.Format("{0} Exists ", array2[current]), this.COLOR_HONOR);
+                    this.WeightedClick(SellItemsLobbyPM.SellButton, 1.0, 1.0, 1, 0, "left");
                     SevenKnightsCore.Sleep(1000);
+                        this.CaptureFrame();
+                        scene = this.SceneSearch();
+                        if (this.ExpectingScene(SceneType.SELL_ITEM_CONFIRM_POPUP, 10, 1000)) // SELL_ITEM_CONFIRM_POPUP
+                    {
+                        this.WeightedClick(SellItemConfirmPopupPM.SellButton, 1.0, 1.0, 1, 0, "left");
+                        SevenKnightsCore.Sleep(3000);
+                        this.CaptureFrame();
+                        scene = this.SceneSearch();
+                        if (this.ExpectingScene(SceneType.SELL_ITEM_SUCCESS_POPUP, 10, 2000)) // SELL_ITEM_SUCCESS_POPUP
+                        {
+                            this.Escape();
+                            SevenKnightsCore.Sleep(1000);
+                        }
+                        }
                 }
                 else
                 {
-                    num++;
-                    if (!flag)
-                    {
-                        num %= 2;
-                    }
-                    this.WeightedClick(SellItemConfirmPopupPM.NoButton, 1.0, 1.0, 1, 0, "left");
-                    if (num == 0)
-                    {
-                        SevenKnightsCore.Sleep(500);
-                        this.ScrollItemPopup(true);
-                        SevenKnightsCore.Sleep(200);
-                        Bitmap frame = this.CaptureFrame();
-                        scene = this.SceneSearch();
-                        if (scene != null && scene.SceneType != SceneType.SELL_ITEM_POPUP)
-                        {
-                            this.DoneSellItems(-1);
-                            return;
-                        }
-                        using (Bitmap bitmap = this.CropFrame(frame, SellItemPopupPM.R_ScrollBarArea))
-                        {
-                            ulong num8 = ImageHashing.AverageHash(bitmap);
-                            double num9 = ImageHashing.Similarity(num3, num8);
-                            double num10 = ImageHashing.Similarity(hash, num8);
-                            if (!flag && num3 != 0uL && num9 >= num4 && num10 >= num4)
-                            {
-                                Console.WriteLine("At last row");
-                                flag = true;
-                                num = 2;
-                            }
-                            hash = num3;
-                            num3 = num8;
-                        }
-                    }
+                    this.Log(string.Format("{0} Doesn't Exists ", array2[current]), this.COLOR_HONOR);
                 }
-                if (flag && num >= array.Length)
-                {
-                    this.DoneSellItems(num2);
-                    return;
-                }
-                SevenKnightsCore.Sleep(1200);
-                num5++;
             }
+            this.DoneSellItems();
         }
 
         private void SendHonors()
@@ -8339,6 +8490,7 @@ namespace SevenKnightsAI.Classes
                             {
                                 this.Log("Send Honor End Popup");
                                 this.Escape();
+                                //this.WeightedClick(SendHonorEndPopupPM.PopupClick, 1.0, 1.0, 1, 0, "left");
                                 SevenKnightsCore.Sleep(300);
                             }
                             if (scene.SceneType == SceneType.SEND_HONOR_FULL_POPUP || scene.SceneType == SceneType.SEND_HONOR_CONFIRM_POPUP)
@@ -8924,6 +9076,13 @@ namespace SevenKnightsAI.Classes
                     this.Log("Send Telegram Failed! : " + ex);
                 }
             }
+        }
+
+        TimeSpan LocalTimeToUTCTime(TimeSpan localTime)
+        {
+            var dt = new DateTime(localTime.Ticks);
+            var utc = dt.ToUniversalTime();
+            return new TimeSpan(utc.Ticks);
         }
 
         #endregion Private Methods

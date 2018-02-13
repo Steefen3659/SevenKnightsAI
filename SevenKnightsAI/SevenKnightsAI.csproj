@@ -145,6 +145,10 @@
     <Compile Include="Classes\Mappings\DialogPM.cs" />
     <Compile Include="Classes\Mappings\DisconnectedPopupPM.cs" />
     <Compile Include="Classes\Mappings\EnterRaidAgainPopupPM.cs" />
+    <Compile Include="Classes\Mappings\ExplorationCompletePopupPM.cs" />
+    <Compile Include="Classes\Mappings\ExplorationSendAgainPM.cs" />
+    <Compile Include="Classes\Mappings\ExplorationPopupPM.cs" />
+    <Compile Include="Classes\Mappings\ExplorationSendSuccessPM.cs" />
     <Compile Include="Classes\Mappings\FriendsPM.cs" />
     <Compile Include="Classes\Mappings\FullHeroPopupPM.cs" />
     <Compile Include="Classes\Mappings\FullItemPopupPM.cs" />
@@ -204,8 +208,12 @@
     <Compile Include="Classes\Mappings\RaidStartPM.cs" />
     <Compile Include="Classes\Mappings\RaidSummonLvlPM.cs" />
     <Compile Include="Classes\Mappings\SellHeroConfirmPopupPM.cs" />
+    <Compile Include="Classes\Mappings\SellHeroesLobby.cs" />
     <Compile Include="Classes\Mappings\SellItemConfirmPopupPM.cs" />
     <Compile Include="Classes\Mappings\SellItemPopupPM.cs" />
+    <Compile Include="Classes\Mappings\SellHeroesSuccessPopupPM.cs" />
+    <Compile Include="Classes\Mappings\SellItemSuccessPopupPM.cs" />
+    <Compile Include="Classes\Mappings\SellItemsLobbyPM.cs" />
     <Compile Include="Classes\Mappings\SendHonorConfirmPopupPM.cs" />
     <Compile Include="Classes\Mappings\SendHonorEndPM.cs" />
     <Compile Include="Classes\Mappings\SendHonorFailedPopupPM.cs" />

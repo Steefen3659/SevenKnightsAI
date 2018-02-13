@@ -444,6 +444,16 @@ namespace SevenKnightsAI.Classes
         [XmlElement(ElementName = "ST_Stop100")]
         public bool ST_Stop100;
 
+        [XmlElement(ElementName = "EX_Enable")]
+        public bool EX_Enable;
+
+        [XmlElement(ElementName = "EX_Send")]
+        public bool EX_Send;
+
+        [XmlElement(ElementName = "AD_SummonAuto")]
+        public bool AD_SummonAuto;
+
+
         public string Version = Application.ProductVersion;
 
         #endregion Public Fields
@@ -452,6 +462,9 @@ namespace SevenKnightsAI.Classes
 
         public AISettings()
         {
+            this.EX_Enable = true;
+            this.EX_Send = true;
+            this.AD_SummonAuto = true;
             this.AD_Enable = true;
             this.AD_HottimeEnable = false;
             this.AD_EnableLimit = false;
@@ -490,7 +503,7 @@ namespace SevenKnightsAI.Classes
             this.AR_UseRubyAmount = 0;
             this.RD_Enable = true;
             this.RD_EnableDragonLimit = false;
-            this.RD_SkillType = SkillType.Both;
+            this.RD_SkillType = SkillType.Auto;
             this.RD_Team1Loop = false;
             this.RD_Team2Loop = false;
             this.RD_OwnerDragon = true;
@@ -573,6 +586,24 @@ namespace SevenKnightsAI.Classes
                 string value = File.ReadAllText(filePath);
                 Dictionary<string, object> dictionary = JsonConvert.DeserializeObject<Dictionary<string, object>>(value);
                 AISettings aISettings = new AISettings();
+                try
+                {
+                    aISettings.AD_SummonAuto = (bool)dictionary["AD_SummonAuto"];
+                }
+                catch (Exception)
+                { }
+                try
+                {
+                    aISettings.EX_Enable = (bool)dictionary["EX_Enable"];
+                }
+                catch (Exception)
+                { }
+                try
+                {
+                    aISettings.EX_Send = (bool)dictionary["EX_Send"];
+                }
+                catch (Exception)
+                { }
                 try
                 {
                     aISettings.AD_Enable = (bool)dictionary["AD_Enable"];

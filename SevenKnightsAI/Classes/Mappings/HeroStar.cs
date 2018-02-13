@@ -341,7 +341,7 @@ namespace SevenKnightsAI.Classes.Mappings
             Color = 16707677,
             Type = MappingType.ANCHOR
         };
-        
+
         public static readonly PixelMapping Star2Loca5R5 = new PixelMapping
         {
             X = 850,

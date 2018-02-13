@@ -21,6 +21,22 @@ namespace SevenKnightsAI.Classes.Mappings
             Type = MappingType.ANCHOR
         };
 
+        public static readonly PixelMapping Point1 = new PixelMapping //Question Mark Auto Repeat
+        {
+            X = 610,
+            Y = 415,
+            Color = 16777075,
+            Type = MappingType.ANCHOR
+        };
+
+        public static readonly PixelMapping Point2 = new PixelMapping //Question Mark Boost Mode
+        {
+            X = 816,
+            Y = 414,
+            Color = 16777065,
+            Type = MappingType.ANCHOR
+        };
+
         public static readonly PixelMapping AutoRepeatOn = new PixelMapping
         {
             X = 456,

@@ -7,6 +7,41 @@ namespace SevenKnightsAI.Classes.Mappings
 {
     class Popup3PM
     {
+
+        /* Special Quest Popup - ARIS */
+        public static readonly PixelMapping QuestCharacterPic = new PixelMapping //Aris Eye
+        {
+            X = 727,
+            Y = 170,
+            Color = 16444639,
+            Type = MappingType.ANCHOR
+        };
+
+        public static readonly PixelMapping QuestPoint1 = new PixelMapping //E letter in QUEST
+        {
+            X = 160,
+            Y = 77,
+            Color = 7018003,
+            Type = MappingType.ANCHOR
+        };
+
+        public static readonly PixelMapping QuestPoint2 = new PixelMapping //Pentagon Card
+        {
+            X = 764,
+            Y = 367,
+            Color = 12428435,
+            Type = MappingType.ANCHOR
+        };
+
+        public static readonly PixelMapping QuestRedCrossButton = new PixelMapping
+        {
+            X = 800,
+            Y = 78,
+            Color = 12991755,
+            Type = MappingType.BOTH
+        };
+
+        /* Special Quest Popup - ARIS */
         public static readonly PixelMapping SPrachelNo = new PixelMapping
         {
             X = 287,

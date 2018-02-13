@@ -4,32 +4,32 @@ namespace SevenKnightsAI.Classes
 {
     internal enum Objective
     {
-        IDLE,
+        IDLE, //0
 
-        ADVENTURE,
+        ADVENTURE, //1
 
-        GOLD_CHAMBER,
+        GOLD_CHAMBER, //2
 
-        CELESTIAL_TOWER,
+        CELESTIAL_TOWER,//3
 
-        SPECIAL_DUNGEON,
+        SPECIAL_DUNGEON, //4
 
-        ARENA,
+        ARENA, //5
 
-        RAID,
+        RAID, //6
 
-        HERO_MANAGEMENT,
+        HERO_MANAGEMENT, //7
 
-        SELL_HEROES,
+        SELL_HEROES, //8
 
-        SELL_ITEMS,
+        SELL_ITEMS, //9
 
-        BUY_KEYS,
+        BUY_KEYS, //10
 
-        COLLECT_INBOX,
+        COLLECT_INBOX, //11
 
-        COLLECT_QUESTS,
+        COLLECT_QUESTS, //12
 
-        SEND_HONORS
+        SEND_HONORS //13
     }
 }

@@ -6,97 +6,49 @@ namespace SevenKnightsAI.Classes.Mappings
     {
         public static readonly PixelMapping DimmedBG_1 = new PixelMapping
         {
-            X = 244,
-            Y = 56,
-            Color = 4735783,
+            X = 872,
+            Y = 200,
+            Color = 4272914,
             Type = MappingType.ANCHOR
         };
 
         public static readonly PixelMapping DimmedBG_2 = new PixelMapping
         {
-            X = 682,
-            Y = 67,
-            Color = 3739907,
+            X = 64,
+            Y = 449,
+            Color = 4931877,
             Type = MappingType.ANCHOR
         };
 
         public static readonly PixelMapping NoButton = new PixelMapping
         {
-            X = 380,
-            Y = 398,
+            X = 316,
+            Y = 393,
             Color = 0,
             Type = MappingType.BUTTON
         };
 
         public static readonly PixelMapping RedCross = new PixelMapping
         {
-            X = 315,
-            Y = 396,
-            Color = 13581321,
+            X = 316,
+            Y = 393,
+            Color = 14433544,
             Type = MappingType.ANCHOR
         };
 
         public static readonly PixelMapping SellButton = new PixelMapping
         {
-            X = 600,
+            X = 532,
             Y = 398,
             Color = 0,
             Type = MappingType.BUTTON
         };
 
-        public static readonly PixelMapping Star1 = new PixelMapping
-        {
-            X = 480,
-            Y = 269,
-            Color = 15309594,
-            Type = MappingType.ANCHOR
-        };
-
-        public static readonly PixelMapping Star2 = new PixelMapping
-        {
-            X = 488,
-            Y = 269,
-            Color = 15309850,
-            Type = MappingType.ANCHOR
-        };
-
-        public static readonly PixelMapping Star3 = new PixelMapping
-        {
-            X = 497,
-            Y = 269,
-            Color = 15309850,
-            Type = MappingType.ANCHOR
-        };
-
-        public static readonly PixelMapping Star4 = new PixelMapping
-        {
-            X = 502,
-            Y = 268,
-            Color = 15309594,
-            Type = MappingType.ANCHOR
-        };
-
-        public static readonly PixelMapping Star5 = new PixelMapping
-        {
-            X = 453,
-            Y = 269,
-            Color = 15309594,
-            Type = MappingType.ANCHOR
-        };
-
-        public static readonly PixelMapping Star6 = new PixelMapping
-        {
-            X = 447,
-            Y = 268,
-            Color = 15309594,
-            Type = MappingType.ANCHOR
-        };
-
         public static readonly PixelMapping YellowTick = new PixelMapping
         {
-            X = 531,
-            Y = 399,
-            Color = 16758039,
+            X = 532,
+            Y = 398,
+            Color = 16759838,
             Type = MappingType.ANCHOR
         };
     }

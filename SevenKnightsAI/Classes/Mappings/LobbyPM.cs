@@ -260,6 +260,32 @@ namespace SevenKnightsAI.Classes.Mappings
             Height = 30
         };
 
+        /* Exploration */
+
+        public static readonly PixelMapping ExplorationAvailable1 = new PixelMapping
+        {
+            X = 902,
+            Y = 221,
+            Color = 16506764,
+            Type = MappingType.ANCHOR
+        };
+
+        public static readonly PixelMapping ExplorationAvailable2 = new PixelMapping
+        {
+            X = 906,
+            Y = 268,
+            Color = 6703915,
+            Type = MappingType.ANCHOR
+        };
+
+        public static readonly PixelMapping ExplorationLobbyButton = new PixelMapping
+        {
+            X = 910,
+            Y = 235,
+            Color = 14399071,
+            Type = MappingType.BUTTON
+        };
+
         #endregion Public Fields
     }
 }

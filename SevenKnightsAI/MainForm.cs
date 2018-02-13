@@ -415,6 +415,7 @@ namespace SevenKnightsAI
             RichTextBox lG_logTextBox = this.LG_logTextBox;
             RichTextBox logsBox = this.logsBox;
             string text = DateTime.Now.ToString("[hh:mm:ss tt]  ", CultureInfo.InvariantCulture);
+            //ubah datetime nya kebentuk UTC
             lG_logTextBox.AppendText(text, Color.Black);
             lG_logTextBox.AppendText(message, color);
             lG_logTextBox.AppendText(Environment.NewLine);
@@ -1108,6 +1109,7 @@ namespace SevenKnightsAI
             this.RD_DragonHPLimit.Value = this.AISettings.RD_DragonHPLimit;
             this.RD_DragonLVLimit.Value = this.AISettings.RD_DragonLVLimit;
             this.RD_SummonLvl_CheckBox.SelectedIndex = this.AISettings.RD_SummonLV;
+            this.AD_SummonAuto.Checked = this.AISettings.AD_SummonAuto;
 
             switch (this.AISettings.RD_SkillType)
             {
@@ -1185,10 +1187,12 @@ namespace SevenKnightsAI
             this.ST_TelegramChatIDTextBox.Text = this.AIProfiles.ST_TelegramChatID;
             this.ST_foregroundMode.Checked = this.AIProfiles.ST_ForegroundMode;
         }
-        private void InitTestTab()
+        private void InitOtherTab()
         {
             this.AD_Pause100.Checked = this.AIProfiles.AD_Pause100;
             this.AD_NoHeroUp_Checkbox.Checked = this.AIProfiles.AD_NoHeroUp;
+            this.EX_EnableCheckBox.Checked = this.AISettings.EX_Enable;
+            this.EX_SendAgainCheckBox.Checked = this.AISettings.EX_Send;
         }
 
         private void LG_clearButton_Click(object sender, EventArgs e)
@@ -1469,7 +1473,7 @@ namespace SevenKnightsAI
             this.InitSPdungeonTab();
             this.InitResourcesTab();
             this.InitLogsTab();
-            this.InitTestTab();
+            this.InitOtherTab();
             if (refreshSettings)
             {
                 this.InitSettingsTab();
@@ -2084,11 +2088,13 @@ namespace SevenKnightsAI
             int num = 0;
             this.ST_currentProfileComboBox.Items.Clear();
             this.ST_hotTimeProfileComboBox.Items.Clear();
+            this.ST_NoMoreProfileComboBox.Items.Clear();
             foreach (KeyValuePair<string, AISettings> current in this.AIProfiles.Settings)
             {
                 ProfileComboBoxItem item = new ProfileComboBoxItem(current);
                 this.ST_currentProfileComboBox.Items.Add(item);
                 this.ST_hotTimeProfileComboBox.Items.Add(item);
+                this.ST_NoMoreProfileComboBox.Items.Add(item);
                 if (current.Key == this.AIProfiles.CurrentKey)
                 {
                     this.ST_currentProfileComboBox.SelectedIndex = num;
@@ -2259,10 +2265,14 @@ namespace SevenKnightsAI
             if (AISettings.RD_OwnerDragon)
             {
                 RD_SummonLvl_CheckBox.Enabled = true;
+                AD_SummonAuto.Enabled = true;
+                AD_SummonAuto.Checked = true;
             }
             else
             {
                 RD_SummonLvl_CheckBox.Enabled = false;
+                AD_SummonAuto.Enabled = false;
+                AD_SummonAuto.Checked = false;
             }
         }
         private void RD_LevelCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -2274,7 +2284,6 @@ namespace SevenKnightsAI
         {
             CheckBox checkBox = sender as CheckBox;
             this.AISettings.RD_ReadNick = checkBox.Checked;
-            //MessageBox.Show("RD_Read Nick : " + this.AISettings.RD_ReadNick);
         }
 
         private void RD_SummonLvl_CheckBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -2817,9 +2826,9 @@ namespace SevenKnightsAI
                         {
                             this.AI.ChangeMode(Objective.RAID);
                         }
-                        else if ((string)progressArgsT.Message == "Change Mode Send Honor")
+                        else if ((string)progressArgsT.Message == "Change Mode Sell Heroes")
                         {
-                            this.AI.ChangeMode(Objective.SEND_HONORS);
+                            this.AI.ChangeMode(Objective.SELL_HEROES);
                         }
                         break;
                     }
@@ -2984,8 +2993,6 @@ namespace SevenKnightsAI
                     bot.send_inline_keyboard.keyboard_R1_3_callback_data = "FArena";
                     bot.send_inline_keyboard.keyboard_R1_4 = "Raid";
                     bot.send_inline_keyboard.keyboard_R1_4_callback_data = "FRaid";
-                    bot.send_inline_keyboard.keyboard_R2_1 = "Send Honor";
-                    bot.send_inline_keyboard.keyboard_R2_1_callback_data = "FSendHonors";
                     bot.send_inline_keyboard.send(bot.chat_id, "This Feature will force bot to change mode, Please choose Mode what you want : ");
                 }
                 if (bot.data == "FAdventure")
@@ -3036,17 +3043,9 @@ namespace SevenKnightsAI
                         bot.sendMessage.send(bot.chat_id, "Raid Mode is not Activated");
                     }
                 }
-                if (bot.data == "FSendHonors")
-                {
-                    if (this.AISettings.RD_Enable == true)
-                    {
-                        SendCommand("Change Mode Send Honor");
-                        bot.sendMessage.send(bot.chat_id, "Mode Changed to : Raid");
-                    }
-                    else
-                    {
-                        bot.sendMessage.send(bot.chat_id, "Raid Mode is not Activated");
-                    }
+                if (bot.data == "FSellHeroes") { 
+                        SendCommand("Change Mode Sell Heroes");
+                        bot.sendMessage.send(bot.chat_id, "Mode Changed to : Sell Heroes");
                 }
                 if (bot.message_text == "ControlPC")
                 {
@@ -3099,9 +3098,7 @@ namespace SevenKnightsAI
 
         private void screenshotButton_Click(object sender, EventArgs e)
         {
-            Bitmap screen = this.AI.BlueStacks.CaptureFrame(!this.AIProfiles.ST_ForegroundMode);
-            screen.Save("C:\\screen.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
-            MessageBox.Show("Screenshot Saved to C:\\screen.jpg");
+
         }
 
         private void label10_Click(object sender, EventArgs e)
@@ -3125,6 +3122,27 @@ ts.Hours, ts.Minutes, ts.Seconds);
         private void botstatusLabel_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void EX_EnableCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            bool @checked = checkBox.Checked;
+            this.AISettings.EX_Enable = @checked;
+        }
+
+        private void EX_SendAgainCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            bool @checked = checkBox.Checked;
+            this.AISettings.EX_Send = @checked;
+        }
+
+        private void AD_SummonAuto_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            bool @checked = checkBox.Checked;
+            this.AISettings.AD_SummonAuto = @checked;
         }
     }
     public class AutoClosingMessageBox

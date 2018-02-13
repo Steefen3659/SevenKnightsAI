@@ -6,17 +6,17 @@ namespace SevenKnightsAI.Classes.Mappings
     {
         public static readonly PixelMapping DimmedBG_1 = new PixelMapping
         {
-            X = 903,
-            Y = 33,
-            Color = 4931097,
+            X = 477,
+            Y = 75,
+            Color = 1248006,
             Type = MappingType.ANCHOR
         };
 
         public static readonly PixelMapping DimmedBG_2 = new PixelMapping
         {
-            X = 59,
-            Y = 25,
-            Color = 3871492,
+            X = 174,
+            Y = 450,
+            Color = 4734245,
             Type = MappingType.ANCHOR
         };
 

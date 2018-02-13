@@ -1007,6 +1007,7 @@ namespace SevenKnightsAI.Classes.Mappings
             //Height = 20
         };
 
+
         #endregion Public Fields
     }
 }

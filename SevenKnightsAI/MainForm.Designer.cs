@@ -432,7 +432,6 @@
             this.tabControl5 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox23 = new System.Windows.Forms.GroupBox();
-            this.checkBox17 = new System.Windows.Forms.CheckBox();
             this.checkBox5 = new System.Windows.Forms.CheckBox();
             this.tabPage15 = new System.Windows.Forms.TabPage();
             this.groupBox26 = new System.Windows.Forms.GroupBox();
@@ -449,8 +448,40 @@
             this.tabPage8 = new System.Windows.Forms.TabPage();
             this.groupBox32 = new System.Windows.Forms.GroupBox();
             this.groupBox31 = new System.Windows.Forms.GroupBox();
+            this.AD_SummonAuto = new System.Windows.Forms.CheckBox();
             this.groupBox19 = new System.Windows.Forms.GroupBox();
             this.tabPage9 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabControl3 = new System.Windows.Forms.TabControl();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.groupBox12 = new System.Windows.Forms.GroupBox();
+            this.EX_SendAgainCheckBox = new System.Windows.Forms.CheckBox();
+            this.EX_EnableCheckBox = new System.Windows.Forms.CheckBox();
+            this.tabPage10 = new System.Windows.Forms.TabPage();
+            this.groupBox13 = new System.Windows.Forms.GroupBox();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton3 = new System.Windows.Forms.RadioButton();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.button19 = new System.Windows.Forms.Button();
+            this.checkBox7 = new System.Windows.Forms.CheckBox();
+            this.button20 = new System.Windows.Forms.Button();
+            this.button21 = new System.Windows.Forms.Button();
+            this.button22 = new System.Windows.Forms.Button();
+            this.button23 = new System.Windows.Forms.Button();
+            this.button24 = new System.Windows.Forms.Button();
+            this.button25 = new System.Windows.Forms.Button();
+            this.button26 = new System.Windows.Forms.Button();
+            this.button27 = new System.Windows.Forms.Button();
+            this.button28 = new System.Windows.Forms.Button();
+            this.button29 = new System.Windows.Forms.Button();
+            this.button30 = new System.Windows.Forms.Button();
+            this.button31 = new System.Windows.Forms.Button();
+            this.button32 = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.button33 = new System.Windows.Forms.Button();
+            this.groupBox14 = new System.Windows.Forms.GroupBox();
+            this.checkBox8 = new System.Windows.Forms.CheckBox();
             this.tabPage17 = new System.Windows.Forms.TabPage();
             this.tabPage18 = new System.Windows.Forms.TabPage();
             this.tabControl6 = new System.Windows.Forms.TabControl();
@@ -463,7 +494,6 @@
             this.label79 = new System.Windows.Forms.Label();
             this.tabPage20 = new System.Windows.Forms.TabPage();
             this.groupBox24 = new System.Windows.Forms.GroupBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.checkBox22 = new System.Windows.Forms.CheckBox();
             this.groupBox39 = new System.Windows.Forms.GroupBox();
             this.tabPage21 = new System.Windows.Forms.TabPage();
@@ -479,6 +509,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.screenshotButton = new System.Windows.Forms.Button();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
+            this.ST_NoMoreProfileComboBox = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.GC_limitNumericBox)).BeginInit();
             this.GC_formationPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RD_DragonLVLimit)).BeginInit();
@@ -570,6 +601,14 @@
             this.groupBox31.SuspendLayout();
             this.groupBox19.SuspendLayout();
             this.tabPage9.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.tabControl3.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            this.groupBox12.SuspendLayout();
+            this.tabPage10.SuspendLayout();
+            this.groupBox13.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.groupBox14.SuspendLayout();
             this.tabPage17.SuspendLayout();
             this.tabPage18.SuspendLayout();
             this.tabControl6.SuspendLayout();
@@ -798,7 +837,7 @@
             // AD_Pause100
             // 
             this.AD_Pause100.AutoSize = true;
-            this.AD_Pause100.Location = new System.Drawing.Point(6, 109);
+            this.AD_Pause100.Location = new System.Drawing.Point(6, 86);
             this.AD_Pause100.Name = "AD_Pause100";
             this.AD_Pause100.Size = new System.Drawing.Size(136, 17);
             this.AD_Pause100.TabIndex = 0;
@@ -810,7 +849,7 @@
             // 
             this.AD_StopOnDragon_Checkbox.AutoSize = true;
             this.AD_StopOnDragon_Checkbox.Enabled = false;
-            this.AD_StopOnDragon_Checkbox.Location = new System.Drawing.Point(11, 71);
+            this.AD_StopOnDragon_Checkbox.Location = new System.Drawing.Point(278, 330);
             this.AD_StopOnDragon_Checkbox.Name = "AD_StopOnDragon_Checkbox";
             this.AD_StopOnDragon_Checkbox.Size = new System.Drawing.Size(143, 17);
             this.AD_StopOnDragon_Checkbox.TabIndex = 41;
@@ -963,7 +1002,7 @@
             "Offensive",
             "Support",
             "Magic"});
-            this.RD_leaderComboBox.Location = new System.Drawing.Point(117, 94);
+            this.RD_leaderComboBox.Location = new System.Drawing.Point(384, 353);
             this.RD_leaderComboBox.Name = "RD_leaderComboBox";
             this.RD_leaderComboBox.Size = new System.Drawing.Size(46, 21);
             this.RD_leaderComboBox.TabIndex = 16;
@@ -975,7 +1014,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Enabled = false;
-            this.label2.Location = new System.Drawing.Point(65, 98);
+            this.label2.Location = new System.Drawing.Point(332, 357);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(40, 13);
             this.label2.TabIndex = 15;
@@ -1898,7 +1937,7 @@
             this.RS_collectQuestsGroupBox.Controls.Add(this.RS_questsSpecialLabel);
             this.RS_collectQuestsGroupBox.Location = new System.Drawing.Point(9, 165);
             this.RS_collectQuestsGroupBox.Name = "RS_collectQuestsGroupBox";
-            this.RS_collectQuestsGroupBox.Size = new System.Drawing.Size(485, 80);
+            this.RS_collectQuestsGroupBox.Size = new System.Drawing.Size(485, 96);
             this.RS_collectQuestsGroupBox.TabIndex = 3;
             this.RS_collectQuestsGroupBox.TabStop = false;
             this.RS_collectQuestsGroupBox.Text = "Collect Quests";
@@ -1906,7 +1945,7 @@
             // RS_questsSocialCheckBox
             // 
             this.RS_questsSocialCheckBox.AutoSize = true;
-            this.RS_questsSocialCheckBox.Location = new System.Drawing.Point(403, 43);
+            this.RS_questsSocialCheckBox.Location = new System.Drawing.Point(406, 57);
             this.RS_questsSocialCheckBox.Name = "RS_questsSocialCheckBox";
             this.RS_questsSocialCheckBox.Size = new System.Drawing.Size(55, 17);
             this.RS_questsSocialCheckBox.TabIndex = 8;
@@ -1918,7 +1957,7 @@
             // RS_questsItemCheckBox
             // 
             this.RS_questsItemCheckBox.AutoSize = true;
-            this.RS_questsItemCheckBox.Location = new System.Drawing.Point(292, 44);
+            this.RS_questsItemCheckBox.Location = new System.Drawing.Point(294, 58);
             this.RS_questsItemCheckBox.Name = "RS_questsItemCheckBox";
             this.RS_questsItemCheckBox.Size = new System.Drawing.Size(46, 17);
             this.RS_questsItemCheckBox.TabIndex = 7;
@@ -1930,7 +1969,7 @@
             // RS_questsHeroCheckBox
             // 
             this.RS_questsHeroCheckBox.AutoSize = true;
-            this.RS_questsHeroCheckBox.Location = new System.Drawing.Point(181, 44);
+            this.RS_questsHeroCheckBox.Location = new System.Drawing.Point(170, 54);
             this.RS_questsHeroCheckBox.Name = "RS_questsHeroCheckBox";
             this.RS_questsHeroCheckBox.Size = new System.Drawing.Size(49, 17);
             this.RS_questsHeroCheckBox.TabIndex = 6;
@@ -1942,7 +1981,7 @@
             // RS_questsBattleCheckBox
             // 
             this.RS_questsBattleCheckBox.AutoSize = true;
-            this.RS_questsBattleCheckBox.Location = new System.Drawing.Point(60, 44);
+            this.RS_questsBattleCheckBox.Location = new System.Drawing.Point(62, 57);
             this.RS_questsBattleCheckBox.Name = "RS_questsBattleCheckBox";
             this.RS_questsBattleCheckBox.Size = new System.Drawing.Size(53, 17);
             this.RS_questsBattleCheckBox.TabIndex = 5;
@@ -1954,7 +1993,7 @@
             // RS_specialQuestsMonthlyCheckBox
             // 
             this.RS_specialQuestsMonthlyCheckBox.AutoSize = true;
-            this.RS_specialQuestsMonthlyCheckBox.Location = new System.Drawing.Point(331, 16);
+            this.RS_specialQuestsMonthlyCheckBox.Location = new System.Drawing.Point(336, 20);
             this.RS_specialQuestsMonthlyCheckBox.Name = "RS_specialQuestsMonthlyCheckBox";
             this.RS_specialQuestsMonthlyCheckBox.Size = new System.Drawing.Size(63, 17);
             this.RS_specialQuestsMonthlyCheckBox.TabIndex = 4;
@@ -1966,7 +2005,7 @@
             // RS_specialQuestsWeeklyCheckBox
             // 
             this.RS_specialQuestsWeeklyCheckBox.AutoSize = true;
-            this.RS_specialQuestsWeeklyCheckBox.Location = new System.Drawing.Point(226, 19);
+            this.RS_specialQuestsWeeklyCheckBox.Location = new System.Drawing.Point(221, 19);
             this.RS_specialQuestsWeeklyCheckBox.Name = "RS_specialQuestsWeeklyCheckBox";
             this.RS_specialQuestsWeeklyCheckBox.Size = new System.Drawing.Size(62, 17);
             this.RS_specialQuestsWeeklyCheckBox.TabIndex = 3;
@@ -1978,7 +2017,7 @@
             // RS_specialQuestsDailyCheckBox
             // 
             this.RS_specialQuestsDailyCheckBox.AutoSize = true;
-            this.RS_specialQuestsDailyCheckBox.Location = new System.Drawing.Point(116, 20);
+            this.RS_specialQuestsDailyCheckBox.Location = new System.Drawing.Point(119, 20);
             this.RS_specialQuestsDailyCheckBox.Name = "RS_specialQuestsDailyCheckBox";
             this.RS_specialQuestsDailyCheckBox.Size = new System.Drawing.Size(49, 17);
             this.RS_specialQuestsDailyCheckBox.TabIndex = 2;
@@ -1990,7 +2029,7 @@
             // RS_questsNormalLabel
             // 
             this.RS_questsNormalLabel.AutoSize = true;
-            this.RS_questsNormalLabel.Location = new System.Drawing.Point(7, 44);
+            this.RS_questsNormalLabel.Location = new System.Drawing.Point(7, 58);
             this.RS_questsNormalLabel.Name = "RS_questsNormalLabel";
             this.RS_questsNormalLabel.Size = new System.Drawing.Size(43, 13);
             this.RS_questsNormalLabel.TabIndex = 1;
@@ -2010,7 +2049,7 @@
             this.RS_sendHonorsGroupBox.Controls.Add(this.RS_giftsGroupBox);
             this.RS_sendHonorsGroupBox.Controls.Add(this.RS_sendHonorsInGame);
             this.RS_sendHonorsGroupBox.Controls.Add(this.RS_sendHonorsFacebook);
-            this.RS_sendHonorsGroupBox.Location = new System.Drawing.Point(9, 251);
+            this.RS_sendHonorsGroupBox.Location = new System.Drawing.Point(9, 267);
             this.RS_sendHonorsGroupBox.Name = "RS_sendHonorsGroupBox";
             this.RS_sendHonorsGroupBox.Size = new System.Drawing.Size(146, 80);
             this.RS_sendHonorsGroupBox.TabIndex = 4;
@@ -2091,7 +2130,7 @@
             this.RS_buyKeysGroupBox.Controls.Add(this.RS_buyKeyHonorsComboBox);
             this.RS_buyKeysGroupBox.Controls.Add(this.RS_buyKeyHonorsCheckBox);
             this.RS_buyKeysGroupBox.Enabled = false;
-            this.RS_buyKeysGroupBox.Location = new System.Drawing.Point(169, 251);
+            this.RS_buyKeysGroupBox.Location = new System.Drawing.Point(169, 267);
             this.RS_buyKeysGroupBox.Name = "RS_buyKeysGroupBox";
             this.RS_buyKeysGroupBox.Size = new System.Drawing.Size(325, 80);
             this.RS_buyKeysGroupBox.TabIndex = 5;
@@ -2287,6 +2326,7 @@
             this.RS_itemAmountRadioButton.Tag = "1";
             this.RS_itemAmountRadioButton.Text = "Amount";
             this.RS_itemAmountRadioButton.UseVisualStyleBackColor = true;
+            this.RS_itemAmountRadioButton.Visible = false;
             // 
             // RS_itemAllRadioButton
             // 
@@ -2300,6 +2340,7 @@
             this.RS_itemAllRadioButton.Tag = "1";
             this.RS_itemAllRadioButton.Text = "All";
             this.RS_itemAllRadioButton.UseVisualStyleBackColor = true;
+            this.RS_itemAllRadioButton.Visible = false;
             this.RS_itemAllRadioButton.CheckedChanged += new System.EventHandler(this.RS_sellAllRadioButton_CheckedChanged);
             // 
             // RS_heroRadioPanel
@@ -2344,6 +2385,7 @@
             this.RS_itemAmountNumericBox.Size = new System.Drawing.Size(37, 20);
             this.RS_itemAmountNumericBox.TabIndex = 8;
             this.RS_itemAmountNumericBox.Tag = "1";
+            this.RS_itemAmountNumericBox.Visible = false;
             this.RS_itemAmountNumericBox.ValueChanged += new System.EventHandler(this.RS_sellAmountNumericBox_ValueChanged);
             // 
             // RS_heroAmountNumericBox
@@ -2358,15 +2400,12 @@
             // RS_itemStarsComboBox
             // 
             this.RS_itemStarsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.RS_itemStarsComboBox.Enabled = false;
             this.RS_itemStarsComboBox.FormattingEnabled = true;
             this.RS_itemStarsComboBox.Items.AddRange(new object[] {
             "★",
             "★★",
             "★★★",
-            "★★★★",
-            "★★★★★",
-            "★★★★★★"});
+            "★★★★"});
             this.RS_itemStarsComboBox.Location = new System.Drawing.Point(226, 54);
             this.RS_itemStarsComboBox.Name = "RS_itemStarsComboBox";
             this.RS_itemStarsComboBox.Size = new System.Drawing.Size(78, 21);
@@ -2404,7 +2443,6 @@
             // RS_sellItemsCheckBox
             // 
             this.RS_sellItemsCheckBox.AutoSize = true;
-            this.RS_sellItemsCheckBox.Enabled = false;
             this.RS_sellItemsCheckBox.Location = new System.Drawing.Point(7, 56);
             this.RS_sellItemsCheckBox.Name = "RS_sellItemsCheckBox";
             this.RS_sellItemsCheckBox.Size = new System.Drawing.Size(207, 17);
@@ -3090,7 +3128,7 @@
             // ST_AutoShutdownCheckBox
             // 
             this.ST_AutoShutdownCheckBox.AutoSize = true;
-            this.ST_AutoShutdownCheckBox.Location = new System.Drawing.Point(6, 86);
+            this.ST_AutoShutdownCheckBox.Location = new System.Drawing.Point(6, 63);
             this.ST_AutoShutdownCheckBox.Name = "ST_AutoShutdownCheckBox";
             this.ST_AutoShutdownCheckBox.Size = new System.Drawing.Size(154, 17);
             this.ST_AutoShutdownCheckBox.TabIndex = 31;
@@ -4580,6 +4618,7 @@
             this.RD_skillGroupBox.Controls.Add(this.RD_manualSkillRadio);
             this.RD_skillGroupBox.Controls.Add(this.RD_autoSkillRadio);
             this.RD_skillGroupBox.Controls.Add(this.RD_team1Panel);
+            this.RD_skillGroupBox.Enabled = false;
             this.RD_skillGroupBox.Location = new System.Drawing.Point(227, 60);
             this.RD_skillGroupBox.Name = "RD_skillGroupBox";
             this.RD_skillGroupBox.Size = new System.Drawing.Size(267, 248);
@@ -5098,14 +5137,13 @@
             // 
             this.GB_WaitForKeys.AutoSize = true;
             this.GB_WaitForKeys.ForeColor = System.Drawing.Color.Blue;
-            this.GB_WaitForKeys.Location = new System.Drawing.Point(320, 221);
+            this.GB_WaitForKeys.Location = new System.Drawing.Point(6, 109);
             this.GB_WaitForKeys.Name = "GB_WaitForKeys";
             this.GB_WaitForKeys.Size = new System.Drawing.Size(72, 17);
             this.GB_WaitForKeys.TabIndex = 11;
             this.GB_WaitForKeys.Text = "Wait on 0";
             this.toolTip.SetToolTip(this.GB_WaitForKeys, "Wait Key");
             this.GB_WaitForKeys.UseVisualStyleBackColor = true;
-            this.GB_WaitForKeys.Visible = false;
             this.GB_WaitForKeys.CheckedChanged += new System.EventHandler(this.GB_WaitForKeys_CheckedChanged);
             // 
             // ST_hotTimeProfileComboBox
@@ -5276,7 +5314,7 @@
             // aiPause
             // 
             this.aiPause.Enabled = false;
-            this.aiPause.Location = new System.Drawing.Point(23, 54);
+            this.aiPause.Location = new System.Drawing.Point(16, 51);
             this.aiPause.Name = "aiPause";
             this.aiPause.Size = new System.Drawing.Size(102, 30);
             this.aiPause.TabIndex = 8;
@@ -5286,7 +5324,7 @@
             // 
             // aiButton
             // 
-            this.aiButton.Location = new System.Drawing.Point(23, 18);
+            this.aiButton.Location = new System.Drawing.Point(16, 15);
             this.aiButton.Name = "aiButton";
             this.aiButton.Size = new System.Drawing.Size(102, 30);
             this.aiButton.TabIndex = 3;
@@ -5494,6 +5532,7 @@
             this.tabControl2.Controls.Add(this.tabPage7);
             this.tabControl2.Controls.Add(this.tabPage8);
             this.tabControl2.Controls.Add(this.tabPage9);
+            this.tabControl2.Controls.Add(this.tabPage2);
             this.tabControl2.Controls.Add(this.tabPage17);
             this.tabControl2.Location = new System.Drawing.Point(-4, 0);
             this.tabControl2.Name = "tabControl2";
@@ -5524,7 +5563,6 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.GB_WaitForKeys);
             this.tabPage1.Controls.Add(this.groupBox23);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
@@ -5534,8 +5572,8 @@
             // 
             // groupBox23
             // 
+            this.groupBox23.Controls.Add(this.GB_WaitForKeys);
             this.groupBox23.Controls.Add(this.AD_EnHottime_Checkbox);
-            this.groupBox23.Controls.Add(this.checkBox17);
             this.groupBox23.Controls.Add(this.checkBox5);
             this.groupBox23.Controls.Add(this.AD_NoHeroUp_Checkbox);
             this.groupBox23.Controls.Add(this.AD_Pause100);
@@ -5548,21 +5586,10 @@
             this.groupBox23.Controls.Add(this.AD_StopOnFullHeroes_Checkbox);
             this.groupBox23.Location = new System.Drawing.Point(8, 13);
             this.groupBox23.Name = "groupBox23";
-            this.groupBox23.Size = new System.Drawing.Size(486, 139);
+            this.groupBox23.Size = new System.Drawing.Size(486, 134);
             this.groupBox23.TabIndex = 0;
             this.groupBox23.TabStop = false;
             this.groupBox23.Text = "Adventure";
-            // 
-            // checkBox17
-            // 
-            this.checkBox17.AutoSize = true;
-            this.checkBox17.Enabled = false;
-            this.checkBox17.Location = new System.Drawing.Point(6, 63);
-            this.checkBox17.Name = "checkBox17";
-            this.checkBox17.Size = new System.Drawing.Size(213, 17);
-            this.checkBox17.TabIndex = 33;
-            this.checkBox17.Text = "Stop Adventure when dragon point max";
-            this.checkBox17.UseVisualStyleBackColor = true;
             // 
             // checkBox5
             // 
@@ -5584,7 +5611,7 @@
             this.tabPage15.Location = new System.Drawing.Point(4, 22);
             this.tabPage15.Name = "tabPage15";
             this.tabPage15.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage15.Size = new System.Drawing.Size(500, 336);
+            this.tabPage15.Size = new System.Drawing.Size(500, 378);
             this.tabPage15.TabIndex = 0;
             this.tabPage15.Text = "Map Option";
             // 
@@ -5626,7 +5653,7 @@
             this.tabPage16.Location = new System.Drawing.Point(4, 22);
             this.tabPage16.Name = "tabPage16";
             this.tabPage16.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage16.Size = new System.Drawing.Size(500, 336);
+            this.tabPage16.Size = new System.Drawing.Size(500, 378);
             this.tabPage16.TabIndex = 1;
             this.tabPage16.Text = "Change Hero Option";
             // 
@@ -5741,10 +5768,13 @@
             // 
             // tabPage8
             // 
+            this.tabPage8.Controls.Add(this.AD_StopOnDragon_Checkbox);
             this.tabPage8.Controls.Add(this.RD_skillGroupBox);
             this.tabPage8.Controls.Add(this.groupBox32);
             this.tabPage8.Controls.Add(this.groupBox31);
             this.tabPage8.Controls.Add(this.groupBox19);
+            this.tabPage8.Controls.Add(this.RD_leaderComboBox);
+            this.tabPage8.Controls.Add(this.label2);
             this.tabPage8.Location = new System.Drawing.Point(4, 22);
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.Size = new System.Drawing.Size(500, 403);
@@ -5771,18 +5801,27 @@
             // 
             // groupBox31
             // 
-            this.groupBox31.Controls.Add(this.AD_StopOnDragon_Checkbox);
+            this.groupBox31.Controls.Add(this.AD_SummonAuto);
             this.groupBox31.Controls.Add(this.RD_SummonLvl_CheckBox);
             this.groupBox31.Controls.Add(this.RD_OwnerDragon);
             this.groupBox31.Controls.Add(this.label21);
-            this.groupBox31.Controls.Add(this.RD_leaderComboBox);
-            this.groupBox31.Controls.Add(this.label2);
             this.groupBox31.Location = new System.Drawing.Point(8, 185);
             this.groupBox31.Name = "groupBox31";
-            this.groupBox31.Size = new System.Drawing.Size(213, 121);
+            this.groupBox31.Size = new System.Drawing.Size(213, 179);
             this.groupBox31.TabIndex = 44;
             this.groupBox31.TabStop = false;
             this.groupBox31.Text = "Summon Dragon";
+            // 
+            // AD_SummonAuto
+            // 
+            this.AD_SummonAuto.AutoSize = true;
+            this.AD_SummonAuto.Location = new System.Drawing.Point(6, 80);
+            this.AD_SummonAuto.Name = "AD_SummonAuto";
+            this.AD_SummonAuto.Size = new System.Drawing.Size(135, 30);
+            this.AD_SummonAuto.TabIndex = 41;
+            this.AD_SummonAuto.Text = "Auto summon dragon\r\nwhen point reach 1000";
+            this.AD_SummonAuto.UseVisualStyleBackColor = true;
+            this.AD_SummonAuto.CheckedChanged += new System.EventHandler(this.AD_SummonAuto_CheckedChanged);
             // 
             // groupBox19
             // 
@@ -5807,6 +5846,359 @@
             this.tabPage9.Size = new System.Drawing.Size(500, 403);
             this.tabPage9.TabIndex = 4;
             this.tabPage9.Text = "Dungeon";
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.tabControl3);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Size = new System.Drawing.Size(500, 403);
+            this.tabPage2.TabIndex = 7;
+            this.tabPage2.Text = "Other";
+            // 
+            // tabControl3
+            // 
+            this.tabControl3.Controls.Add(this.tabPage3);
+            this.tabControl3.Controls.Add(this.tabPage10);
+            this.tabControl3.Location = new System.Drawing.Point(0, 0);
+            this.tabControl3.Name = "tabControl3";
+            this.tabControl3.SelectedIndex = 0;
+            this.tabControl3.Size = new System.Drawing.Size(498, 404);
+            this.tabControl3.TabIndex = 0;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.groupBox12);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(490, 378);
+            this.tabPage3.TabIndex = 0;
+            this.tabPage3.Text = "Exploration";
+            // 
+            // groupBox12
+            // 
+            this.groupBox12.Controls.Add(this.EX_SendAgainCheckBox);
+            this.groupBox12.Controls.Add(this.EX_EnableCheckBox);
+            this.groupBox12.Location = new System.Drawing.Point(6, 6);
+            this.groupBox12.Name = "groupBox12";
+            this.groupBox12.Size = new System.Drawing.Size(478, 108);
+            this.groupBox12.TabIndex = 0;
+            this.groupBox12.TabStop = false;
+            this.groupBox12.Text = "Exploration Control";
+            // 
+            // EX_SendAgainCheckBox
+            // 
+            this.EX_SendAgainCheckBox.AutoSize = true;
+            this.EX_SendAgainCheckBox.Location = new System.Drawing.Point(6, 61);
+            this.EX_SendAgainCheckBox.Name = "EX_SendAgainCheckBox";
+            this.EX_SendAgainCheckBox.Size = new System.Drawing.Size(81, 17);
+            this.EX_SendAgainCheckBox.TabIndex = 1;
+            this.EX_SendAgainCheckBox.Text = "Send Again";
+            this.EX_SendAgainCheckBox.UseVisualStyleBackColor = true;
+            this.EX_SendAgainCheckBox.CheckedChanged += new System.EventHandler(this.EX_SendAgainCheckBox_CheckedChanged);
+            // 
+            // EX_EnableCheckBox
+            // 
+            this.EX_EnableCheckBox.AutoSize = true;
+            this.EX_EnableCheckBox.Location = new System.Drawing.Point(6, 28);
+            this.EX_EnableCheckBox.Name = "EX_EnableCheckBox";
+            this.EX_EnableCheckBox.Size = new System.Drawing.Size(113, 17);
+            this.EX_EnableCheckBox.TabIndex = 0;
+            this.EX_EnableCheckBox.Text = "Collect Exploration";
+            this.EX_EnableCheckBox.UseVisualStyleBackColor = true;
+            this.EX_EnableCheckBox.CheckedChanged += new System.EventHandler(this.EX_EnableCheckBox_CheckedChanged);
+            // 
+            // tabPage10
+            // 
+            this.tabPage10.Controls.Add(this.groupBox13);
+            this.tabPage10.Controls.Add(this.groupBox14);
+            this.tabPage10.Location = new System.Drawing.Point(4, 22);
+            this.tabPage10.Name = "tabPage10";
+            this.tabPage10.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage10.Size = new System.Drawing.Size(490, 378);
+            this.tabPage10.TabIndex = 1;
+            this.tabPage10.Text = "Unknown Area";
+            // 
+            // groupBox13
+            // 
+            this.groupBox13.Controls.Add(this.radioButton1);
+            this.groupBox13.Controls.Add(this.radioButton2);
+            this.groupBox13.Controls.Add(this.radioButton3);
+            this.groupBox13.Controls.Add(this.panel2);
+            this.groupBox13.Enabled = false;
+            this.groupBox13.Location = new System.Drawing.Point(220, 59);
+            this.groupBox13.Name = "groupBox13";
+            this.groupBox13.Size = new System.Drawing.Size(267, 137);
+            this.groupBox13.TabIndex = 27;
+            this.groupBox13.TabStop = false;
+            this.groupBox13.Tag = "2";
+            this.groupBox13.Text = "Skill Management";
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(200, 14);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(47, 17);
+            this.radioButton1.TabIndex = 7;
+            this.radioButton1.Tag = "2";
+            this.radioButton1.Text = "Both";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Enabled = false;
+            this.radioButton2.Location = new System.Drawing.Point(138, 14);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(60, 17);
+            this.radioButton2.TabIndex = 6;
+            this.radioButton2.Tag = "1";
+            this.radioButton2.Text = "Manual";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            // 
+            // radioButton3
+            // 
+            this.radioButton3.AutoSize = true;
+            this.radioButton3.Checked = true;
+            this.radioButton3.Location = new System.Drawing.Point(86, 14);
+            this.radioButton3.Name = "radioButton3";
+            this.radioButton3.Size = new System.Drawing.Size(47, 17);
+            this.radioButton3.TabIndex = 5;
+            this.radioButton3.TabStop = true;
+            this.radioButton3.Tag = "0";
+            this.radioButton3.Text = "Auto";
+            this.radioButton3.UseVisualStyleBackColor = true;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.button19);
+            this.panel2.Controls.Add(this.checkBox7);
+            this.panel2.Controls.Add(this.button20);
+            this.panel2.Controls.Add(this.button21);
+            this.panel2.Controls.Add(this.button22);
+            this.panel2.Controls.Add(this.button23);
+            this.panel2.Controls.Add(this.button24);
+            this.panel2.Controls.Add(this.button25);
+            this.panel2.Controls.Add(this.button26);
+            this.panel2.Controls.Add(this.button27);
+            this.panel2.Controls.Add(this.button28);
+            this.panel2.Controls.Add(this.button29);
+            this.panel2.Controls.Add(this.button30);
+            this.panel2.Controls.Add(this.button31);
+            this.panel2.Controls.Add(this.button32);
+            this.panel2.Controls.Add(this.label7);
+            this.panel2.Controls.Add(this.button33);
+            this.panel2.Location = new System.Drawing.Point(6, 42);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(241, 82);
+            this.panel2.TabIndex = 8;
+            this.panel2.Tag = "5";
+            // 
+            // button19
+            // 
+            this.button19.BackColor = System.Drawing.Color.Transparent;
+            this.button19.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button19.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.button19.Location = new System.Drawing.Point(78, 4);
+            this.button19.Name = "button19";
+            this.button19.Size = new System.Drawing.Size(23, 23);
+            this.button19.TabIndex = 31;
+            this.button19.Tag = "10";
+            this.button19.UseVisualStyleBackColor = false;
+            // 
+            // checkBox7
+            // 
+            this.checkBox7.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBox7.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.checkBox7.Location = new System.Drawing.Point(8, 23);
+            this.checkBox7.Name = "checkBox7";
+            this.checkBox7.Size = new System.Drawing.Size(40, 20);
+            this.checkBox7.TabIndex = 12;
+            this.checkBox7.Text = "Loop";
+            this.checkBox7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBox7.UseVisualStyleBackColor = true;
+            // 
+            // button20
+            // 
+            this.button20.BackColor = System.Drawing.Color.Transparent;
+            this.button20.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button20.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.button20.Location = new System.Drawing.Point(110, 4);
+            this.button20.Name = "button20";
+            this.button20.Size = new System.Drawing.Size(23, 23);
+            this.button20.TabIndex = 32;
+            this.button20.Tag = "11";
+            this.button20.UseVisualStyleBackColor = false;
+            // 
+            // button21
+            // 
+            this.button21.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.button21.Location = new System.Drawing.Point(206, 56);
+            this.button21.Name = "button21";
+            this.button21.Size = new System.Drawing.Size(23, 23);
+            this.button21.TabIndex = 10;
+            this.button21.Tag = "9";
+            this.button21.UseVisualStyleBackColor = true;
+            // 
+            // button22
+            // 
+            this.button22.BackColor = System.Drawing.Color.Transparent;
+            this.button22.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button22.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.button22.Location = new System.Drawing.Point(142, 4);
+            this.button22.Name = "button22";
+            this.button22.Size = new System.Drawing.Size(23, 23);
+            this.button22.TabIndex = 33;
+            this.button22.Tag = "12";
+            this.button22.UseVisualStyleBackColor = false;
+            // 
+            // button23
+            // 
+            this.button23.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.button23.Location = new System.Drawing.Point(174, 56);
+            this.button23.Name = "button23";
+            this.button23.Size = new System.Drawing.Size(23, 23);
+            this.button23.TabIndex = 9;
+            this.button23.Tag = "8";
+            this.button23.UseVisualStyleBackColor = true;
+            // 
+            // button24
+            // 
+            this.button24.BackColor = System.Drawing.Color.Transparent;
+            this.button24.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button24.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.button24.Location = new System.Drawing.Point(174, 4);
+            this.button24.Name = "button24";
+            this.button24.Size = new System.Drawing.Size(23, 23);
+            this.button24.TabIndex = 34;
+            this.button24.Tag = "13";
+            this.button24.UseVisualStyleBackColor = false;
+            // 
+            // button25
+            // 
+            this.button25.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.button25.Location = new System.Drawing.Point(142, 56);
+            this.button25.Name = "button25";
+            this.button25.Size = new System.Drawing.Size(23, 23);
+            this.button25.TabIndex = 8;
+            this.button25.Tag = "7";
+            this.button25.UseVisualStyleBackColor = true;
+            // 
+            // button26
+            // 
+            this.button26.BackColor = System.Drawing.Color.Transparent;
+            this.button26.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button26.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.button26.Location = new System.Drawing.Point(206, 4);
+            this.button26.Name = "button26";
+            this.button26.Size = new System.Drawing.Size(23, 23);
+            this.button26.TabIndex = 35;
+            this.button26.Tag = "14";
+            this.button26.UseVisualStyleBackColor = false;
+            // 
+            // button27
+            // 
+            this.button27.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.button27.Location = new System.Drawing.Point(110, 56);
+            this.button27.Name = "button27";
+            this.button27.Size = new System.Drawing.Size(23, 23);
+            this.button27.TabIndex = 7;
+            this.button27.Tag = "6";
+            this.button27.UseVisualStyleBackColor = true;
+            // 
+            // button28
+            // 
+            this.button28.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.button28.Location = new System.Drawing.Point(78, 56);
+            this.button28.Name = "button28";
+            this.button28.Size = new System.Drawing.Size(23, 23);
+            this.button28.TabIndex = 6;
+            this.button28.Tag = "5";
+            this.button28.UseVisualStyleBackColor = true;
+            // 
+            // button29
+            // 
+            this.button29.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.button29.Location = new System.Drawing.Point(206, 32);
+            this.button29.Name = "button29";
+            this.button29.Size = new System.Drawing.Size(23, 23);
+            this.button29.TabIndex = 5;
+            this.button29.Tag = "4";
+            this.button29.UseVisualStyleBackColor = true;
+            // 
+            // button30
+            // 
+            this.button30.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.button30.Location = new System.Drawing.Point(174, 32);
+            this.button30.Name = "button30";
+            this.button30.Size = new System.Drawing.Size(23, 23);
+            this.button30.TabIndex = 4;
+            this.button30.Tag = "3";
+            this.button30.UseVisualStyleBackColor = true;
+            // 
+            // button31
+            // 
+            this.button31.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.button31.Location = new System.Drawing.Point(142, 32);
+            this.button31.Name = "button31";
+            this.button31.Size = new System.Drawing.Size(23, 23);
+            this.button31.TabIndex = 3;
+            this.button31.Tag = "2";
+            this.button31.UseVisualStyleBackColor = true;
+            // 
+            // button32
+            // 
+            this.button32.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.button32.Location = new System.Drawing.Point(110, 32);
+            this.button32.Name = "button32";
+            this.button32.Size = new System.Drawing.Size(23, 23);
+            this.button32.TabIndex = 2;
+            this.button32.Tag = "1";
+            this.button32.UseVisualStyleBackColor = true;
+            // 
+            // label7
+            // 
+            this.label7.Location = new System.Drawing.Point(6, 6);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(60, 13);
+            this.label7.TabIndex = 0;
+            this.label7.Text = "Team 1";
+            // 
+            // button33
+            // 
+            this.button33.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.button33.Location = new System.Drawing.Point(78, 32);
+            this.button33.Name = "button33";
+            this.button33.Size = new System.Drawing.Size(23, 23);
+            this.button33.TabIndex = 1;
+            this.button33.Tag = "0";
+            this.button33.UseVisualStyleBackColor = true;
+            // 
+            // groupBox14
+            // 
+            this.groupBox14.Controls.Add(this.checkBox8);
+            this.groupBox14.Enabled = false;
+            this.groupBox14.Location = new System.Drawing.Point(6, 6);
+            this.groupBox14.Name = "groupBox14";
+            this.groupBox14.Size = new System.Drawing.Size(481, 47);
+            this.groupBox14.TabIndex = 26;
+            this.groupBox14.TabStop = false;
+            this.groupBox14.Text = "Unknown Area";
+            // 
+            // checkBox8
+            // 
+            this.checkBox8.AutoSize = true;
+            this.checkBox8.Checked = true;
+            this.checkBox8.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox8.Location = new System.Drawing.Point(6, 19);
+            this.checkBox8.Name = "checkBox8";
+            this.checkBox8.Size = new System.Drawing.Size(133, 17);
+            this.checkBox8.TabIndex = 1;
+            this.checkBox8.Tag = "3";
+            this.checkBox8.Text = "Enable Unknown Area";
+            this.checkBox8.UseVisualStyleBackColor = true;
             // 
             // tabPage17
             // 
@@ -5929,13 +6321,13 @@
             this.tabPage20.Controls.Add(this.groupBox39);
             this.tabPage20.Location = new System.Drawing.Point(4, 22);
             this.tabPage20.Name = "tabPage20";
-            this.tabPage20.Size = new System.Drawing.Size(500, 354);
+            this.tabPage20.Size = new System.Drawing.Size(500, 407);
             this.tabPage20.TabIndex = 2;
             this.tabPage20.Text = "Profile";
             // 
             // groupBox24
             // 
-            this.groupBox24.Controls.Add(this.comboBox2);
+            this.groupBox24.Controls.Add(this.ST_NoMoreProfileComboBox);
             this.groupBox24.Controls.Add(this.ST_hotTimeProfileComboBox);
             this.groupBox24.Controls.Add(this.ST_AutoProfileCheckBox);
             this.groupBox24.Controls.Add(this.checkBox22);
@@ -5945,17 +6337,6 @@
             this.groupBox24.TabIndex = 0;
             this.groupBox24.TabStop = false;
             this.groupBox24.Text = "Change Profile When";
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(27, 101);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(153, 21);
-            this.comboBox2.TabIndex = 6;
-            this.comboBox2.Visible = false;
             // 
             // checkBox22
             // 
@@ -5988,7 +6369,7 @@
             this.tabPage21.Location = new System.Drawing.Point(4, 22);
             this.tabPage21.Name = "tabPage21";
             this.tabPage21.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage21.Size = new System.Drawing.Size(500, 354);
+            this.tabPage21.Size = new System.Drawing.Size(500, 407);
             this.tabPage21.TabIndex = 1;
             this.tabPage21.Text = "Remote Bot";
             // 
@@ -6099,24 +6480,33 @@
             this.groupBox2.Controls.Add(this.aiPause);
             this.groupBox2.Location = new System.Drawing.Point(359, 553);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(145, 130);
+            this.groupBox2.Size = new System.Drawing.Size(134, 130);
             this.groupBox2.TabIndex = 15;
             this.groupBox2.TabStop = false;
             // 
             // screenshotButton
             // 
-            this.screenshotButton.Enabled = false;
-            this.screenshotButton.Location = new System.Drawing.Point(23, 90);
+            this.screenshotButton.Location = new System.Drawing.Point(16, 87);
             this.screenshotButton.Name = "screenshotButton";
             this.screenshotButton.Size = new System.Drawing.Size(102, 27);
             this.screenshotButton.TabIndex = 17;
-            this.screenshotButton.Text = "&Screenshot";
+            this.screenshotButton.Text = "&Save Profile";
             this.screenshotButton.UseVisualStyleBackColor = true;
-            this.screenshotButton.Click += new System.EventHandler(this.screenshotButton_Click);
+            this.screenshotButton.Click += new System.EventHandler(this.saveSettingsButton_Click);
             // 
             // timer2
             // 
             this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
+            // 
+            // ST_NoMoreProfileComboBox
+            // 
+            this.ST_NoMoreProfileComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ST_NoMoreProfileComboBox.FormattingEnabled = true;
+            this.ST_NoMoreProfileComboBox.Location = new System.Drawing.Point(27, 101);
+            this.ST_NoMoreProfileComboBox.Name = "ST_NoMoreProfileComboBox";
+            this.ST_NoMoreProfileComboBox.Size = new System.Drawing.Size(112, 21);
+            this.ST_NoMoreProfileComboBox.TabIndex = 5;
+            this.toolTip.SetToolTip(this.ST_NoMoreProfileComboBox, "Profile to change");
             // 
             // MainForm
             // 
@@ -6241,7 +6631,6 @@
             this.tabPage6.ResumeLayout(false);
             this.tabControl5.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
             this.groupBox23.ResumeLayout(false);
             this.groupBox23.PerformLayout();
             this.tabPage15.ResumeLayout(false);
@@ -6265,6 +6654,7 @@
             this.groupBox11.ResumeLayout(false);
             this.groupBox11.PerformLayout();
             this.tabPage8.ResumeLayout(false);
+            this.tabPage8.PerformLayout();
             this.groupBox32.ResumeLayout(false);
             this.groupBox32.PerformLayout();
             this.groupBox31.ResumeLayout(false);
@@ -6273,6 +6663,17 @@
             this.groupBox19.PerformLayout();
             this.tabPage9.ResumeLayout(false);
             this.tabPage9.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabControl3.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
+            this.groupBox12.ResumeLayout(false);
+            this.groupBox12.PerformLayout();
+            this.tabPage10.ResumeLayout(false);
+            this.groupBox13.ResumeLayout(false);
+            this.groupBox13.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.groupBox14.ResumeLayout(false);
+            this.groupBox14.PerformLayout();
             this.tabPage17.ResumeLayout(false);
             this.tabPage18.ResumeLayout(false);
             this.tabControl6.ResumeLayout(false);
@@ -7184,7 +7585,6 @@
         private System.Windows.Forms.GroupBox groupBox21;
         private System.Windows.Forms.GroupBox groupBox23;
         private System.Windows.Forms.GroupBox groupBox24;
-        private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.CheckBox checkBox22;
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.TabControl tabControl2;
@@ -7220,7 +7620,6 @@
         private System.Windows.Forms.GroupBox groupBox38;
         private System.Windows.Forms.Label label79;
         private System.Windows.Forms.GroupBox groupBox11;
-        private System.Windows.Forms.CheckBox checkBox17;
         private System.Windows.Forms.CheckBox checkBox5;
         private System.Windows.Forms.CheckBox ST_foregroundMode;
         private System.Windows.Forms.Button ST_toggleBlueStacksButton;
@@ -7238,5 +7637,38 @@
         private System.Windows.Forms.ToolStripStatusLabel statusToolStripLabel;
         private System.Windows.Forms.GroupBox groupBox10;
         private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabControl tabControl3;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.GroupBox groupBox12;
+        private System.Windows.Forms.CheckBox EX_SendAgainCheckBox;
+        private System.Windows.Forms.CheckBox EX_EnableCheckBox;
+        private System.Windows.Forms.TabPage tabPage10;
+        private System.Windows.Forms.GroupBox groupBox13;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton radioButton3;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button button19;
+        private System.Windows.Forms.CheckBox checkBox7;
+        private System.Windows.Forms.Button button20;
+        private System.Windows.Forms.Button button21;
+        private System.Windows.Forms.Button button22;
+        private System.Windows.Forms.Button button23;
+        private System.Windows.Forms.Button button24;
+        private System.Windows.Forms.Button button25;
+        private System.Windows.Forms.Button button26;
+        private System.Windows.Forms.Button button27;
+        private System.Windows.Forms.Button button28;
+        private System.Windows.Forms.Button button29;
+        private System.Windows.Forms.Button button30;
+        private System.Windows.Forms.Button button31;
+        private System.Windows.Forms.Button button32;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button button33;
+        private System.Windows.Forms.GroupBox groupBox14;
+        private System.Windows.Forms.CheckBox checkBox8;
+        private System.Windows.Forms.CheckBox AD_SummonAuto;
+        private System.Windows.Forms.ComboBox ST_NoMoreProfileComboBox;
     }
 }
